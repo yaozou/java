@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaSbtSettings">
+    <option name="customVMEnabled" value="true" />
+    <option name="customVMPath" value="D:/Program Files (x86)/Java/jdk1.8.0_144" />
+    <option name="maximumHeapSize" value="768" />
+    <option name="vmParameters" value="-Dsbt.log.format=true -Dfile.encoding=UTF8 -Dsbt.global.base=C:/Users/yao/.sbt -Dsbt.boot.directory=C:/Users/yao/.sbt/boot/ -Dsbt.repository.config=C:/Users/yao/.sbt/repositories -Dsbt.ivy.home=C:/Users/yao/.ivy2  -Xmx512M -Xss2M -XX:+CMSClassUnloadingEnabled" />
+  </component>
+</project>
