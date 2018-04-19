@@ -1,5 +1,7 @@
 package com.yaozou.model.creation;
 
+import lombok.Data;
+
 import java.io.*;
 
 /**
@@ -10,7 +12,10 @@ import java.io.*;
       就是深复制进行了完全彻底的复制，而浅复制不彻底。（
       要实现深复制，需要采用流的形式读入当前对象的二进制输入，再写出二进制数据对应的对象。）
  */
+@Data
 public class PrototypeMethod implements Cloneable,Serializable {
+    private String key;
+    private String value;
     /**浅复制*/
     @Override
     protected Object clone() throws CloneNotSupportedException {
