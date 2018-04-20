@@ -1,0 +1,47 @@
+package com.yaozou.model.structural;/**
+ * created by yaozou on 2018/4/20
+ */
+
+/**
+ * 装饰模式
+ * @author yaozou
+ * @create 2018-04-20 14:30
+ **/
+public class DecoratorMethod {
+    public static void main(String[] args) {
+        // 装饰模式就是给一个对象增加一些新的功能，而且是动态的，要求装饰对象和被装饰对象实现同一个接口，装饰对象持有被装饰对象的实例
+        // Source类是被装饰类，Decorator类是一个装饰类，可以为Source类动态的添加一些功能
+        DecoratorMethod method = new DecoratorMethod();
+        method.run();
+    }
+
+    interface Sourceable{
+        void method();
+    }
+
+    class Source implements Sourceable{
+        public void method() {
+            System.out.println("This is a method");
+        }
+    }
+
+    class Decorator implements Sourceable{
+        private Sourceable source;
+        public  Decorator(Sourceable source){
+            this.source = source;
+        }
+        public void method() {
+            System.out.println("Before Decorator......");
+            source.method();
+            System.out.println("After Decorator.......");
+        }
+    }
+
+    public void run(){
+        Sourceable source = new Source();
+        Decorator decorator = new Decorator(source);
+        decorator.method();
+    }
+
+}
+
