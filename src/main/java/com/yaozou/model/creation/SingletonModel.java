@@ -28,4 +28,13 @@ public class SingletonModel {
     private synchronized static void syncInit(){
         if (model == null) model = new SingletonModel();
     }
+
+    public void run(){
+        System.out.println("This is a singleton.");
+    }
+
+    public static void main(String[] args) {
+        SingletonModel model = SingletonModel.getInstance();
+        model.run();
+    }
 }
