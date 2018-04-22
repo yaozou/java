@@ -17,47 +17,47 @@ public class BridgeMethod {
         method.run();
     }
 
-    interface Sourceable{
-        void method();
+    interface Driver{
+        void connection();
     }
 
-    class SourceSubFirst implements Sourceable{
-        public void method() {
-            System.out.println("This is the first sub");
+    class MysqlDriver implements Driver{
+        public void connection() {
+            System.out.println("mysql is connecting......");
         }
     }
 
-    class SourceSubSecond implements Sourceable{
-        public void method() {
-            System.out.println("This is the second sub");
+    class OracleDriver implements Driver{
+        public void connection() {
+            System.out.println("oracle is connecting.......");
         }
     }
 
     @Data
-    abstract class Bridge{
-        private Sourceable source;
-        public void method(){
-            source.method();
+    abstract class DriverManager{
+        private Driver driver;
+        public void connection(){
+            driver.connection();
         }
     }
 
-    class MyBridge extends Bridge{
-        public void method(){
-            getSource().method();
+    class Client extends DriverManager{
+        public void connection(){
+            getDriver().connection();
         }
     }
 
     public void run(){
-        Bridge bridge = new MyBridge();
+        Client client = new Client();
 
         /*调用第一个对象*/
-        Sourceable source1 = new SourceSubFirst();
-        bridge.setSource(source1);
-        bridge.method();
+        Driver mysqlDriver = new MysqlDriver();
+        client.setDriver(mysqlDriver);
+        client.connection();
 
         /*调用第二个对象*/
-        Sourceable source2 = new SourceSubSecond();
-        bridge.setSource(source2);
-        bridge.method();
+        Driver oracleDriver = new OracleDriver();
+        client.setDriver(oracleDriver);
+        client.connection();
     }
 }
