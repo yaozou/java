@@ -3,6 +3,7 @@ package com.yaozou.jdk;/**
  */
 
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 /**
@@ -13,8 +14,13 @@ import java.util.Map;
 public class TestCollection {
 
     public void testMap(){
-       Map map = new HashMap();
-       map.put("aa","aaa");
-       map.put("bb","bbb");
+       Map hash = new HashMap();
+       hash.put("aa","aaa");
+       hash.put(null,null);
+
+       Map table = new Hashtable();
+       table.put("aa","aaa");
+       table.put(null,null);
+
     }
 }
