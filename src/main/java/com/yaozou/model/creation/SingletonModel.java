@@ -14,25 +14,20 @@ public class SingletonModel {
     private static SingletonModel model = null;
     /* 私有构造方法，防止被实例化 */
     private SingletonModel(){}
-
     public static SingletonModel getInstance(){
         if (model == null) syncInit();
         return model;
     }
-
     /* 如果该对象被用于序列化，可以保证对象在序列化前后保持一致 */
     public Object readResolve() {
         return model;
     }
-
     private synchronized static void syncInit(){
         if (model == null) model = new SingletonModel();
     }
-
     public void run(){
         System.out.println("This is a singleton.");
     }
-
     public static void main(String[] args) {
         SingletonModel model = SingletonModel.getInstance();
         model.run();
