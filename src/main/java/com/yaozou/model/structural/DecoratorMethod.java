@@ -17,17 +17,14 @@ public class DecoratorMethod {
         DecoratorMethod method = new DecoratorMethod();
         method.run();
     }
-
     interface Sourceable{
         void method();
     }
-
     class Source implements Sourceable{
         public void method() {
             System.out.println("This is a method");
         }
     }
-
     class Decorator implements Sourceable{
         private Sourceable source;
         public  Decorator(Sourceable source){
@@ -39,12 +36,10 @@ public class DecoratorMethod {
             System.out.println("After Decorator.......");
         }
     }
-
     public void run(){
         Sourceable source = new Source();
         Decorator decorator = new Decorator(source);
         decorator.method();
     }
-
 }
 

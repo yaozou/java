@@ -24,8 +24,6 @@ public class FlyweightMethod {
         connectionPool.getConnection();
         connectionPool.release();
     }
-
-
 }
 
 class ConnectionPool{
