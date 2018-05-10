@@ -52,6 +52,13 @@ public class TestCollection {
 
     }
 
+    public void testSet(){
+        Set<String> hashSet = new HashSet<String>();
+        hashSet.add("aaa");
+        Set<String> treeSet = new TreeSet<String>();
+        treeSet.add("bbbb");
+    }
+
     public static void main(String[] args){
         DecimalFormat decimalFormat = new DecimalFormat("###################.##");
         BigDecimal p2 = new BigDecimal(2.0D);
