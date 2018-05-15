@@ -7,6 +7,7 @@ import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Collector;
 
 /**
  * 集合类
@@ -57,6 +58,15 @@ public class TestCollection {
         hashSet.add("aaa");
         Set<String> treeSet = new TreeSet<String>();
         treeSet.add("bbbb");
+    }
+
+    public void testCollection(){
+        Integer[] intVal = {1,2,3,4,5,6,7,8,9,10};
+        Arrays.sort(intVal);
+
+        List<Integer> intList = Arrays.asList(intVal);
+        Collections.sort(intList);
+
     }
 
     public static void main(String[] args){
