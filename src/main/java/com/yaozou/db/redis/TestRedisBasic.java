@@ -8,5 +8,7 @@ public class TestRedisBasic {
         String key = "list";
         jedis.lpush(key,"111");
         jedis.lpush(key,"222");
+
+        jedis.lpop(key);
     }
 }
