@@ -1,5 +1,8 @@
 package com.yaozou.jdk;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TestArray {
     public static void main(String[] args){
         int[] arr=new int[3];
@@ -18,5 +21,14 @@ public class TestArray {
         arr3[1]=200;
         arr3[2]=300;
         System.out.println(arr);
+
+        List<Long> orderIdsList = new ArrayList<Long>();
+        orderIdsList.add(1L);
+        orderIdsList.add(2L);
+        Long[] orderIds = new Long[orderIdsList.size()];
+
+        for (Long or:orderIdsList.toArray(orderIds)) {
+            System.out.println(or);
+        }
     }
 }
