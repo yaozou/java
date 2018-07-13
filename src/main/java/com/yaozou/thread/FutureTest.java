@@ -58,7 +58,13 @@ public class FutureTest {
         for (Future<String> future:results) {
             System.out.println("future:"+future.get());
         }
-        es.shutdown();
+        //关闭线程
+        //es.shutdown();
+        //
+        List<Runnable> list = es.shutdownNow();
+        for (Runnable r:list) {
+            System.out.println(r.toString());
+        }
         System.out.println("执行时间："+(System.currentTimeMillis()-start)+"ms");
     }
 }
