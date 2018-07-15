@@ -58,9 +58,9 @@ public class FutureTest {
         for (Future<String> future:results) {
             System.out.println("future:"+future.get());
         }
-        //关闭线程
+        //关闭线程池 不可以再 submit 新的 task，已经 submit 的将继续执行
         //es.shutdown();
-        //
+        //关闭线程池 试图停止当前正在执行的 task，并返回尚未执行的 task 的 list
         List<Runnable> list = es.shutdownNow();
         for (Runnable r:list) {
             System.out.println(r.toString());
