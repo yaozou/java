@@ -18,6 +18,11 @@ public class TestCollector {
         list.add(new TestCollectorBean("1","1"));
         list.add(new TestCollectorBean("1","2"));
 
+        listToConcurrentMap(list);
+
+    }
+
+    public static void listToConcurrentMap(List<TestCollectorBean> list){
         Map<String,TestCollectorBean> map1 = list.stream().collect(Collectors.toConcurrentMap(TestCollectorBean::getName, a->a,(k1, k2)->k1)); //当key发生重复时取第一次的value
         Map<String,TestCollectorBean> map2 = list.stream().collect(Collectors.toConcurrentMap(TestCollectorBean::getName,a->a,(k1,k2)->k2)); //当key发生重复时取第二次的value
         //Map<String,TestBean> map3 = list.stream().collect(Collectors.toConcurrentMap(TestCollectorBean::getName,a->a)); //当key发生重复时抛出异常
