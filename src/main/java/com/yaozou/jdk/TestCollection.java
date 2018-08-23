@@ -2,12 +2,15 @@ package com.yaozou.jdk;/**
  * created by yaozou on 2018/4/20
  */
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * 集合类
@@ -50,7 +53,6 @@ public class TestCollection {
         //双向链表
         List<Integer> linkedList = new LinkedList<Integer>();
         linkedList.add(11);
-
     }
 
     public void testSet(){
@@ -70,7 +72,7 @@ public class TestCollection {
     }
 
     public static void main(String[] args){
-        DecimalFormat decimalFormat = new DecimalFormat("###################.##");
+        /*DecimalFormat decimalFormat = new DecimalFormat("###################.##");
         BigDecimal p2 = new BigDecimal(2.0D);
         BigDecimal p3 = new BigDecimal(2.00D);
         BigDecimal p4 = new BigDecimal(2.50D);
@@ -83,6 +85,8 @@ public class TestCollection {
         System.out.println(decimalFormat.format(p2));
         System.out.println(decimalFormat.format(p3));
         System.out.println(decimalFormat.format(p4));
-        System.out.println(decimalFormat.format(p5));
+        System.out.println(decimalFormat.format(p5));*/
+
     }
 }
+
