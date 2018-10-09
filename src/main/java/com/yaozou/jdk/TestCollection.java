@@ -87,6 +87,26 @@ public class TestCollection {
         System.out.println(decimalFormat.format(p4));
         System.out.println(decimalFormat.format(p5));*/
 
+        /**
+         * static final int hash(Object key) {
+         *         int h;
+         *         return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+         *     }
+         */
+        Object obj = "a";
+        int h = obj.hashCode();
+        System.out.println(h +":"+Integer.toBinaryString(h));
+        int hash = h ^ (h>>>16);
+        System.out.println((h>>>16)+":"+Integer.toBinaryString(h>>>16));
+        System.out.println(hash+":"+Integer.toBinaryString(hash));
+
+        /**
+         * i = (n - 1) & hash
+         */
+        int n = 16;
+        int i = (n-1) & hash;
+        System.out.println((n-1)+":"+Integer.toBinaryString((n-1)));
+        System.out.println(i);
     }
 }
 
