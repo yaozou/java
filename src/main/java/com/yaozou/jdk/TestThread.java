@@ -27,20 +27,6 @@ class TestSynchronized{
     }
 }
 
-class TestSemaphore{
-    Semaphore semaphore = new Semaphore(10);//控制10个共享资源的使用
-    public void use(){
-        try {
-            semaphore.acquire();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-    public  void  release(){
-        semaphore.release();
-    }
-}
-
 class TestThreadLocal{
     private static TestThreadLocal testThreadLocal = null;
     private static ThreadLocal<TestThreadLocal> map = new ThreadLocal<TestThreadLocal>();
