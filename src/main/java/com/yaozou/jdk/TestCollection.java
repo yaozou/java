@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class TestCollection {
 
     public void testMap(){
-       Map hash = new HashMap();
+       Map hash = new HashMap(16);
        hash.put("aa","aaa");
        hash.put(null,null);
        hash.get("aa");
@@ -38,8 +38,17 @@ public class TestCollection {
        table.put("aa","aaa");
        table.put(null,null);
 
-       Map concurrentHashMap = new ConcurrentHashMap();
+       Map concurrentHashMap = new ConcurrentHashMap(16);
        concurrentHashMap.put("aa","aaa");
+
+        Map<TestMapKey,TestMapKey> map = new HashMap(16);
+        TestMapKey key1 = new TestMapKey("key","value");
+        TestMapKey key2 = new TestMapKey("key","value");
+        map.put(key1,key1);
+        map.put(key2,key2);
+        System.out.println(map.size());
+        System.out.println(key1.toString()+":" + key2.toString());
+        System.out.println(key1.hashCode()+":" + key2.hashCode());
     }
 
     public void testList(){
@@ -76,20 +85,51 @@ public class TestCollection {
 //            int h;
 //            return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
 //         }
-        Object obj = "abcdef";
+        Object obj = "a";
         int h = obj.hashCode();
-        System.out.println(h +":"+Integer.toBinaryString(h));
-        int hash = h ^ (h>>>16);
-        System.out.println((h>>>16)+":"+Integer.toBinaryString(h>>>16));
-        System.out.println(hash+":"+Integer.toBinaryString(hash));
+        System.out.println("h="+h +":"+Integer.toBinaryString(h));
+        // 右移16位即丢弃低16位，就是任何小于2^16的数，右移16后结果都为0
+        // 任何一个数，与0按位异或的结果都是这个数本身
+        // 大于等于2^16的时候才会重新调整其值。
+        int hightH = h>>>16;
+        // 使用hash值与hash的高16位进行异或运算防止哈希冲突太过频繁
+        int hash = h ^ hightH;
+        System.out.println("(h>>>16)="+hightH+":"+Integer.toBinaryString(hightH));
+        System.out.println("hash="+hash+":"+Integer.toBinaryString(hash));
 
         /**
          * i = (n - 1) & hash
          */
         int n = 1<<4;
         int i = (n-1) & hash;
-        System.out.println((n-1)+":"+Integer.toBinaryString((n-1)));
-        System.out.println(i);
+        System.out.println("(n-1)="+(n-1)+":"+Integer.toBinaryString((n-1)));
+        System.out.println("i="+i);
+
+        int a = 1;
+        int b = 0;
+        // 逻辑运算
+        System.out.println("a&&b="+(a==0&&b==1));
+        System.out.println("a||b="+(a==1||b==1));
+        System.out.println("a^b="+(a==1^b==1));
+        // 位运算
+        System.out.println("1&1="+(a&a)+","+"1&0="+(a&b)+","+"0&0="+(b&b));
+        System.out.println("1|1="+(a|a)+","+"1|0="+(a|b)+","+"0|0="+(b|b));
+        System.out.println("1^1="+(a^a)+","+"1^0="+(a^b)+","+"0^0="+(b^b));
+        // 左右移位、无符号右移位
+        int num1 = 2,num2=-2;
+        System.out.println("num1<<2="+(num1<<2)+","+"num1>>2="+(num2>>2));
+        System.out.println("num1>>>2="+(num1>>>2)+","+"num2>>>2="+(num2>>>2));
+    }
+}
+
+@Data
+class TestMapKey{
+    private String key;
+    private String value;
+
+    public TestMapKey(String key,String value){
+        this.key = key;
+        this.value = value;
     }
 }
 
