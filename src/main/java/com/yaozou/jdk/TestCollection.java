@@ -72,28 +72,11 @@ public class TestCollection {
     }
 
     public static void main(String[] args){
-        /*DecimalFormat decimalFormat = new DecimalFormat("###################.##");
-        BigDecimal p2 = new BigDecimal(2.0D);
-        BigDecimal p3 = new BigDecimal(2.00D);
-        BigDecimal p4 = new BigDecimal(2.50D);
-        BigDecimal p5 = new BigDecimal(2.585444D);
-        System.out.println(p2.toString());
-        System.out.println(p3.toString());
-        System.out.println(p4.toString());
-        System.out.println(p5.toString());
-
-        System.out.println(decimalFormat.format(p2));
-        System.out.println(decimalFormat.format(p3));
-        System.out.println(decimalFormat.format(p4));
-        System.out.println(decimalFormat.format(p5));*/
-
-        /**
-         * static final int hash(Object key) {
-         *         int h;
-         *         return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
-         *     }
-         */
-        Object obj = "a";
+//         static final int hash(Object key) {
+//            int h;
+//            return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+//         }
+        Object obj = "abcdef";
         int h = obj.hashCode();
         System.out.println(h +":"+Integer.toBinaryString(h));
         int hash = h ^ (h>>>16);
@@ -103,7 +86,7 @@ public class TestCollection {
         /**
          * i = (n - 1) & hash
          */
-        int n = 16;
+        int n = 1<<4;
         int i = (n-1) & hash;
         System.out.println((n-1)+":"+Integer.toBinaryString((n-1)));
         System.out.println(i);
