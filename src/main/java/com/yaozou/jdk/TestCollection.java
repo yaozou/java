@@ -41,6 +41,8 @@ public class TestCollection {
        Map concurrentHashMap = new ConcurrentHashMap(16);
        concurrentHashMap.put("aa","aaa");
 
+       Map synchronizedMap = Collections.synchronizedMap(new HashMap<>(8));
+
         Map<TestMapKey,TestMapKey> map = new HashMap(16);
         TestMapKey key1 = new TestMapKey("key","value");
         TestMapKey key2 = new TestMapKey("key","value");
