@@ -1,7 +1,5 @@
 package com.yaozou.jdk;
 
-import java.util.concurrent.Semaphore;
-
 public class TestThread {
 
 }
