@@ -4,13 +4,8 @@ package com.yaozou.jdk;/**
 
 import lombok.Data;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 /**
  * 集合类
@@ -78,6 +73,7 @@ public class TestCollection {
         Arrays.sort(intVal);
 
         List<Integer> intList = Arrays.asList(intVal);
+        intList.sort(null);
         Collections.sort(intList);
 
     }
