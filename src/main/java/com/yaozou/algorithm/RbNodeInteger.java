@@ -86,15 +86,6 @@ class RbTreeUtils{
         RbNodeInteger node = insertNode(val);
         rebuildAfterInsert(node);
     }
-
-    public void remove(int val) throws Exception{
-        RbNodeInteger removeNode;
-        if ((removeNode = findValue(root,val)) == null){
-            throw new Exception("要删除的节点不存在!");
-        }
-        removeNode(removeNode);
-    }
-
     private RbNodeInteger insertNode(int val){
         RbNodeInteger node = new RbNodeInteger(val);
         RbNodeInteger father = root;
@@ -150,6 +141,14 @@ class RbTreeUtils{
             }
         }
         setBlack(root);
+    }
+
+    public void remove(int val) throws Exception{
+        RbNodeInteger removeNode;
+        if ((removeNode = findValue(root,val)) == null){
+            throw new Exception("要删除的节点不存在!");
+        }
+        removeNode(removeNode);
     }
 
     private void removeNode(RbNodeInteger node){
