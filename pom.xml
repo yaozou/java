@@ -195,5 +195,11 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>3.4.49.ALL</version>
+        </dependency>
     </dependencies>
 </project>
