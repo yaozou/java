@@ -96,7 +96,7 @@ public class TestCollection {
         System.out.println("hash="+hash+":"+Integer.toBinaryString(hash));
 
         /**
-         * i = (n - 1) & hash
+         * i = (n - 1) & hash 初始大小为什么是2的n次方
          */
         int n = 1<<4;
         int i = (n-1) & hash;
