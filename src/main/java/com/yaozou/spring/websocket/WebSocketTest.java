@@ -1,4 +1,4 @@
-package com.yaozou.websocket;/**
+package com.yaozou.spring.websocket;/**
  * created by yaozou on 2018/6/28
  */
 
