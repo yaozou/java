@@ -37,6 +37,10 @@ public class LogAspect {
             throw t;
         }
     }
+
+
+
+
     @After("pointcut()")
     public void after(JoinPoint point){
         System.out.println("【后置通知】");
