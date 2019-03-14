@@ -26,13 +26,14 @@ public class TestProxy {
         JDKProxy jdkPrpxy = new JDKProxy();
         IUserManager userManagerJDK = (IUserManager) jdkPrpxy
                 .newProxy(new UserManagerImpl());
-        userManagerJDK.addUser("tom", "root");
+        userManagerJDK.addUser("kimi", "1234567");
     }
 }
 
 class CGLibProxy implements MethodInterceptor {
 
-    private Object targetObject;// CGLib需要代理的目标对象
+    /** CGLib需要代理的目标对象 */
+    private Object targetObject;
 
     public Object createProxyObject(Object obj) {
         this.targetObject = obj;
@@ -40,7 +41,8 @@ class CGLibProxy implements MethodInterceptor {
         enhancer.setSuperclass(obj.getClass());
         enhancer.setCallback(this);
         Object proxyObj = enhancer.create();
-        return proxyObj;// 返回代理对象
+        /** 返回代理对象 */
+        return proxyObj;
     }
 
     @Override
@@ -60,19 +62,24 @@ class CGLibProxy implements MethodInterceptor {
 }
 
 class JDKProxy implements InvocationHandler{
-    private Object targetObject;//需要代理的目标对象
+    /** 需要代理的目标对象 */
+    private Object targetObject;
 
     public Object newProxy(Object targetObject) {//将目标对象传入进行代理
         this.targetObject = targetObject;
+        /**返回代理对象*/
         return Proxy.newProxyInstance(targetObject.getClass().getClassLoader(),
-                targetObject.getClass().getInterfaces(), this);//返回代理对象
+                targetObject.getClass().getInterfaces(), this);
     }
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        checkPopedom();//一般我们进行逻辑处理的函数
-        Object ret = null;      // 设置方法的返回值
-        ret  = method.invoke(targetObject, args);       //调用invoke方法，ret存储该方法的返回值
+        /** 一般我们进行逻辑处理的函数 */
+        checkPopedom();
+        /** 设置方法的返回值 */
+        Object ret = null;
+        /** 调用invoke方法，ret存储该方法的返回值 */
+        ret  = method.invoke(targetObject, args);
         return ret;
     }
 
@@ -83,18 +90,12 @@ class JDKProxy implements InvocationHandler{
 
 interface IUserManager{
     void addUser(String id, String password);
-    void delUser(String id);
 }
 
 class UserManagerImpl implements IUserManager{
-
     @Override
     public void addUser(String id, String password) {
         System.out.println(".: 掉用了UserManagerImpl.addUser()方法！ ");
-    }
-
-    @Override
-    public void delUser(String id) {
-        System.out.println(".: 掉用了UserManagerImpl.delUser()方法！ ");
+        System.out.println("id:"+id+" password:"+password);
     }
 }
