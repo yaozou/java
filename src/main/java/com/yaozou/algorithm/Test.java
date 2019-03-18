@@ -18,9 +18,5 @@ import java.util.Set;
  * @create 2018-06-13 14:53
  **/
 public class Test {
-    public static void main(String[] args) {
-
-    }
-
 
 }

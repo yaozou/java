@@ -1,5 +1,10 @@
 package com.yaozou.algorithm.LeetCode;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * @Description:字符串
  * @author: yaozou
@@ -7,8 +12,35 @@ package com.yaozou.algorithm.LeetCode;
  */
 public class StringCode {
     public static void main(String[] args) {
-        int x = -123;
-        System.out.println(reverse(x));
+        String s = "loveleetcode";
+        System.out.println(firstUniqChar(s));
+    }
+
+    public static int firstUniqChar(String s) {
+        if("".equals(s.trim())){
+            return -1;
+        }
+        int[] idxArr = new int[26];
+        int n = s.length();
+        for(int i = 0;i<idxArr.length;i++){
+            idxArr[i] = n;
+        }
+        char[] chars = s.toCharArray();
+        for(int i = 0;i<n;i++){
+            char c = chars[i];
+            int index = c-'a';
+            if(idxArr[index] == n){
+                idxArr[index] = i;
+            }else{
+                idxArr[index] = n+1;
+            }
+        }
+        Arrays.sort(idxArr);
+        int min = idxArr[0];
+        if(min >= n){
+            return -1;
+        }
+        return min;
     }
 
     public static int reverse(int x) {
