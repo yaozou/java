@@ -182,7 +182,8 @@ class TestSemaphore{
 
 /**
  * 闭锁CountDownLatch
- * 将闭锁的初始值设置1，所有线程调用await方法等待，当事件发生时调用countDown将闭锁值减为0，则所有await等待闭锁的线程得以继续执行。
+ * 将闭锁的初始值设置1，所有线程调用await方法等待，当事件发生时调用countDown将闭锁值减为0，
+ * 则所有await等待闭锁的线程得以继续执行。
  */
 class TestCountDownLatch{
     public static void main(String[] args){
