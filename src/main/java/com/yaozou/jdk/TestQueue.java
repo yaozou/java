@@ -1,5 +1,7 @@
 package com.yaozou.jdk;
 
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.concurrent.*;
 
 /**
@@ -32,17 +34,23 @@ public class TestQueue {
 
         flag = arrayBlockingQueue.contains(obj);
 
-        // 由链表结构组成的有界阻塞队列
+        // 由链表结构组成
+        // 有界阻塞队列
         BlockingQueue linkedBlockingQueue = new LinkedBlockingQueue(10);
+        // 双阻塞队列 最大值为Integer.MAX_VALUE
+        BlockingQueue linkedBlockingDeque = new LinkedBlockingDeque(10);
+        // 由链表结构组成的无界阻塞队列
+        BlockingQueue linkedTransferQueue = new LinkedTransferQueue();
         // 支持优先级别排序的无界阻塞队列 默认大小为11
         BlockingQueue priorityBlockingQueue = new PriorityBlockingQueue();
-        // 使用有限级队列实现的无界阻塞队列 PriorityQueue
+        // 使用优先级别队列实现的无界阻塞队列 PriorityQueue
         BlockingQueue delayQueue = new DelayQueue();
         // 不存储元素的阻塞队列
         BlockingQueue synchronousQueue = new SynchronousQueue();
-        // 由链表结构组成的无界阻塞队列
-        BlockingQueue linkedTransferQueue = new LinkedTransferQueue();
-        // 由链表结构组成的双阻塞队列
-        BlockingQueue linkedBlockingDeque = new LinkedBlockingDeque();
+
+        // 优先级别队列
+        Queue priorityQueue = new PriorityQueue();
+
+
     }
 }
