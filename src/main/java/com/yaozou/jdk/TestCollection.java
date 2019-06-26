@@ -79,6 +79,19 @@ public class TestCollection {
     }
 
     public static void main(String[] args){
+        Map concurrentHashMap = new ConcurrentHashMap(16);
+        concurrentHashMap.put("aa","aaa");
+        concurrentHashMap.put("bb","bbb");
+        concurrentHashMap.put("cc","ccc");
+        concurrentHashMap.forEach((vin, netType) -> {
+            concurrentHashMap.remove(vin);
+                });
+        Object[] keys = concurrentHashMap.keySet().toArray();
+        List list = Arrays.asList(keys);
+        list.forEach(key->{
+            concurrentHashMap.remove(key);
+        });
+
 //         static final int hash(Object key) {
 //            int h;
 //            return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);

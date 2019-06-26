@@ -25,8 +25,8 @@ public class TestNewFeatureForJ8 {
     // 流式 list 转 map
     public static void listToConcurrentMap(){
         List<TestCollectorBean> list = new ArrayList<>();
-        list.add(new TestCollectorBean("1","1"));
-        list.add(new TestCollectorBean("1","2"));
+        list.add(new TestCollectorBean("1",1));
+        list.add(new TestCollectorBean("1",2));
 
         Map<String,TestCollectorBean> map1 = list.stream().collect(Collectors.toConcurrentMap(TestCollectorBean::getName, a->a,(k1, k2)->k1)); //当key发生重复时取第一次的value
         Map<String,TestCollectorBean> map2 = list.stream().collect(Collectors.toConcurrentMap(TestCollectorBean::getName,a->a,(k1,k2)->k2)); //当key发生重复时取第二次的value
