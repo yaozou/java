@@ -1,5 +1,6 @@
 package com.yaozou.jdk;
 
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -8,27 +9,30 @@ import java.util.concurrent.ThreadLocalRandom;
  * @Date: 2019/6/26 17:52
  */
 public class TestRandom {
+    private static Random rng = new Random(2019);
     public static void main(String[] args){
-        int max = 10000;
-        int num1 = 0,num2 =0,num3=0;
-        double large = 0.5093214159691332;
-        double medium = 1.0186005706596197;
-        double small = 1.2640544331803072;
-        double[] rates = {0.1,0.15,0.2,0.3,0.4,0.5,0.6,0.65,0.8,0.9,1};
-        for(int i = 0 ; i<max;i++){
-            double random = rates[ThreadLocalRandom.current().nextInt(rates.length)];
-            double rand = small*random;
-            if(rand <= 0.5093214159691332){
-                num1++;
-            }else if(rand <=medium && rand > large){
-                num2++;
-            }else {
-                num3++;
+        long max = 150;
+        int i=0,j = 0;
+        while (i < 1000){
+            i++;
+            long rtt = nextRTT();
+            if(max <= rtt){
+                j++;
             }
         }
 
-        System.out.println((double) num1/(double)max);
-        System.out.println((double) num2/(double)max);
-        System.out.println((double) num3/(double)max);
+        System.out.println("----"+j);
+    }
+
+    private static long nextRTT() {
+        double u = rng.nextDouble();
+        int x = 0;
+        double cdf = 0;
+        while (u >= cdf) {
+            x++;
+            cdf = 1 - Math.exp(-1.0D * 1 / 50 * x);
+        }
+        System.out.println(x+":"+u);
+        return x;
     }
 }
