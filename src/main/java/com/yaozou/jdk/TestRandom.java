@@ -1,7 +1,9 @@
 package com.yaozou.jdk;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @Description:
@@ -9,30 +11,26 @@ import java.util.concurrent.ThreadLocalRandom;
  * @Date: 2019/6/26 17:52
  */
 public class TestRandom {
-    private static Random rng = new Random(2019);
     public static void main(String[] args){
-        long max = 150;
-        int i=0,j = 0;
-        while (i < 1000){
-            i++;
-            long rtt = nextRTT();
-            if(max <= rtt){
-                j++;
-            }
+        List<BigDecimal> list = new ArrayList(3);
+        list.add(new BigDecimal(3.24));
+        list.add(new BigDecimal(2.44));
+        list.add(new BigDecimal(2.24));
+
+        BigDecimal weightTotal = BigDecimal.ZERO;
+        for(BigDecimal val : list){
+            weightTotal = weightTotal.add(val);
         }
 
-        System.out.println("----"+j);
-    }
-
-    private static long nextRTT() {
-        double u = rng.nextDouble();
-        int x = 0;
-        double cdf = 0;
-        while (u >= cdf) {
-            x++;
-            cdf = 1 - Math.exp(-1.0D * 1 / 50 * x);
+        BigDecimal weightLongest = BigDecimal.ZERO;
+        List<Double> finalWeights = new ArrayList<Double>();
+        StringBuilder sb = new StringBuilder();
+        for(BigDecimal val : list){
+            BigDecimal weight = weightTotal.subtract(val);
+            weightLongest = weightLongest.add(weight);
+            finalWeights.add(weightLongest.doubleValue());
+            sb.append(weightLongest.doubleValue()+" ");
         }
-        System.out.println(x+":"+u);
-        return x;
+        System.out.println(sb.toString());
     }
 }
