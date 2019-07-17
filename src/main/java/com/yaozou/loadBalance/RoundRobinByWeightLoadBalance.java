@@ -170,9 +170,9 @@ public class RoundRobinByWeightLoadBalance {
 
     public static void main(String[] args){
         Map<Invoker, Integer> invokersWeight = new HashMap<>(3);
-        Integer aWeight = 4;
-        Integer bWeight = 2;
-        Integer cWeight = 1;
+        Integer aWeight = 410;
+        Integer bWeight = 1841;
+        Integer cWeight = 690;
 
         invokersWeight.put(new Invoker() {
             @Override
