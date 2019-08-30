@@ -1,6 +1,12 @@
 package com.yaozou.jdk.concurrent;
 
 class TestSynchronized{
+    public static void main(String[] args){
+        synchronized (TestSynchronized.class){
+
+        }
+        System.out.println("over");
+    }
     /**
      * 锁实例object对象
      */
