@@ -1,11 +1,9 @@
-package com.yaozou.thread;/**
+package com.yaozou.jdk.concurrent;/**
  * created by yaozou on 2018/6/28
  */
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.*;
 
 import lombok.Data;

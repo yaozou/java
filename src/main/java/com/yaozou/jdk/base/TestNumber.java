@@ -1,4 +1,4 @@
-package com.yaozou.jdk;
+package com.yaozou.jdk.base;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;

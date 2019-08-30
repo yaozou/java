@@ -1,4 +1,4 @@
-package com.yaozou.jdk;/**
+package com.yaozou.jdk.base;/**
  * created by yaozou on 2018/5/3
  */
 

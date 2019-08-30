@@ -1,4 +1,4 @@
-package com.yaozou.thread;
+package com.yaozou.jdk.concurrent;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

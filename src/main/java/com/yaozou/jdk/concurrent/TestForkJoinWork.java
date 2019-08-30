@@ -1,4 +1,4 @@
-package com.yaozou.jdk;
+package com.yaozou.jdk.concurrent;
 
 import lombok.Data;
 
