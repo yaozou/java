@@ -5,7 +5,7 @@ import com.rabbitmq.client.Connection;
 import com.yaozou.mq.rabbitmq.ConnectUtils;
 
 /**
- * @Description: 路由模式  Topic exchange（主题交换机）
+ * @Description: topic模式  Topic exchange（主题交换机）
  * @Author yao.zou
  * @Date 2019/9/3 0003
  * @Version V1.0
