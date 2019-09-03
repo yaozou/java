@@ -15,7 +15,7 @@ public class Consumer2 {
     private static final String QUEUE_NAME = "test_fanout_2";
     private static final String EXCHANGE_NAME = "fanout";
     public static void main(String[] args) throws Exception{
-        Connection connection = ConnectUtils.getConnect("",5672,"","","");
+        Connection connection = ConnectUtils.getConnect();
         // 建立通道
         Channel channel = connection.createChannel();
         // 设置队列类型

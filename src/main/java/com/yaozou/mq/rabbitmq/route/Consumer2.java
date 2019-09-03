@@ -1,4 +1,4 @@
-package com.yaozou.mq.rabbitmq.work;
+package com.yaozou.mq.rabbitmq.route;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -6,19 +6,24 @@ import com.rabbitmq.client.QueueingConsumer;
 import com.yaozou.mq.rabbitmq.ConnectUtils;
 
 /**
- * @Description: 消费者1 休眠时间为10
+ * @Description: 消费者
  * @Author yao.zou
  * @Date 2019/9/3 0003
  * @Version V1.0
  **/
-public class Consumer {
-    private static final String QUEUE_NAME = "test";
+public class Consumer2 {
+    private static final String QUEUE_NAME = "test_direct_1";
+    private static final String EXCHANGE_NAME = "direct";
     public static void main(String[] args) throws Exception{
         Connection connection = ConnectUtils.getConnect();
         // 建立通道
         Channel channel = connection.createChannel();
         // 设置队列类型
         channel.queueDeclare(QUEUE_NAME,false,false,false,null);
+        // 绑定队列到交换机
+        channel.queueBind(QUEUE_NAME,EXCHANGE_NAME,"select");
+
+        channel.basicQos(1);
 
         QueueingConsumer queueingConsumer = new QueueingConsumer(channel);
 

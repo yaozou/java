@@ -19,7 +19,7 @@ import com.yaozou.mq.rabbitmq.ConnectUtils;
 public class Producer {
     private static final String EXCHANGE_NAME = "fanout";
     public static void main(String[] args) throws Exception{
-        Connection connection = ConnectUtils.getConnect("",5672,"","","");
+        Connection connection = ConnectUtils.getConnect();
         // 建立通道
         Channel channel = connection.createChannel();
         // 设置交换机类型

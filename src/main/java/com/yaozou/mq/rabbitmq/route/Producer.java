@@ -1,28 +1,26 @@
-package com.yaozou.mq.rabbitmq.simple;
+package com.yaozou.mq.rabbitmq.route;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.yaozou.mq.rabbitmq.ConnectUtils;
 
 /**
- * @Description: 简单队列 一对一
+ * @Description: 路由模式  Direct exchange（直连交换机）
  * @Author yao.zou
  * @Date 2019/9/3 0003
  * @Version V1.0
  **/
 public class Producer {
-    private static final String QUEUE_NAME = "test";
+    private static final String EXCHANGE_NAME = "direct";
     public static void main(String[] args) throws Exception{
         Connection connection = ConnectUtils.getConnect();
         // 建立通道
         Channel channel = connection.createChannel();
-        // 设置队列类型
-        channel.queueDeclare(QUEUE_NAME,false,false,false,null);
+        // 设置直连交换机
+        channel.exchangeDeclare(EXCHANGE_NAME,"direct");
 
         String msg = "You are stupid!!!!idiot!!!";
-        //简单队列 一对一
-        channel.basicPublish("",QUEUE_NAME,null,msg.getBytes());
-        System.out.println("producer send msg:"+msg);
+        channel.basicPublish(EXCHANGE_NAME, "add", null, msg.getBytes());
 
         // 关闭通道和连接
         channel.close();

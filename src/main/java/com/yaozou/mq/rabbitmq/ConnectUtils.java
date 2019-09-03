@@ -22,8 +22,9 @@ public class ConnectUtils {
      * @return
      * @throws IOException
      */
-    public static Connection getConnect(String host,int port,String vhost,
-                                             String username,String password) throws IOException {
+    public static Connection getConnect() throws IOException {
+        String host="",vhost="",username="",password="";
+        int port = 5672;
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(host);
         factory.setPort(port);

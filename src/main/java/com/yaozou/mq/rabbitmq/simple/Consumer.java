@@ -14,7 +14,7 @@ import com.yaozou.mq.rabbitmq.ConnectUtils;
 public class Consumer {
     private static final String QUEUE_NAME = "test";
     public static void main(String[] args) throws Exception{
-        Connection connection = ConnectUtils.getConnect("",5672,"","","");
+        Connection connection = ConnectUtils.getConnect();
         // 建立通道
         Channel channel = connection.createChannel();
         // 设置队列类型

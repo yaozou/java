@@ -13,10 +13,10 @@ import com.yaozou.mq.rabbitmq.ConnectUtils;
 public class Producer {
     private static final String QUEUE_NAME = "test";
     public static void main(String[] args) throws Exception{
-        Connection connection = ConnectUtils.getConnect("",5672,"","","");
+        Connection connection = ConnectUtils.getConnect();
         // 建立通道
         Channel channel = connection.createChannel();
-        // 设置队列类型
+        // 设置队列类型 默认交换机
         channel.queueDeclare(QUEUE_NAME,false,false,false,null);
 
         String msg = "You are stupid!!!!idiot!!!";
