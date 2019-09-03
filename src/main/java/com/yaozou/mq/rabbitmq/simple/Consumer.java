@@ -1,8 +1,9 @@
-package com.yaozou.mq.rabbitmq;
+package com.yaozou.mq.rabbitmq.simple;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.QueueingConsumer;
+import com.yaozou.mq.rabbitmq.ConnectUtils;
 
 /**
  * @Description: 消费者
