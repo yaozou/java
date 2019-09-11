@@ -22,7 +22,7 @@ public class FtpService extends DefaultFtplet {
         System.out.println(".....upload file end......");
         System.out.println("File's path is " + path);
 
-        File file = new File(path);
+        /*File file = new File(path);
         if (file.exists()){
             FileInputStream in = new FileInputStream(file);
             //默认有8M的缓存
@@ -32,7 +32,7 @@ public class FtpService extends DefaultFtplet {
             while ((len = bis.read(bytes)) != -1){
                 System.out.println(new String(bytes,0,len));
             }
-        }
+        }*/
 
         return super.onUploadEnd(session, request);
     }
