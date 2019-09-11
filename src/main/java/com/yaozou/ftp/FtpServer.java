@@ -3,6 +3,8 @@ package com.yaozou.ftp;
 import org.apache.ftpserver.FtpServerFactory;
 import org.apache.ftpserver.ftplet.Authority;
 import org.apache.ftpserver.ftplet.FtpException;
+import org.apache.ftpserver.ftplet.Ftplet;
+import org.apache.ftpserver.listener.Listener;
 import org.apache.ftpserver.listener.ListenerFactory;
 import org.apache.ftpserver.usermanager.PropertiesUserManagerFactory;
 import org.apache.ftpserver.usermanager.impl.BaseUser;
@@ -10,7 +12,9 @@ import org.apache.ftpserver.usermanager.impl.WritePermission;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description: ftp服务器
@@ -21,11 +25,17 @@ import java.util.List;
 public class FtpServer {
     public static void main(String[] args) throws FtpException {
         FtpServerFactory serverFactory = new FtpServerFactory();
-        ListenerFactory  factory       = new ListenerFactory();
+        ListenerFactory  listenerFactory       = new ListenerFactory();
         // 监听2121端口
-        factory.setPort(2121);
+        listenerFactory.setPort(2121);
 
-        serverFactory.addListener("default",factory.createListener());
+        // 设置监听
+        Listener listener = listenerFactory.createListener();
+        serverFactory.addListener("default",listener);
+
+        Map<String, Ftplet> ftpLets = new HashMap<>();
+        ftpLets.put("ftpService",new FtpService());
+        serverFactory.setFtplets(ftpLets);
 
         BaseUser user = new BaseUser();
         user.setName("admin");
