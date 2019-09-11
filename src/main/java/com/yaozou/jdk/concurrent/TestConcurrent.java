@@ -1,13 +1,7 @@
 package com.yaozou.jdk.concurrent;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
+import java.util.concurrent.*;
 import java.util.concurrent.locks.*;
 
 /**
@@ -16,6 +10,41 @@ import java.util.concurrent.locks.*;
  * @Date: 2018/8/23 14:31
  */
 public class TestConcurrent {
+
+    public static void main(String[] args){
+        BlockingQueue arrayBlockingQueue = new ArrayBlockingQueue(10);
+        BlockingQueue delayQueue         = new DelayQueue();
+        BlockingQueue linkedBlockingQueue = new LinkedBlockingQueue();
+        BlockingQueue priorityBlockingQueue = new PriorityBlockingQueue();
+        BlockingQueue synchronousQueue = new SynchronousQueue();
+        TransferQueue linkedTransferQueue   = new LinkedTransferQueue();
+
+
+        BlockingDeque linkedBlockingDeque = new LinkedBlockingDeque();
+
+        Queue  concurrentLinkedQueue = new ConcurrentLinkedQueue();
+
+        Deque  deque = new ConcurrentLinkedDeque();
+
+        Map<String,Integer> map1 = new ConcurrentHashMap<>(16);
+        ConcurrentNavigableMap<String,Integer> map2 = new ConcurrentSkipListMap<>();
+
+        /** 由ConcurrentSkipListMap实现 */
+        ConcurrentSkipListSet<Integer> set1 = new ConcurrentSkipListSet<>();
+        set1.add(1); //添加
+        set1.pollLast(); // 集合尾部推出
+        set1.pollFirst(); // 集合头部推出
+
+        CopyOnWriteArraySet<Integer>   set2 = new CopyOnWriteArraySet<>();
+
+
+        CopyOnWriteArrayList<Integer> list = new CopyOnWriteArrayList<>();
+
+    }
+
+}
+
+class TestLock{
     private static Lock reentrantLock = new ReentrantLock();
     public static void testReentrantLock(){
         //lock
@@ -55,9 +84,9 @@ public class TestConcurrent {
         try {
             x += deltaX;
             y += deltaY;
-         } finally {
+        } finally {
             sl.unlockWrite(stamp);
-         }
+        }
     }
 
     double distanceFromOrigin() { // A read-only and optimistic locked method
@@ -86,12 +115,12 @@ public class TestConcurrent {
                     x = newX;
                     y = newY;
                     break;
-                 }
+                }
                 else {
                     sl.unlockRead(stamp);
                     stamp = sl.writeLock();
                 }
-             }
+            }
         }finally {
             sl.unlock(stamp);
         }
