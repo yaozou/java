@@ -23,7 +23,6 @@ public class FtpService extends DefaultFtplet {
         String path = homeDirectory+"\\"+filename;
 
         System.out.println(".....upload file end......");
-        System.out.println("Path is " + path);
         System.out.println("File's name is " + filename);
         return super.onUploadEnd(session, request);
     }
