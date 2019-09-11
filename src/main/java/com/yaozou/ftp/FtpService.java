@@ -1,9 +1,7 @@
 package com.yaozou.ftp;
 
 import org.apache.ftpserver.ftplet.*;
-
 import java.io.IOException;
-import java.net.InetSocketAddress;
 
 /**
  * @Description:ftp服务
@@ -12,16 +10,25 @@ import java.net.InetSocketAddress;
  * @Version V1.0
  **/
 public class FtpService extends DefaultFtplet {
+
+    private String homeDirectory = "E:\\\\FTPServerPath";
+
     @Override
     public FtpletResult onUploadEnd(FtpSession session, FtpRequest request) throws FtpException, IOException {
-        //获取当前路径
-        String path = session.getFileSystemView().getWorkingDirectory().getAbsolutePath();
-        String[] picInfoArr = session.getFileSystemView().getWorkingDirectory().getAbsolutePath().split("/");
+
         //获取文件名
         String filename = request.getArgument();
-        InetSocketAddress serverAddress = session.getServerAddress();
-        System.out.println("upload file end......");
-        System.out.println("file's name is "+filename);
+
+        //获取文件绝对地址
+        String path = homeDirectory+"\\"+filename;
+
+        System.out.println(".....upload file end......");
+        System.out.println("Path is " + path);
+        System.out.println("File's name is " + filename);
         return super.onUploadEnd(session, request);
+    }
+
+    public String getHomeDirectory() {
+        return homeDirectory;
     }
 }

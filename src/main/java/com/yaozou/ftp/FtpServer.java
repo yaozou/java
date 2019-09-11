@@ -34,13 +34,14 @@ public class FtpServer {
         serverFactory.addListener("default",listener);
 
         Map<String, Ftplet> ftpLets = new HashMap<>();
-        ftpLets.put("ftpService",new FtpService());
+        FtpService ftpService = new FtpService();
+        ftpLets.put("ftpService",ftpService);
         serverFactory.setFtplets(ftpLets);
 
         BaseUser user = new BaseUser();
         user.setName("admin");
         user.setPassword("123456");
-        user.setHomeDirectory("E:\\\\FTPServerPath");
+        user.setHomeDirectory(ftpService.getHomeDirectory());
 
         List<Authority> authorities = new ArrayList<>();
         authorities.add(new WritePermission());
