@@ -25,7 +25,8 @@ public class FtpService extends DefaultFtplet {
         File file = new File(path);
         if (file.exists()){
             FileInputStream in = new FileInputStream(file);
-            BufferedInputStream bis = new BufferedInputStream(in); //默认有8M的缓存
+            //默认有8M的缓存
+            BufferedInputStream bis = new BufferedInputStream(in);
             byte[] bytes = new byte[1024];
             int len;
             while ((len = bis.read(bytes)) != -1){
