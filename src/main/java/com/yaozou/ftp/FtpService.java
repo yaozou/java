@@ -1,7 +1,8 @@
 package com.yaozou.ftp;
 
 import org.apache.ftpserver.ftplet.*;
-import java.io.IOException;
+
+import java.io.*;
 
 /**
  * @Description:ftp服务
@@ -15,15 +16,23 @@ public class FtpService extends DefaultFtplet {
 
     @Override
     public FtpletResult onUploadEnd(FtpSession session, FtpRequest request) throws FtpException, IOException {
-
-        //获取文件名
         String filename = request.getArgument();
-
-        //获取文件绝对地址
         String path = homeDirectory+"\\"+filename;
 
         System.out.println(".....upload file end......");
-        System.out.println("File's name is " + filename);
+        System.out.println("File's path is " + path);
+
+        File file = new File(path);
+        if (file.exists()){
+            FileInputStream in = new FileInputStream(file);
+            BufferedInputStream bis = new BufferedInputStream(in); //默认有8M的缓存
+            byte[] bytes = new byte[1024];
+            int len;
+            while ((len = bis.read(bytes)) != -1){
+                System.out.println(new String(bytes,0,len));
+            }
+        }
+
         return super.onUploadEnd(session, request);
     }
 
