@@ -1,4 +1,4 @@
-package com.yaozou.jdk;
+package com.yaozou.spring;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
