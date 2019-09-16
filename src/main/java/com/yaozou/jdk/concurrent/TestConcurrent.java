@@ -283,4 +283,49 @@ class TestCyclicBarrier{
     }
 }
 
+class TestBlockingQueue{
+    public static void main(String[] args){
+        int n = 2;
+        BlockingQueue<Message> queue = new ArrayBlockingQueue(n);
+
+    }
+
+    static class Message{
+        private String msg;
+        public Message(String msg){
+            this.msg = msg;
+        }
+
+        @Override
+        public String toString() {
+            return this.msg;
+        }
+    }
+
+   static class Producer extends Thread{
+        private BlockingQueue<Message> queue;
+        public Producer(BlockingQueue<Message> queue){
+            this.queue = queue;
+        }
+       @Override
+       public void run() {
+           try {
+           } catch (Exception e) {
+               e.printStackTrace();
+           }
+       }
+   }
+
+   static class Consumer extends Thread{
+       private BlockingQueue<Message> queue;
+       public Consumer(BlockingQueue<Message> queue){
+           this.queue = queue;
+       }
+       @Override
+       public void run() {
+
+       }
+   }
+}
+
 
