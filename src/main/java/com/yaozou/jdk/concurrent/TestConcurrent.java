@@ -29,6 +29,7 @@ public class TestConcurrent {
         Deque  deque = new ConcurrentLinkedDeque();
 
         Map<String,Integer> map1 = new ConcurrentHashMap<>(16);
+        map1.put("1111",1);
         ConcurrentNavigableMap<String,Integer> map2 = new ConcurrentSkipListMap<>();
 
         /** 由ConcurrentSkipListMap实现 */
