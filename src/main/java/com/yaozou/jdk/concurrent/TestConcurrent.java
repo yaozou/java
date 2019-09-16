@@ -17,6 +17,8 @@ public class TestConcurrent {
         BlockingQueue linkedBlockingQueue = new LinkedBlockingQueue();
         BlockingQueue priorityBlockingQueue = new PriorityBlockingQueue();
         BlockingQueue synchronousQueue = new SynchronousQueue();
+
+        // TransferQueue extend BlockingQueue
         TransferQueue linkedTransferQueue   = new LinkedTransferQueue();
 
 
