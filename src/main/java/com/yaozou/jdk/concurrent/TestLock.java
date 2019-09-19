@@ -15,11 +15,27 @@ import java.util.concurrent.locks.*;
 class TestLock{
     private static Lock reentrantLock = new ReentrantLock();
     public static void testReentrantLock(){
-        //lock
-        reentrantLock.lock();
         try{
-
-        }finally {
+            // 获得锁 如果未获得当前锁，当前线程进入禁用调度目录并休眠，直到获得锁。
+            reentrantLock.lock();
+            // 获得锁时返回true , 未获得锁时返回false
+            boolean tryLock1 = reentrantLock.tryLock();
+            // 获得锁时返回true , 未获得锁时进入禁用调度目录并休眠，在三种情况下结束：
+            //  1、获得了锁
+            //  2、其他线程终端了此线程
+            //  3、超过制定的等待时间
+            boolean tryLock2 = reentrantLock.tryLock(100,TimeUnit.SECONDS);
+            // 未获得锁时进入禁止调度目录并休眠，在两种情况下结束：
+            //  1、获得了锁
+            //  2、其他线程终端了此线程
+            // 在当前线程可获得锁时，线程被中断，抛出InterruptedException异常。
+            reentrantLock.lockInterruptibly();
+            // 获得Condition之前此线程必须获得锁。
+            Condition condition = reentrantLock.newCondition();
+            testCondition();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
             reentrantLock.unlock();
         }
     }
