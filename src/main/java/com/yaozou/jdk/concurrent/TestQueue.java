@@ -5,7 +5,7 @@ import java.util.Queue;
 import java.util.concurrent.*;
 
 /**
- * @Description:
+ * @Description:队列
  * @Auther: yaozou
  * @Date: 2018/10/10 17:17
  */
