@@ -12,8 +12,8 @@ import com.yaozou.mq.rabbitmq.ConnectUtils;
  * @Version V1.0
  **/
 public class Consumer {
-    private static final String QUEUE_NAME = "test_direct_1";
-    private static final String EXCHANGE_NAME = "direct";
+    private static final String QUEUE_NAME = "iot-coder-dn-command";
+    private static final String EXCHANGE_NAME = "iot-coder-dn";
     public static void main(String[] args) throws Exception{
         Connection connection = ConnectUtils.getConnect();
         // 建立通道
@@ -21,9 +21,7 @@ public class Consumer {
         // 设置队列类型
         channel.queueDeclare(QUEUE_NAME,false,false,false,null);
         // 绑定队列到交换机
-        channel.queueBind(QUEUE_NAME,EXCHANGE_NAME,"add");
-        channel.queueBind(QUEUE_NAME,EXCHANGE_NAME,"update");
-        channel.queueBind(QUEUE_NAME,EXCHANGE_NAME,"delete");
+        channel.queueBind(QUEUE_NAME,EXCHANGE_NAME,"command");
 
         channel.basicQos(1);
 

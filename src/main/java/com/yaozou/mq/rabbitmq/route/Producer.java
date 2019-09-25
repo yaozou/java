@@ -11,7 +11,7 @@ import com.yaozou.mq.rabbitmq.ConnectUtils;
  * @Version V1.0
  **/
 public class Producer {
-    private static final String EXCHANGE_NAME = "direct";
+    private static final String EXCHANGE_NAME = "iot-api-dn";
     public static void main(String[] args) throws Exception{
         Connection connection = ConnectUtils.getConnect();
         // 建立通道
@@ -19,8 +19,8 @@ public class Producer {
         // 设置直连交换机
         channel.exchangeDeclare(EXCHANGE_NAME,"direct");
 
-        String msg = "You are stupid!!!!idiot!!!";
-        channel.basicPublish(EXCHANGE_NAME, "add", null, msg.getBytes());
+        String msg = "{\"request-id\":\"test-111111111111\",\"client-id\":\"29a68dbdb66d45d6a2ee56ce9010acd0\",\"body\":{\"topic\":\"open battery\",\"commend\":{\"0\":{\"name\":\"operator\",\"type\":\"Byte\",\"value\":1},\"1\":{\"name\":\"time\",\"type\":\"Long\",\"value\":1569380403512},\"2\":{\"name\":\"num\",\"type\":\"Integer\",\"value\":2},\"3\":{\"name\":\"lt\",\"type\":\"Double\",\"value\":0.123},\"4\":{\"name\":\"desc\",\"type\":\"String\",\"value\":\"2222222\"}}}}\n";
+        channel.basicPublish(EXCHANGE_NAME, "command", null, msg.getBytes());
 
         // 关闭通道和连接
         channel.close();

@@ -23,13 +23,17 @@ public class ConnectUtils {
      * @throws IOException
      */
     public static Connection getConnect() throws IOException {
-        String host="",vhost="",username="",password="";
+        String host="192.168.98.81",vhost="",username="admin",password="admin";
         int port = 5672;
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(host);
         factory.setPort(port);
-        // 设置虚拟主机
-        factory.setVirtualHost(vhost);
+
+        if (!vhost.equals("")){
+            // 设置虚拟主机
+            factory.setVirtualHost(vhost);
+        }
+
         factory.setUsername(username);
         factory.setPassword(password);
 
