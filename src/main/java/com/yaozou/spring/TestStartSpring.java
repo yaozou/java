@@ -1,5 +1,6 @@
 package com.yaozou.spring;
 
+import com.yaozou.spring.web.RestTestController;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -8,7 +9,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author yaozou
  */
 public class TestStartSpring {
-    public static void main(String[] args){
-        ApplicationContext applicationContext=new ClassPathXmlApplicationContext("classpath:spring-mvc.xml");
+    public static void main(String[] args) throws Exception{
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:applicationContent.xml");
+        ((ClassPathXmlApplicationContext) applicationContext).refresh();
+        RestTestController restTestController = applicationContext.getBean("restTestController",RestTestController.class);
+
     }
 }
