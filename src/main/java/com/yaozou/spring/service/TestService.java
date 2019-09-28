@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TestService {
+    private int count;
     /**
      * 隔离级别
      * Isolation.READ_UNCOMMITTED 一个事务可以读取别一个未提交事务的数据
@@ -14,12 +15,14 @@ public class TestService {
      * Isolation.SERIALIZABLE 事务串行化顺序执行，可以避免脏读，不可重复读与幻读
      */
     @Transactional(readOnly = true,isolation = Isolation.SERIALIZABLE)
-    public void query(){
-        System.out.println("This is query.");
+    public synchronized void query(){
+        count++;
+        //System.out.println("This is query.");
     }
 
-    public void query1(){
-        System.out.println("This is query.");
+    public synchronized void query1(){
+        count++;
+        //System.out.println("This is query.");
     }
 
     public void updateAndQuery(){
@@ -35,5 +38,9 @@ public class TestService {
 
     public void delete(){ // 1、抛出异常 2、try-catch异常
         System.out.println("This is delete.");
+    }
+
+    public int count(){
+        return count;
     }
 }

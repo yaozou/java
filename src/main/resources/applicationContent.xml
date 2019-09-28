@@ -21,6 +21,10 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
     </context:component-scan>
 
+    <bean id="testService" class="com.yaozou.spring.service.TestService">
+
+    </bean>
+
     <!--<import resource="classpath:spring-mybatis.xml" />-->
 
 </beans>

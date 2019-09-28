@@ -1,8 +1,10 @@
 package com.yaozou.spring;
 
-import com.yaozou.spring.web.RestTestController;
+import com.yaozou.spring.service.TestService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.util.concurrent.*;
 
 /**
  * 测试spring
@@ -12,7 +14,6 @@ public class TestStartSpring {
     public static void main(String[] args) throws Exception{
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:applicationContent.xml");
         ((ClassPathXmlApplicationContext) applicationContext).refresh();
-        RestTestController restTestController = applicationContext.getBean("restTestController",RestTestController.class);
-
+        TestService testService = applicationContext.getBean("testService",TestService.class);
     }
 }
