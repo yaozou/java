@@ -12,16 +12,16 @@ import com.yaozou.mq.rabbitmq.ConnectUtils;
  * @Version V1.0
  **/
 public class Consumer {
-    private static final String QUEUE_NAME = "iot-coder-dn-command";
-    private static final String EXCHANGE_NAME = "iot-coder-dn";
+    private static final String QUEUE_NAME = "iot-queue-gateway-data";
+    private static final String EXCHANGE_NAME = "iot-gateway-up";
     public static void main(String[] args) throws Exception{
         Connection connection = ConnectUtils.getConnect();
         // 建立通道
         Channel channel = connection.createChannel();
         // 设置队列类型
-        channel.queueDeclare(QUEUE_NAME,false,false,false,null);
+        channel.queueDeclare(QUEUE_NAME,true,false,false,null);
         // 绑定队列到交换机
-        channel.queueBind(QUEUE_NAME,EXCHANGE_NAME,"command");
+        channel.queueBind(QUEUE_NAME,EXCHANGE_NAME,"data");
 
         channel.basicQos(1);
 

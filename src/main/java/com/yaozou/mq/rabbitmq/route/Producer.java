@@ -17,9 +17,9 @@ public class Producer {
         // 建立通道
         Channel channel = connection.createChannel();
         // 设置直连交换机
-        channel.exchangeDeclare(EXCHANGE_NAME,"direct");
+        channel.exchangeDeclare(EXCHANGE_NAME,"direct",true);
 
-        String msg = "{\"request-id\":\"test-111111111111\",\"client-id\":\"29a68dbdb66d45d6a2ee56ce9010acd0\",\"body\":{\"topic\":\"open battery\",\"commend\":{\"0\":{\"name\":\"operator\",\"type\":\"Byte\",\"value\":1},\"1\":{\"name\":\"time\",\"type\":\"Long\",\"value\":1569380403512},\"2\":{\"name\":\"num\",\"type\":\"Integer\",\"value\":2},\"3\":{\"name\":\"lt\",\"type\":\"Double\",\"value\":0.123},\"4\":{\"name\":\"desc\",\"type\":\"String\",\"value\":\"2222222\"}}}}\n";
+        String msg = "{\"request-id\":\"9449985b286a4a98aadc3e62f2c1ada0\",\"client-id\":\"SN12345678\",\"body\":\"{\\\"topic\\\":\\\"open_battery\\\",\\\"command\\\":{\\\"0\\\":{\\\"name\\\":\\\"result\\\",\\\"type\\\":\\\"Byte\\\",\\\"value\\\":2},\\\"1\\\":{\\\"name\\\":\\\"error\\\",\\\"type\\\":\\\"Byte\\\",\\\"value\\\":1}}}\"}";
         channel.basicPublish(EXCHANGE_NAME, "command", null, msg.getBytes());
 
         // 关闭通道和连接
