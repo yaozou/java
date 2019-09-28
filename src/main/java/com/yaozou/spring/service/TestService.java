@@ -1,16 +1,11 @@
 package com.yaozou.spring.service;
 
-import com.yaozou.Dao.TestDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TestService {
-    @Autowired
-    private TestDao testDao;
-
     /**
      * 隔离级别
      * Isolation.READ_UNCOMMITTED 一个事务可以读取别一个未提交事务的数据
