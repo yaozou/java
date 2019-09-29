@@ -14,7 +14,6 @@ import java.util.concurrent.*;
 public class TestStartSpring {
     public static void main(String[] args) throws Exception{
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:applicationContent.xml");
-        ((ClassPathXmlApplicationContext) applicationContext).refresh();
         TestBean testBean = applicationContext.getBean("testBean",TestBean.class);
         System.out.println("result "+testBean.toString());
     }
