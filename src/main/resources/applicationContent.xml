@@ -25,10 +25,12 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     </bean>
 
     <bean id="testBean" class="com.yaozou.spring.bean.TestBean"></bean>
-    <!-- beanPostProcessor -->
-    <bean id="springBeanPostProcessorOne" class="com.yaozou.spring.config.SpringBeanPostProcessorOne"></bean>
-    <bean id="springBeanPostProcessorTwo" class="com.yaozou.spring.config.SpringBeanPostProcessorTwo"></bean>
-
+    <!-- BeanPostProcessor -->
+   <!-- <bean id="springBeanPostProcessorOne" class="com.yaozou.spring.config.SpringBeanPostProcessorOne"></bean>
+    <bean id="springBeanPostProcessorTwo" class="com.yaozou.spring.config.SpringBeanPostProcessorTwo"></bean>-->
+    <!-- BeanFactoryPostProcessor -->
+    <bean id="springBeanFactoryPostProcessorOne" class="com.yaozou.spring.config.SpringBeanFactoryPostProcessorOne"></bean>
+    <bean id="springBeanFactoryPostProcessorTwo" class="com.yaozou.spring.config.SpringBeanFactoryPostProcessorTwo"></bean>
     <!--<import resource="classpath:spring-mybatis.xml" />-->
 
 </beans>
