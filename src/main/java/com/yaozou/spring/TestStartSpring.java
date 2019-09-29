@@ -1,5 +1,6 @@
 package com.yaozou.spring;
 
+import com.yaozou.spring.bean.TestBean;
 import com.yaozou.spring.service.TestService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -14,6 +15,7 @@ public class TestStartSpring {
     public static void main(String[] args) throws Exception{
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:applicationContent.xml");
         ((ClassPathXmlApplicationContext) applicationContext).refresh();
-        TestService testService = applicationContext.getBean("testService",TestService.class);
+        TestBean testBean = applicationContext.getBean("testBean",TestBean.class);
+        System.out.println("result "+testBean.toString());
     }
 }

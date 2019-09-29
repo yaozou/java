@@ -22,8 +22,12 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     </context:component-scan>
 
     <bean id="testService" class="com.yaozou.spring.service.TestService">
-
     </bean>
+
+    <bean id="testBean" class="com.yaozou.spring.bean.TestBean"></bean>
+    <!-- beanPostProcessor -->
+    <bean id="springBeanPostProcessorOne" class="com.yaozou.spring.config.SpringBeanPostProcessorOne"></bean>
+    <bean id="springBeanPostProcessorTwo" class="com.yaozou.spring.config.SpringBeanPostProcessorTwo"></bean>
 
     <!--<import resource="classpath:spring-mybatis.xml" />-->
 
