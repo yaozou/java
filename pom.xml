@@ -232,5 +232,12 @@
             <artifactId>aspectjweaver</artifactId>
             <version>1.7.4</version>
         </dependency>
+
+        <!-- mongodb -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>3.11.0</version>
+        </dependency>
     </dependencies>
 </project>
