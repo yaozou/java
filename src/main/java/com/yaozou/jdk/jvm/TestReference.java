@@ -1,7 +1,5 @@
 package com.yaozou.jdk.jvm;
 
-import com.yaozou.jdk.TestJvm;
-
 import java.io.File;
 import java.lang.ref.PhantomReference;
 import java.lang.ref.ReferenceQueue;
@@ -13,7 +11,7 @@ public class TestReference {
     static int j =0;
 
     public void reference(){
-        TestJvm jvm = new TestJvm();
+        TestReference jvm = new TestReference();
         // 强引用  是指创建一个对象并把这个对象赋给一个引用变量。
         Object object = new Object();
         Object[] objArr = new Object[1000];

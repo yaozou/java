@@ -54,22 +54,26 @@ public class ThreadPool {
 
 class JdkThreadPool{
     public static void main(String[] args){
-        /* corePoolSize:0 maximumPoolSize:Integer.MAX_VALUE
-         * keepAliveTime:60 unit:s   workQueue:new SynchronousQueue<Runnable>()
-         */
-        ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
-        /* corePoolSize:nThreads maximumPoolSize:nThreads  nThreads:自定义线程数
-         * keepAliveTime:0 unit:s   workQueue:new LinkedBlockingQueue<Runnable>()
-         */
-        ExecutorService fixedThreadPool = Executors.newFixedThreadPool(3);
-        /* corePoolSize:1 maximumPoolSize:1
-         * keepAliveTime:0 unit:s   workQueue:new LinkedBlockingQueue<Runnable>()
-         */
-        ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
-        /* corePoolSize:nThreads maximumPoolSize:Integer.MAX_VALUE  nThreads:自定义线程数
-         * keepAliveTime:0 unit:s   workQueue:new DelayedWorkQueue()
-         */
-        ExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(1);
-        ExecutorService workStealingPool = Executors.newWorkStealingPool();
+        ExecutorService fixedThreadPool = Executors.newFixedThreadPool(10);
+        int n = 0;
+        while ((n++ < 10)){
+            fixedThreadPool.submit(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        System.out.println(Thread.currentThread().getName());
+                        Thread.sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+        fixedThreadPool.shutdown();
+        try {
+            fixedThreadPool.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
