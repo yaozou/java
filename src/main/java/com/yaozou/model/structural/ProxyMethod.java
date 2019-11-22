@@ -27,6 +27,7 @@ public class ProxyMethod {
         void method();
     }
     class Source implements Sourceable{
+        @Override
         public void method() {
             System.out.println("this is original method");
         }
@@ -38,6 +39,7 @@ public class ProxyMethod {
             this.source = new Source();
         }
 
+        @Override
         public void method() {
             System.out.println("after proxy!");
             source.method();
