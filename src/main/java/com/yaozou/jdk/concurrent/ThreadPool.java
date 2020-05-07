@@ -54,26 +54,37 @@ public class ThreadPool {
 
 class JdkThreadPool{
     public static void main(String[] args){
-        ExecutorService fixedThreadPool = Executors.newFixedThreadPool(10);
+        // 有界new ArrayBlockingQueue<>
+        // corePoolSize:1 maximumPoolSize:2 workQueue:6 创建了2个线程  maxSize:8
+        // corePoolSize:1 maximumPoolSize:4 workQueue:6 创建了4个线程  maxSize:10
+        // corePoolSize:1 maximumPoolSize:20 workQueue:6 创建了20个线程 maxSize:26
+
+        // 无界 new LinkedBlockingQueue<>()
+
+
+        ThreadPoolExecutor fixedThreadPool = new ThreadPoolExecutor(1, 3,
+                1L, TimeUnit.MILLISECONDS,
+                new LinkedBlockingQueue<>());
+        /*fixedThreadPool.allowCoreThreadTimeOut(true);*/
         int n = 0;
-        while ((n++ < 10)){
-            fixedThreadPool.submit(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        System.out.println(Thread.currentThread().getName());
-                        Thread.sleep(10000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        int maxSize = 5;
+        while ((n++ < maxSize)){
+            fixedThreadPool.submit(() -> {
+                try {
+                    System.out.println(Thread.currentThread().getName());
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
             });
         }
+
         fixedThreadPool.shutdown();
-        try {
+        /*try {
             fixedThreadPool.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

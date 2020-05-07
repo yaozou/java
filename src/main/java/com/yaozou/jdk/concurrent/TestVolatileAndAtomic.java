@@ -30,12 +30,7 @@ public class TestVolatileAndAtomic {
             n++;
             //同时启动1000个线程，去进行i++运算，看看实际结果
             for (int i = 0; i < 1000; i++) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        TestVolatileAndAtomic.inc();
-                    }
-                }).start();
+                new Thread(() -> TestVolatileAndAtomic.inc()).start();
             }
 
             try{
