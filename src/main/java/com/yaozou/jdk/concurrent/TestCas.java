@@ -1,8 +1,5 @@
 package com.yaozou.jdk.concurrent;
 
-import sun.misc.Unsafe;
-
-import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -24,17 +21,14 @@ public class TestCas {
 
     private static void testSynchronized(){
         for (int i = 0 ;i < 100;i++){
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(10);
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    synchronized (TestCas.class){
-                        synCount++;
-                    }
+            new Thread(() -> {
+                try {
+                    Thread.sleep(10);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                synchronized (TestCas.class){
+                    synCount++;
                 }
             }).start();
         }
@@ -48,15 +42,12 @@ public class TestCas {
 
     private static void testAtomic(){
         for (int i = 0 ;i < 100;i++){
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(10);
-                        atomicCount.incrementAndGet();
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
+            new Thread(() -> {
+                try {
+                    Thread.sleep(10);
+                    atomicCount.incrementAndGet();
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             }).start();
         }
