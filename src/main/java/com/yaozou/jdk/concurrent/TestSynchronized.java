@@ -20,30 +20,27 @@ class TestSynchronized{
         for (int n = 1;n<=5;n++){
             for (int i=0;i<100;i++){
                 final int methodNum = n;
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try{
-                            Thread.sleep(10);
-                        }catch (Exception e){}
-                        switch (methodNum){
-                            case 1:
-                                testSynchronized.method1();
-                                break;
-                            case 2:
-                                testSynchronized.method2();
-                                break;
-                            case 3:
-                                testSynchronized.method3();
-                                break;
-                            case 4:
-                                testSynchronized.method4();
-                                break;
-                            case 5:
-                                testSynchronized.method5();
-                                break;
-                            default:testSynchronized.method1();
-                        }
+                new Thread(() -> {
+                    try{
+                        Thread.sleep(10);
+                    }catch (Exception e){}
+                    switch (methodNum){
+                        case 1:
+                            testSynchronized.method1();
+                            break;
+                        case 2:
+                            testSynchronized.method2();
+                            break;
+                        case 3:
+                            testSynchronized.method3();
+                            break;
+                        case 4:
+                            testSynchronized.method4();
+                            break;
+                        case 5:
+                            testSynchronized.method5();
+                            break;
+                        default:testSynchronized.method1();
                     }
                 }).start();
             }
@@ -58,31 +55,28 @@ class TestSynchronized{
         for (int n = 1;n<=5;n++){
             for (int i=0;i<100;i++){
                 final int methodNum = n;
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try{
-                            Thread.sleep(10);
-                        }catch (Exception e){}
-                        TestSynchronized testSynchronized = new TestSynchronized();
-                        switch (methodNum){
-                            case 1:
-                                testSynchronized.method1();
-                                break;
-                            case 2:
-                                testSynchronized.method2();
-                                break;
-                            case 3:
-                                testSynchronized.method3();
-                                break;
-                            case 4:
-                                testSynchronized.method4();
-                                break;
-                            case 5:
-                                testSynchronized.method5();
-                                break;
-                            default:testSynchronized.method1();
-                        }
+                new Thread(() -> {
+                    try{
+                        Thread.sleep(10);
+                    }catch (Exception e){}
+                    TestSynchronized testSynchronized = new TestSynchronized();
+                    switch (methodNum){
+                        case 1:
+                            testSynchronized.method1();
+                            break;
+                        case 2:
+                            testSynchronized.method2();
+                            break;
+                        case 3:
+                            testSynchronized.method3();
+                            break;
+                        case 4:
+                            testSynchronized.method4();
+                            break;
+                        case 5:
+                            testSynchronized.method5();
+                            break;
+                        default:testSynchronized.method1();
                     }
                 }).start();
             }
