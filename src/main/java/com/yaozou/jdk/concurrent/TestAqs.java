@@ -9,7 +9,8 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
 /**
- * @Description: AQS(Abstract Queued Synchronizer)即抽象队列式的同步器。AQS定义了一套多线程访问共享资源的同步器矿建。许多同步类实现都依赖于它，如常用的ReentrantLock/Semaphore/CountDownLatch。
+ * @Description: AQS(Abstract Queued Synchronizer)即抽象队列式的同步器。AQS定义了一套多线程访问共享资源的同步器矿建。
+ * 许多同步类实现都依赖于它，如常用的ReentrantLock/Semaphore/CountDownLatch。
  * AQS中的state只有两种状态：0--表示未锁定，1---表示锁定。
  *
  * @Author yao.zou
