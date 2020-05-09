@@ -27,10 +27,13 @@ public class ThreadPool {
      *                  一般来说，这里的阻塞队列就是（ArrayBlockingQueue、LinkedBlockingQueue、SynchronousQueue）。
      * @param threadFactory 线程工厂，主要用来创建线程；可以是一个自定义的线程工厂，默认就是Executors.defaultThreadFactory()。用来在线程池中创建线程。
      * @param handler 表示当拒绝处理任务时的策略，也是可以自定义的，默认是我们前面的4种取值：
-     *                  ThreadPoolExecutor.AbortPolicy（默认的，一言不合即抛异常的）
-     *                  ThreadPoolExecutor.DiscardPolicy（一言不合就丢弃任务）
-     *                  ThreadPoolExecutor.DiscardOldestPolicy（一言不合就把最近的任务给抛弃，然后执行当前任务）
-     *                  ThreadPoolExecutor.CallerRunsPolicy（由调用者所在线程来执行任务）
+     *                  ThreadPoolExecutor.AbortPolicy（默认的，直接抛出异常，阻止系统正常运行。）
+     *                  ThreadPoolExecutor.DiscardPolicy（该策略默默地丢弃无法处理的任务，不予任何处理。如果允许任务丢失，这是最好的一种方案）
+     *                  ThreadPoolExecutor.DiscardOldestPolicy（丢弃最老的一个请求，也就是即将被执行的一个任务，并尝试再次提交当前任务）
+     *                  ThreadPoolExecutor.CallerRunsPolicy（只要线程池未关闭，该策略直接在调用者线程中，运行当前被丢弃的任务。
+     *                    显然这样做不会真的丢弃任务，但是，任务提交线程的性能极有可能会急剧下降。）
+     *                  以上内置拒绝策略均实现了 RejectedExecutionHandler 接口，若以上策略仍无法满足实际
+     *                  需要，完全可以自己扩展 RejectedExecutionHandler 接口。
      */
     public ThreadPool(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit,
                               BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory, RejectedExecutionHandler handler) {
