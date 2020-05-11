@@ -130,6 +130,10 @@ public class TestCollection {
         int num1 = 2,num2=-2;
         System.out.println("num1<<2="+(num1<<2)+","+"num1>>2="+(num2>>2));
         System.out.println("num1>>>2="+(num1>>>2)+","+"num2>>>2="+(num2>>>2));
+
+        // arraylist的扩容 1.5倍
+        int newCapacity = 20 + (20 >> 1);
+        System.out.println(newCapacity);
     }
 }
 
