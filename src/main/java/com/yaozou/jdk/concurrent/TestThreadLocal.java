@@ -8,7 +8,7 @@ package com.yaozou.jdk.concurrent;
  **/
 class TestThreadLocal{
     private static TestThreadLocal testThreadLocal = null;
-    private static ThreadLocal<TestThreadLocal> map = new ThreadLocal<TestThreadLocal>();
+    private static ThreadLocal<TestThreadLocal> map = new ThreadLocal<>();
     private TestThreadLocal(){}
     public static synchronized TestThreadLocal getInstance1(){
         if(testThreadLocal==null){
