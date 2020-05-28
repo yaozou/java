@@ -1,4 +1,4 @@
-package com.yaozou.spring;/**
+package com.yaozou.jdk.proxy;/**
  * created by yaozou on 2018/5/15
  */
 
@@ -38,7 +38,7 @@ interface TestReflectImpl{
 class TestReflectMain{
     public static void main(String[] args){
         try{
-            Class clazz = Class.forName("com.yaozou.spring.TestReflect");
+            Class clazz = Class.forName("com.yaozou.jdk.proxy.TestReflect");
             // 获得此类的构造方法
             Constructor<?>[] constructors =  clazz.getConstructors();
             System.out.println("constructors:"+constructors.length);

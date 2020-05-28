@@ -1,4 +1,4 @@
-package com.yaozou.spring;
+package com.yaozou.jdk.proxy;
 
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;
