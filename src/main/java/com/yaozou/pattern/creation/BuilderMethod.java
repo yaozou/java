@@ -1,4 +1,4 @@
-package com.yaozou.model.creation;/**
+package com.yaozou.pattern.creation;/**
  * created by yaozou on 2018/4/19
  */
 

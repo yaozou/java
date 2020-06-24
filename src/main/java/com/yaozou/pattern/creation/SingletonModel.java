@@ -1,4 +1,4 @@
-package com.yaozou.model.creation;
+package com.yaozou.pattern.creation;
 
 /**
  * 单例模式

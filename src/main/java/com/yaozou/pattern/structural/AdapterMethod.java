@@ -1,4 +1,4 @@
-package com.yaozou.model.structural;
+package com.yaozou.pattern.structural;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.yaozou.model.structural;/**
+package com.yaozou.pattern.structural;/**
  * created by yaozou on 2018/4/20
  */
 

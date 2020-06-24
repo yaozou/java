@@ -1,4 +1,4 @@
-package com.yaozou.model.behavior;
+package com.yaozou.pattern.behavior;
 
 import java.math.BigDecimal;
 
