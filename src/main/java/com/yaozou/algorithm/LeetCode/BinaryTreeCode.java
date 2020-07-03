@@ -21,13 +21,59 @@ public class BinaryTreeCode {
 
 
         BinaryTreeCode binaryTreeCode = new BinaryTreeCode();
-        binaryTreeCode.preorderTraversal(root);
-    }
-    public List<Integer> preorderTraversal(TreeNode root) {
-        return method4(root);
+        binaryTreeCode.inorderTraversal(root);
     }
 
-    public List<Integer> method1(TreeNode root){
+    public List<Integer> preorderTraversal(TreeNode root) {
+        /*return preMethod1(root);
+        return preMethod2(root);
+        return preMethod3(root);*/
+        return preMethod4(root);
+    }
+
+    public List<Integer> inorderTraversal(TreeNode root){
+        return inMethod1(root);
+    }
+
+    public List<Integer> inMethod1(TreeNode root){
+        // left - root - right
+        List<Integer> list = new ArrayList<>();
+        if(root != null){
+            if(root.left != null){
+                list.addAll(inorderTraversal(root.left));
+            }
+            list.add(root.val);
+            if(root.right != null){
+                list.addAll(inorderTraversal(root.right));
+            }
+        }
+        return list;
+    }
+
+    public List<Integer> inMethod2(TreeNode root){
+        // left - root - right
+        List<Integer> list = new ArrayList<>();
+        if(root == null){return list;}
+
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        stack.push(root);
+
+        while (!stack.empty()){
+            TreeNode node = stack.pop();
+            if(node.right != null){
+                stack.push(node.right);
+            }
+
+            list.add(node.val);
+
+            if(node.left != null){
+                stack.push(node.left);
+            }
+        }
+        return list;
+    }
+
+    public List<Integer> preMethod1(TreeNode root){
         List<Integer> list = new ArrayList<>();
         // root - left - right
         if(root != null){
@@ -55,7 +101,7 @@ public class BinaryTreeCode {
         return list;
     }
 
-    public List<Integer> method2(TreeNode root){
+    public List<Integer> preMethod2(TreeNode root){
         List<Integer> list = new ArrayList<>();
         if(root == null){return list;}
 
@@ -76,7 +122,7 @@ public class BinaryTreeCode {
         return list;
     }
 
-    public List<Integer> method3(TreeNode root){
+    public List<Integer> preMethod3(TreeNode root){
         List<Integer> list = new LinkedList<>();
         if(root == null){return list;}
 
@@ -96,7 +142,7 @@ public class BinaryTreeCode {
         return list;
     }
 
-    public List<Integer> method4(TreeNode root){
+    public List<Integer> preMethod4(TreeNode root){
         List<Integer> list = new ArrayList<>();
         if(root == null){return list;}
 
