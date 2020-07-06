@@ -62,13 +62,15 @@ public class BinaryTreeCode {
         if(root == null){return list;}
 
         Stack<TreeNode> stack = new Stack<>();
-        TreeNode curr = root;
-        while (curr != null && !stack.isEmpty()){
+        stack.push(root);
+        while (!stack.isEmpty()){
+            TreeNode curr = stack.pop();
+            list.add(0,curr.val);
             if (curr.left != null){
-                stack.push(curr);
-            }else{
-                curr = stack.pop();
-                list.add(curr.val);
+                stack.push(curr.left);
+            }
+            if (curr.right != null){
+                stack.push(curr.right);
             }
         }
 
