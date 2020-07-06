@@ -32,7 +32,47 @@ public class BinaryTreeCode {
     }
 
     public List<Integer> inorderTraversal(TreeNode root){
-        return inMethod1(root);
+        /*return inMethod1(root);*/
+        return inMethod2(root);
+    }
+
+    public List<Integer> postorderTraversal(TreeNode root) {
+        /*return postMethod1(root);*/
+        return postMethod2(root);
+    }
+
+    public List<Integer> postMethod1(TreeNode root){
+        // left - right - root
+        List<Integer> list = new ArrayList<>();
+        if(root != null){
+            if(root.left != null){
+                list.addAll(postorderTraversal(root.left));
+            }
+            if(root.right != null){
+                list.addAll(postorderTraversal(root.right));
+            }
+            list.add(root.val);
+        }
+        return list;
+    }
+
+    public List<Integer> postMethod2(TreeNode root){
+        // left - right - root
+        List<Integer> list = new ArrayList<>();
+        if(root == null){return list;}
+
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = root;
+        while (curr != null && !stack.isEmpty()){
+            if (curr.left != null){
+                stack.push(curr);
+            }else{
+                curr = stack.pop();
+                list.add(curr.val);
+            }
+        }
+
+        return list;
     }
 
     public List<Integer> inMethod1(TreeNode root){
@@ -55,19 +95,16 @@ public class BinaryTreeCode {
         List<Integer> list = new ArrayList<>();
         if(root == null){return list;}
 
-        Stack<TreeNode> stack = new Stack<TreeNode>();
-        stack.push(root);
-
-        while (!stack.empty()){
-            TreeNode node = stack.pop();
-            if(node.right != null){
-                stack.push(node.right);
-            }
-
-            list.add(node.val);
-
-            if(node.left != null){
-                stack.push(node.left);
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = root;
+        while (curr != null && !stack.isEmpty()){
+            if (curr != null){
+                stack.push(curr);
+                curr = curr.left;
+            }else{
+                curr = stack.pop();
+                list.add(curr.val);
+                curr = curr.left;
             }
         }
         return list;
