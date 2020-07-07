@@ -1,5 +1,6 @@
 package com.yaozou.algorithm.LeetCode;
 
+import javax.validation.constraints.Max;
 import java.util.*;
 
 /**
@@ -22,6 +23,59 @@ public class BinaryTreeCode {
 
         BinaryTreeCode binaryTreeCode = new BinaryTreeCode();
         binaryTreeCode.inorderTraversal(root);
+    }
+
+    public int maxDepth1(TreeNode root) {
+        if (root == null){return 0;}
+        Queue<TreeNode> stack = new LinkedList<>();
+        stack.add(root);
+        int num = 0;
+        while (!stack.isEmpty()){
+            int level = stack.size();
+            List<Integer> vals = new ArrayList<>();
+            for (int i = 1;i<=level;i++){
+                TreeNode node = stack.poll();
+                vals.add(node.val);
+                if (node.left != null){stack.add(node.left);}
+                if (node.right != null){stack.add(node.right);}
+            }
+            num ++ ;
+        }
+        return num;
+    }
+
+    public int maxDepth2(TreeNode root) {
+        if (root == null){return 0;}
+        return Math.max(maxDepth2(root.left),maxDepth2(root.right))+1;
+    }
+
+    public int maxDepth3(TreeNode root) {
+        if (root == null){return 0;}
+        int preCount = 1;int pCount = 0;int level = 0;
+        Queue<TreeNode> stack = new LinkedList<>();
+        stack.add(root);
+        while (!stack.isEmpty()){
+            TreeNode node = stack.poll();
+            preCount--;
+
+            if (node.left != null){
+                stack.add(node.left);
+                pCount ++;
+            }
+
+            if (node.right != null){
+                stack.add(node.right);
+                pCount ++;
+            }
+
+            if (preCount == 0){
+                preCount = pCount;
+                pCount = 0;
+                level++;
+            }
+        }
+
+        return level;
     }
 
     public List<List<Integer>> levelOrder(TreeNode root) {
