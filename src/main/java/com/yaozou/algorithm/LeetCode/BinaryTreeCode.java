@@ -24,6 +24,29 @@ public class BinaryTreeCode {
         binaryTreeCode.inorderTraversal(root);
     }
 
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> list = new ArrayList<>();
+        if (root == null){return list;}
+
+        Queue<TreeNode> stack = new LinkedList<>();
+        stack.add(root);
+
+        while (!stack.isEmpty()){
+            int level = stack.size();
+            List<Integer> vals = new ArrayList<>();
+            for (int i = 1;i<=level;i++){
+                TreeNode node = stack.poll();
+                vals.add(node.val);
+                if (node.left != null){stack.add(node.left);}
+                if (node.right != null){stack.add(node.right);}
+            }
+
+            list.add(vals);
+        }
+
+        return list;
+    }
+
     public List<Integer> preorderTraversal(TreeNode root) {
         /*return preMethod1(root);
         return preMethod2(root);
