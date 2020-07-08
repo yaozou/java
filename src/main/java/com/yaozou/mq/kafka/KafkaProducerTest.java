@@ -44,6 +44,7 @@ public class KafkaProducerTest {
         config.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
         config.put("acks", "all");
+        config.put("zk.connect", "192.168.98.90:2181");
 
         return new KafkaProducer<>(config);
     }
