@@ -1,4 +1,4 @@
-package com.yaozou.algorithm.LeetCode;
+package com.yaozou.algorithm.leetcode;
 
 import java.util.*;
 
@@ -21,7 +21,77 @@ public class BinaryTreeCode {
 
 
         BinaryTreeCode binaryTreeCode = new BinaryTreeCode();
-        binaryTreeCode.inorderTraversal(root);
+        /*binaryTreeCode.inorderTraversal(root);*/
+        binaryTreeCode.hasPathSum2(root,10);
+    }
+
+    public boolean hasPathSum(TreeNode root, int sum) {
+        if (root == null){return false;}
+        if(root.left == null && root.right == null){return sum - root.val == 0;}
+
+        return hasPathSum(root.left,sum-root.val) || hasPathSum(root.right,sum-root.val);
+    }
+
+    public boolean hasPathSum2(TreeNode root, int sum) {
+        if (root == null){return false;}
+        if(root.left == null && root.right == null){return sum - root.val == 0;}
+
+        Stack<TreeNode> sNode = new Stack<>();
+        Stack<Integer>  sVal = new Stack<>();
+        sNode.push(root);
+        sVal.push(sum-root.val);
+
+        while (!sNode.isEmpty()){
+            TreeNode node = sNode.pop();
+            int      val  = sVal.pop();
+
+            if (node.left == null && node.right == null){
+                if (val-node.val == 0){return true;}
+                continue;
+            }
+
+            if (node.left != null){
+                sNode.push(node.left);
+                sVal.push(val-node.val);
+            }
+
+            if (node.left != null){
+                sNode.push(node.right);
+                sVal.push(val-node.val);
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isSymmetric1(TreeNode root) {
+        return isMirror(root,root);
+    }
+    private boolean isMirror(TreeNode node1,TreeNode node2){
+        if (node1 == null && node2 == null){return true;}
+        if (node1 == null || node2 == null){return false;}
+        return (node1.val == node2.val) && (isMirror(node1.right,node2.left)) && (isMirror(node1.left,node2.right));
+    }
+
+    public boolean isSymmetric2(TreeNode root) {
+       if (root == null){return true;}
+       Queue<TreeNode> queue = new LinkedList<>();
+       queue.add(root.left);
+       queue.add(root.right);
+
+       while(!queue.isEmpty()){
+           TreeNode node1 = queue.poll();
+           TreeNode node2 = queue.poll();
+           if (node1 == null && node2 == null){continue;}
+           if (node1 == null || node2 == null || node1.val != node2.val){return false;}
+           queue.add(node1.left);
+           queue.add(node2.right);
+
+           queue.add(node1.right);
+           queue.add(node2.left);
+       }
+
+       return true;
     }
 
     public int maxDepth1(TreeNode root) {

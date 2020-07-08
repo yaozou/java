@@ -1,9 +1,6 @@
-package com.yaozou.algorithm.LeetCode;
+package com.yaozou.algorithm.leetcode;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * @Description:字符串
