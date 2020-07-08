@@ -24,13 +24,18 @@ public class KafkaProducerTest {
     }
 
     public void send(){
-        final ProducerRecord<String, String> record = new ProducerRecord<>("monitor", "test 111111111111111");
-        producer.send(record, (metadata, e) -> {
-            if (e != null) {
-                e.printStackTrace();
-                System.out.println("Kafka Send failed for record "+record);
-            }
-        });
+        int max = 2000;
+        for (int i = 0;i<max;i++){
+            System.out.println("---"+i);
+            final ProducerRecord<String, String> record = new ProducerRecord<>("monitor", "test 111111111111111");
+            producer.send(record, (metadata, e) -> {
+                if (e != null) {
+                    e.printStackTrace();
+                    System.out.println("Kafka Send failed for record "+record);
+                }
+            });
+        }
+
     }
 
     private KafkaProducer<String, String> kafkaProducer() {
