@@ -38,26 +38,27 @@ public class BinaryTreeCode {
 
         Stack<TreeNode> sNode = new Stack<>();
         Stack<Integer>  sVal = new Stack<>();
-        sNode.push(root);
-        sVal.push(sum-root.val);
+        sNode.add(root);
+        sVal.add(sum-root.val);
 
         while (!sNode.isEmpty()){
             TreeNode node = sNode.pop();
             int      val  = sVal.pop();
+            System.out.println(node.val+" "+val);
 
             if (node.left == null && node.right == null){
-                if (val-node.val == 0){return true;}
+                if (val == 0){return true;}
                 continue;
             }
 
             if (node.left != null){
-                sNode.push(node.left);
-                sVal.push(val-node.val);
+                sNode.add(node.left);
+                sVal.add(val-node.left.val);
             }
 
-            if (node.left != null){
-                sNode.push(node.right);
-                sVal.push(val-node.val);
+            if (node.right != null){
+                sNode.add(node.right);
+                sVal.add(val-node.right.val);
             }
         }
 
