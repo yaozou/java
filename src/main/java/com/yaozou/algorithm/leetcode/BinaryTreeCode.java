@@ -25,6 +25,37 @@ public class BinaryTreeCode {
         binaryTreeCode.hasPathSum2(root,10);
     }
 
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        if (inorder==null || postorder==null || inorder.length != postorder.length){return null;}
+        // postorder:  left -> right -> root
+        // inorder:    left -> root -> right
+        return helpBuildTree(inorder,postorder);
+    }
+
+    public TreeNode helpBuildTree(int[] inorder, int[] postorder) {
+        if (inorder.length == 0 || postorder.length == 0 ){
+            return null;
+        }
+        // 1.get root node. postorder:last node is root node
+        TreeNode rootNode = new TreeNode(postorder[postorder.length-1]);
+        // 2. loop left tree
+        for (int i=0;i<inorder.length;i++){
+            if (inorder[i] == postorder[postorder.length-1]){
+                // get left and right tree
+                int[] inleft = Arrays.copyOfRange(inorder,0,i);
+                int[] inright = Arrays.copyOfRange(inorder,i+1,inorder.length);
+
+                int[] postLeft = Arrays.copyOfRange(postorder,0,i);
+                int[] postRight = Arrays.copyOfRange(postorder,i,postorder.length-1);
+
+                rootNode.left = helpBuildTree(inleft,postLeft);
+                rootNode.right = helpBuildTree(inright,postRight);
+                break;
+            }
+        }
+        return rootNode;
+    }
+
     public boolean hasPathSum(TreeNode root, int sum) {
         if (root == null){return false;}
         if(root.left == null && root.right == null){return sum - root.val == 0;}
