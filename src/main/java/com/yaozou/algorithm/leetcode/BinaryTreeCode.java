@@ -11,7 +11,7 @@ import java.util.*;
 public class BinaryTreeCode {
 
     public static void main(String[] args) {
-        TreeNode left = new TreeNode(4);
+        /*TreeNode left = new TreeNode(4);
         left.left = new TreeNode(2);
         TreeNode right = new TreeNode(3);
         TreeNode root = new TreeNode(1);
@@ -21,11 +21,43 @@ public class BinaryTreeCode {
 
 
         BinaryTreeCode binaryTreeCode = new BinaryTreeCode();
-        /*binaryTreeCode.inorderTraversal(root);*/
-        binaryTreeCode.hasPathSum2(root,10);
+        *//*binaryTreeCode.inorderTraversal(root);*//*
+        binaryTreeCode.hasPathSum2(root,10);*/
+
+        int[] preorder = new int[]{3,9,20,15,7};
+        int[] inorder = new int[]{9,3,15,20,7};
+        buildTreePreAndIn(preorder,inorder);
     }
 
-    public TreeNode buildTree(int[] inorder, int[] postorder) {
+
+    public static TreeNode buildTreePreAndIn(int[] preorder, int[] inorder) {
+        if (inorder==null || preorder==null || inorder.length != preorder.length){return null;}
+        // preorder root -> left -> right
+        // inorder  left -> root -> right
+        return helpBuildTreePreAndIn(preorder,inorder);
+    }
+
+    private static TreeNode helpBuildTreePreAndIn(int[] preorder, int[] inorder) {
+        if (inorder.length == 0 || preorder.length == 0 ){
+            return null;
+        }
+        TreeNode rootNode = new TreeNode(preorder[0]);
+        for (int i=0;i<inorder.length;i++){
+            if (inorder[i] == preorder[0]){
+                int[] preLeft = Arrays.copyOfRange(preorder,1,i+1);
+                int[] preRight = Arrays.copyOfRange(preorder,i+1,preorder.length);
+
+                int[] inLeft = Arrays.copyOfRange(inorder,0,i);
+                int[] inRight = Arrays.copyOfRange(inorder,i+1,inorder.length);
+
+                rootNode.left = helpBuildTreePreAndIn(preLeft,inLeft);
+                rootNode.right = helpBuildTreePreAndIn(preRight,inRight);
+            }
+        }
+        return rootNode;
+    }
+
+    public TreeNode buildTreeByInAndPost(int[] inorder, int[] postorder) {
         if (inorder==null || postorder==null || inorder.length != postorder.length){return null;}
         // postorder:  left -> right -> root
         // inorder:    left -> root -> right
