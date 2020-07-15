@@ -29,6 +29,19 @@ public class BinaryTreeCode {
         buildTreePreAndIn(preorder,inorder);
     }
 
+    public Node connect(Node root) {
+        if (root == null){return null;}
+
+        Stack<Node> stack = new Stack<>();
+        stack.push(root);
+
+        while (!stack.isEmpty()){
+            int level = stack.size();
+
+        }
+
+        return root;
+    }
 
     public static TreeNode buildTreePreAndIn(int[] preorder, int[] inorder) {
         if (inorder==null || preorder==null || inorder.length != preorder.length){return null;}
@@ -412,8 +425,28 @@ public class BinaryTreeCode {
 
     static class TreeNode {
         int val;
-      TreeNode left;
-      TreeNode right;
-      TreeNode(int x) { val = x; }
+        TreeNode left;
+        TreeNode right;
+        TreeNode(int x) { val = x; }
+  }
+
+  static class Node{
+      public int val;
+      public Node left;
+      public Node right;
+      public Node next;
+
+      public Node() {}
+
+      public Node(int _val) {
+          val = _val;
+      }
+
+      public Node(int _val, Node _left, Node _right, Node _next) {
+          val = _val;
+          left = _left;
+          right = _right;
+          next = _next;
+      }
   }
 }
