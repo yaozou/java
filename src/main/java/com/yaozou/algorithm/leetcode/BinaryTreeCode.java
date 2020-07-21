@@ -33,13 +33,38 @@ public class BinaryTreeCode {
         if (root == null){return null;}
 
         Stack<Node> stack = new Stack<>();
+        Stack<Node> nodes = new Stack<>();
         stack.push(root);
 
         while (!stack.isEmpty()){
             int level = stack.size();
+            Node node = stack.pop();
+            System.out.println("root:"+node.val+","+level);
+            for (int i = 0;i<level;i++){
+                Node left = node.left;
+                Node right = node.right;
 
+                Node last = null;
+                if (!nodes.isEmpty()){nodes.pop();}
+                if (right != null){
+                    System.out.print("right:"+right.val);
+                    nodes.push(right);
+                    stack.push(right);
+                }
+
+                if (left != null){
+                    System.out.print(" left:"+left.val);
+                    left.next = right;
+                    if (last != null){
+                        last.next = new Node(left.val,left.left,left.right,left.next);
+                    }
+                    stack.push(left);
+                }
+                System.out.println();
+            }
+
+            System.out.println("----------------");
         }
-
         return root;
     }
 
