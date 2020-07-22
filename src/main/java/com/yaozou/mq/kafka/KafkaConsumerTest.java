@@ -29,7 +29,7 @@ public class KafkaConsumerTest {
         config.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
         List<String> topics = new ArrayList<>();
-        topics.add("monitor");
+        topics.add("monitor_y");
 
         KafkaConsumerTest KafkaConsumerTest = new KafkaConsumerTest(config,topics);
 

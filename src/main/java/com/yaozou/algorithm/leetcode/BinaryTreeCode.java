@@ -24,9 +24,106 @@ public class BinaryTreeCode {
         *//*binaryTreeCode.inorderTraversal(root);*//*
         binaryTreeCode.hasPathSum2(root,10);*/
 
-        int[] preorder = new int[]{3,9,20,15,7};
+        /*int[] preorder = new int[]{3,9,20,15,7};
         int[] inorder = new int[]{9,3,15,20,7};
-        buildTreePreAndIn(preorder,inorder);
+        buildTreePreAndIn(preorder,inorder);*/
+
+        String data = "[1,2,3,null,null,4,5]";
+        System.out.println(data.substring(1,data.length()-1));
+    }
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        if (root == null){return null;}
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+
+        boolean labelFlag = false;
+        StringBuilder sb = new StringBuilder();
+        while (!queue.isEmpty()){
+            if (labelFlag){sb.append(",");}
+            labelFlag = true;
+            int level = queue.size();
+            boolean flag = false;
+            StringBuilder nodeStr = new StringBuilder();
+            for (int i = 0;i<level;i++){
+                TreeNode node = queue.poll();
+                boolean isNull = node == null;
+                if (i == 0 && isNull){flag = true;}
+                flag &= isNull;
+                if (isNull){
+                    queue.add(null);
+                    queue.add(null);
+                    nodeStr.append("null").append(",").append("null");
+                }else{
+                    queue.add(node.left);
+                    String lVal = "null";
+                    if (node.left!=null){lVal = node.left.val+"";}
+
+                    queue.add(node.right);
+
+                    String rVal = "null";
+                    if (node.right!=null){rVal = node.right.val+"";}
+                    nodeStr.append(lVal).append(",").append(rVal);
+                }
+                if (i<level-1){nodeStr.append(",");}
+            }
+            if (flag){
+                return "["+sb.toString()+"]";
+            }
+            sb.append(nodeStr.toString());
+        }
+        return "["+sb.toString()+"]";
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        if (data == null && "".equals(data)){return null;}
+        data = data.substring(1,data.length()-1);
+
+        String[] nodes = data.split(",");
+        int max = nodes.length;
+        Map<Integer,TreeNode> map = new HashMap<>();
+        for (int i = 0;i<max;i++){
+            String nodeStr = nodes[i];
+            if (nodeStr.equals("null")){
+                continue;
+            }
+            int val = Integer.valueOf(nodeStr);
+            TreeNode node = new TreeNode(val);
+            map.put(i,node);
+        }
+        /**
+         * 0,1
+         * 1,2
+         * 2,3
+         * 5,4
+         * 6,5
+         */
+        TreeNode root = map.get(0);
+         int level = (max-1)/2;
+
+         for (int i =2;i<=level;i++){
+
+         }
+
+        return root;
+    }
+
+    private TreeNode ans;
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        this.dfs(root, p, q);
+        return this.ans;
+    }
+
+    private boolean dfs(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) {return false;}
+        boolean lson = dfs(root.left, p, q);
+        boolean rson = dfs(root.right, p, q);
+        if ((lson && rson) || ((root.val == p.val || root.val == q.val) && (lson || rson))) {
+            ans = root;
+        }
+        return lson || rson || (root.val == p.val || root.val == q.val);
     }
 
     public Node connect(Node root) {
