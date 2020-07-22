@@ -32,33 +32,31 @@ public class BinaryTreeCode {
     public Node connect(Node root) {
         if (root == null){return null;}
 
-        Stack<Node> stack = new Stack<>();
-        Stack<Node> nodes = new Stack<>();
-        stack.push(root);
+        Queue<Node> stack = new LinkedList<>();
+        stack.add(root);
 
         while (!stack.isEmpty()){
             int level = stack.size();
-            Node node = stack.pop();
-            System.out.println("root:"+node.val+","+level);
+            Queue<Node> nodes = new LinkedList<>();
+            System.out.println(level);
             for (int i = 0;i<level;i++){
+                Node node = stack.poll();
+                System.out.print("val:"+node.val);
+                Node last = null;
+                if (!nodes.isEmpty()){last=nodes.poll();}
+                if (last != null){
+                    last.next = node;
+                    System.out.print(" last val:"+last.val);
+                }
+                nodes.add(node);
+
                 Node left = node.left;
                 Node right = node.right;
-
-                Node last = null;
-                if (!nodes.isEmpty()){nodes.pop();}
-                if (right != null){
-                    System.out.print("right:"+right.val);
-                    nodes.push(right);
-                    stack.push(right);
-                }
-
                 if (left != null){
-                    System.out.print(" left:"+left.val);
-                    left.next = right;
-                    if (last != null){
-                        last.next = new Node(left.val,left.left,left.right,left.next);
-                    }
-                    stack.push(left);
+                    stack.add(left);
+                }
+                if (right != null){
+                    stack.add(right);
                 }
                 System.out.println();
             }
