@@ -28,86 +28,82 @@ public class BinaryTreeCode {
         int[] inorder = new int[]{9,3,15,20,7};
         buildTreePreAndIn(preorder,inorder);*/
 
-        String data = "[1,2,3,null,null,4,5]";
-        System.out.println(data.substring(1,data.length()-1));
-    }
+        // [1,2,3,null,null,4,5]
+        // [1,null,2,null,3,null,4,null,5,null,6,null,7]
+        String data = "[1,null,2,null,3,null,4,null,5,null,6,null,7]";
+        BinaryTreeCode tree = new BinaryTreeCode();
+        String result = tree.serialize(tree.deserialize(data));
+        System.out.println(result.equals(data));
+        System.out.println(data);
+        System.out.println(result);
+}
 
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
-        if (root == null){return null;}
+        if (root == null){return "[]";}
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
 
-        boolean labelFlag = false;
         StringBuilder sb = new StringBuilder();
+        sb.append(root.val);
         while (!queue.isEmpty()){
-            if (labelFlag){sb.append(",");}
-            labelFlag = true;
             int level = queue.size();
-            boolean flag = false;
-            StringBuilder nodeStr = new StringBuilder();
+            boolean leaveNode = true;
             for (int i = 0;i<level;i++){
                 TreeNode node = queue.poll();
-                boolean isNull = node == null;
-                if (i == 0 && isNull){flag = true;}
-                flag &= isNull;
-                if (isNull){
-                    queue.add(null);
-                    queue.add(null);
-                    nodeStr.append("null").append(",").append("null");
-                }else{
+                boolean isNull = true;
+                String lVal = "null";
+                if (node.left!=null){
+                    lVal = node.left.val+"";
+                    isNull = false;
                     queue.add(node.left);
-                    String lVal = "null";
-                    if (node.left!=null){lVal = node.left.val+"";}
-
-                    queue.add(node.right);
-
-                    String rVal = "null";
-                    if (node.right!=null){rVal = node.right.val+"";}
-                    nodeStr.append(lVal).append(",").append(rVal);
+                    if (node.left.left != null || node.left.right != null){leaveNode = false;}
                 }
-                if (i<level-1){nodeStr.append(",");}
+
+                String rVal = "null";
+                if (node.right!=null){
+                    rVal = node.right.val+"";
+                    isNull = false;
+                    queue.add(node.right);
+                    if (node.right.left != null || node.right.right != null){leaveNode = false;}
+                }
+                if (!(isNull && queue.isEmpty())){
+                    sb.append(",").append(lVal).append(",").append(rVal);
+                }
             }
-            if (flag){
-                return "["+sb.toString()+"]";
+            if (leaveNode){
+                break;
             }
-            sb.append(nodeStr.toString());
         }
         return "["+sb.toString()+"]";
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-        if (data == null && "".equals(data)){return null;}
+        if ((data == null || "".equals(data)) || (data.length() <=2)){return null;}
         data = data.substring(1,data.length()-1);
-
         String[] nodes = data.split(",");
-        int max = nodes.length;
-        Map<Integer,TreeNode> map = new HashMap<>();
-        for (int i = 0;i<max;i++){
-            String nodeStr = nodes[i];
-            if (nodeStr.equals("null")){
-                continue;
-            }
-            int val = Integer.valueOf(nodeStr);
-            TreeNode node = new TreeNode(val);
-            map.put(i,node);
-        }
-        /**
-         * 0,1
-         * 1,2
-         * 2,3
-         * 5,4
-         * 6,5
-         */
-        TreeNode root = map.get(0);
-         int level = (max-1)/2;
+       Queue<TreeNode> queue = new LinkedList<>();
+       TreeNode root = createTreeNode(nodes[0]);
+       queue.add(root);
 
-         for (int i =2;i<=level;i++){
+       int i = 1;
+       while (!queue.isEmpty() && i < nodes.length){
+           TreeNode node = queue.poll();
+           if (node == null){continue;}
+           node.left = createTreeNode(nodes[i]);
+           node.right = createTreeNode(nodes[i+1]);
 
-         }
+           i += 2;
+           queue.add(node.left);
+           queue.add(node.right);
+       }
+       return root;
+    }
 
-        return root;
+    private TreeNode createTreeNode(String nodeStr){
+        if ("null".equals(nodeStr)){return null;}
+        return new TreeNode(Integer.valueOf(nodeStr));
     }
 
     private TreeNode ans;
