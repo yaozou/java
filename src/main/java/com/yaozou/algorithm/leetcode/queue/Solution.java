@@ -22,4 +22,16 @@ public class Solution {
 
         return num;
     }
+
+    public int openLock(String[] deadends, String target) {
+        int lock = -1;
+
+        return lock;
+    }
+
+    public int numSquares(int n) {
+        int square = 0;
+
+        return square;
+    }
 }
