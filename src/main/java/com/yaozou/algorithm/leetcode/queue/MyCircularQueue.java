@@ -9,11 +9,13 @@ package com.yaozou.algorithm.leetcode.queue;
 public class MyCircularQueue {
     private int head;
     private int tail;
+    private int size;
     private int[] data;
     /** Initialize your data structure here. Set the size of the queue to be k. */
     public MyCircularQueue(int k) {
         head = -1;
         tail = -1;
+        size = k;
         data = new int[k];
     }
 
@@ -23,8 +25,7 @@ public class MyCircularQueue {
         if (isEmpty()){
             head = 0;
         }
-        tail ++;
-        if (tail == data.length){tail = 0;}
+        tail = (tail+1)%size;
         data[tail] = value;
         return true;
     }
@@ -32,9 +33,11 @@ public class MyCircularQueue {
     /** Delete an element from the circular queue. Return true if the operation is successful. */
     public boolean deQueue() {
         if (isEmpty()){return false;}
-        if (head == tail){head = -1;tail=-1;}else{
-            head++;
+        if (head == tail){
+            head = -1;tail=-1;
+            return true;
         }
+        head = (head+1)%size;
         return true;
     }
 
@@ -59,7 +62,7 @@ public class MyCircularQueue {
 
     /** Checks whether the circular queue is full or not. */
     public boolean isFull() {
-        return (tail+1)%data.length == head;
+        return (tail+1)%size == head;
     }
 
     public static void main(String[] args) {
