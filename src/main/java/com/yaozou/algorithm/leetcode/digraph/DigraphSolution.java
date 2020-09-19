@@ -18,7 +18,7 @@ public class DigraphSolution {
         // [[4,2],[1,5],[5,2],[5,3],[2,4]]  {{4,2},{1,5},{5,2},{5,3},{2,4}} 4->2
         // [[4,2],[1,5],[5,2],[5,3],[1,4]]  {{4,2},{1,5},{5,2},{5,3},{1,4}} 5->2
         // [[1,4],[5,2],[1,3],[4,5],[1,5]]  {{1,4},{5,2},{1,3},{4,5},{1,5}} 1->5
-        // [[4,1],[1,5],[4,2],[5,1],[4,3]]
+        // [[4,1],[1,5],[4,2],[5,1],[4,3]]   {{4,1},{1,5},{4,2},{5,1},{4,3}} 5->1
        execute(new int[][]{{2,1},{3,1},{4,2},{1,4}});
        execute(new int[][]{{1,2}, {1,3}, {2,3}});
        execute(new int[][]{{1,2}, {2,3},{3,4},{4,1},{1,5}});
@@ -26,6 +26,7 @@ public class DigraphSolution {
         execute(new int[][]{{4,2},{1,5},{5,2},{5,3},{2,4}});
         execute(new int[][]{{4,2},{1,5},{5,2},{5,3},{1,4}});
         execute(new int[][]{{1,4},{5,2},{1,3},{4,5},{1,5}});
+        execute(new int[][]{{4,1},{1,5},{4,2},{5,1},{4,3}});
     }
 
     private static void execute(int[][] edges){
@@ -88,8 +89,21 @@ public class DigraphSolution {
            }
 
            if (flag){
-               result[0] = dif1[0];
-               result[1] = dif2[1];
+               // 双向
+               Integer p1 = m1.get(dif2[1]);
+               if (p1 != null && p1.intValue() == dif2[0]){
+                   result[0] = dif2[0];
+                   result[1] = dif2[1];
+                   return result;
+               }
+               // 闭环
+               if (dif1[0] == dif2[0]){
+                   result[0] = dif1[0];
+                   result[1] = dif2[1];
+               }else {
+                   result[0] = dif1[0];
+                   result[1] = m3.get(m3.get(result[0]));
+               }
                return result;
            }
 
