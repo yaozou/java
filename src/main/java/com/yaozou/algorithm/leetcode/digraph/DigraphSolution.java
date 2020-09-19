@@ -19,20 +19,21 @@ public class DigraphSolution {
         // [[4,2],[1,5],[5,2],[5,3],[1,4]]  {{4,2},{1,5},{5,2},{5,3},{1,4}} 5->2
         // [[1,4],[5,2],[1,3],[4,5],[1,5]]  {{1,4},{5,2},{1,3},{4,5},{1,5}} 1->5
         // [[4,1],[1,5],[4,2],[5,1],[4,3]]   {{4,1},{1,5},{4,2},{5,1},{4,3}} 5->1
-       execute(new int[][]{{2,1},{3,1},{4,2},{1,4}});
-       execute(new int[][]{{1,2}, {1,3}, {2,3}});
-       execute(new int[][]{{1,2}, {2,3},{3,4},{4,1},{1,5}});
-       execute(new int[][]{{1,2}, {2,3}, {3,1}});
-        execute(new int[][]{{4,2},{1,5},{5,2},{5,3},{2,4}});
-        execute(new int[][]{{4,2},{1,5},{5,2},{5,3},{1,4}});
-        execute(new int[][]{{1,4},{5,2},{1,3},{4,5},{1,5}});
-        execute(new int[][]{{4,1},{1,5},{4,2},{5,1},{4,3}});
+        // [[4,2],[1,5],[5,2],[4,3],[4,1]]
+       execute(new int[][]{{2,1},{3,1},{4,2},{1,4}},"2->1");
+       execute(new int[][]{{1,2}, {1,3}, {2,3}},"2->3");
+       execute(new int[][]{{1,2}, {2,3},{3,4},{4,1},{1,5}},"4->1");
+       execute(new int[][]{{1,2}, {2,3}, {3,1}},"3->1");
+        execute(new int[][]{{4,2},{1,5},{5,2},{5,3},{2,4}},"4->2");
+        execute(new int[][]{{4,2},{1,5},{5,2},{5,3},{1,4}},"5->2");
+        execute(new int[][]{{1,4},{5,2},{1,3},{4,5},{1,5}},"1->5");
+        execute(new int[][]{{4,1},{1,5},{4,2},{5,1},{4,3}},"5->1");
     }
 
-    private static void execute(int[][] edges){
+    private static void execute(int[][] edges,String str){
         DigraphSolution solution = new DigraphSolution();
         int[] result = solution.findRedundantDirectedConnection(edges);
-        System.out.println(result[0]+"->"+result[1]);
+        System.out.println(str+"  "+result[0]+"->"+result[1]);
     }
 
     public int[] findRedundantDirectedConnection(int[][] edges) {
