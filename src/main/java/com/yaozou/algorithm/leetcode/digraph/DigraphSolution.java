@@ -17,13 +17,15 @@ public class DigraphSolution {
         // [[1,2], [2,3], [3,1]]            {{1,2}, {2,3}, {3,1}} 3->1
         // [[4,2],[1,5],[5,2],[5,3],[2,4]]  {{4,2},{1,5},{5,2},{5,3},{2,4}} 4->2
         // [[4,2],[1,5],[5,2],[5,3],[1,4]]  {{4,2},{1,5},{5,2},{5,3},{1,4}} 5->2
-        // [[1,4],[5,2],[1,3],[4,5],[1,5]]
+        // [[1,4],[5,2],[1,3],[4,5],[1,5]]  {{1,4},{5,2},{1,3},{4,5},{1,5}} 1->5
+        // [[4,1],[1,5],[4,2],[5,1],[4,3]]
        execute(new int[][]{{2,1},{3,1},{4,2},{1,4}});
        execute(new int[][]{{1,2}, {1,3}, {2,3}});
        execute(new int[][]{{1,2}, {2,3},{3,4},{4,1},{1,5}});
        execute(new int[][]{{1,2}, {2,3}, {3,1}});
         execute(new int[][]{{4,2},{1,5},{5,2},{5,3},{2,4}});
         execute(new int[][]{{4,2},{1,5},{5,2},{5,3},{1,4}});
+        execute(new int[][]{{1,4},{5,2},{1,3},{4,5},{1,5}});
     }
 
     private static void execute(int[][] edges){
@@ -44,11 +46,16 @@ public class DigraphSolution {
         Map<Integer,Integer> m3 = new HashMap<>(edges.length);
        // 为一个父结点，两个子结点  子结点，父结点
         Map<Integer,Integer> m4 = new HashMap<>(16);
+
+        boolean flag = false;
        for (int i=0;i<edges.length;i++){
            // key1->key2
            int key1 = edges[i][0];
            int key2 = edges[i][1];
-            if (!m1.containsKey(key1)){
+
+           if (m1.containsKey(key1) && m2.containsKey(key1)){
+               flag = true;
+           }else if (!m1.containsKey(key1)){
                 m1.put(key1,key2);
             }else{
                 m2.put(key1,key2);
@@ -78,6 +85,12 @@ public class DigraphSolution {
                dif2[0] = entry.getValue();
                dif2[1] = entry.getKey();
                break;
+           }
+
+           if (flag){
+               result[0] = dif1[0];
+               result[1] = dif2[1];
+               return result;
            }
 
            if (m1.containsKey(dif2[1])){
