@@ -33,14 +33,17 @@ public class DigraphSolution {
        /*execute(new int[][]{{2,1},{3,1},{4,2},{1,4}},"2->1");
        execute(new int[][]{{1,2}, {1,3}, {2,3}},"2->3");
        execute(new int[][]{{1,2}, {2,3},{3,4},{4,1},{1,5}},"4->1");
-       execute(new int[][]{{1,2}, {2,3}, {3,1}},"3->1");
+       execute(new int[][]{{1,2}, {2,3}, {3,1}},"3->1");*/
+
         execute(new int[][]{{4,2},{1,5},{5,2},{5,3},{2,4}},"4->2");
-        execute(new int[][]{{4,2},{1,5},{5,2},{5,3},{1,4}},"5->2");
+        execute(new int[][]{{3,5},{1,3},{2,1},{5,4},{2,3}},"2->3");
+
+        /*execute(new int[][]{{4,2},{1,5},{5,2},{5,3},{1,4}},"5->2");
         execute(new int[][]{{1,4},{5,2},{1,3},{4,5},{1,5}},"1->5");
         execute(new int[][]{{4,1},{1,5},{4,2},{5,1},{4,3}},"5->1");
         execute(new int[][]{{4,2},{1,5},{5,2},{4,3},{4,1}},"5->2");
         execute(new int[][]{{5,2},{1,5},{4,2},{4,3},{4,1}},"4->2");*/
-        execute(new int[][]{{3,5},{1,3},{2,1},{5,4},{2,3}},"2->3");
+
     }
 
     private static void execute(int[][] edges,String str){
@@ -89,6 +92,10 @@ public class DigraphSolution {
 
            }
 
+           if (m4.size() > 1){
+
+           }
+
            // 为两个子节点的父结点       父结点，子节点
            // 父结点，子节点
            int[] dif1 = new int[2];
@@ -133,6 +140,18 @@ public class DigraphSolution {
                }
                return result;
            }
+
+           //（4）有两个节点异常，既有(1)也有(2), 为（2）情况的节点它的一个子节点也是它的父结点
+           if (m1.containsKey(dif2[1])){
+               int val = m1.get(dif2[1]);
+               Integer val2 = m3.get(dif2[1]);
+               if (val2!=null && val2.intValue() == val){
+                   result[0] = val;
+                   result[1] = dif2[1];
+                   return result;
+               }
+           }
+
            // (6) 有两个节点异常，既有(1)也有(2),并且（1）情况的节点也是一个子节点
            if (m3.containsKey(dif1[0])){
                result[0] = m3.get(dif1[0]);
@@ -140,12 +159,6 @@ public class DigraphSolution {
                return result;
            }
 
-           //（4）有两个节点异常，既有(1)也有(2), 为（2）情况的节点它的一个子节点也是它的父结点
-           if (m1.containsKey(dif2[1])){
-               result[0] = m1.get(dif2[1]);
-               result[1] = dif2[1];
-               return result;
-           }
 
            // (5) (4)和(3)
            int end = dif2[1];
@@ -174,12 +187,7 @@ public class DigraphSolution {
                return result;
            }
 
-           /**
-            * 5 <-  1 -> 2
-            *      ^    |
-            *      |    v
-            *      4 <- 3
-            */
+
            if (cricle1(dif,dif[0],m1)){
               int val =  m1.get(dif[0]);
               dif[1]  = val;
