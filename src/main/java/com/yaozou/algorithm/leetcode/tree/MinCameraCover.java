@@ -1,5 +1,7 @@
 package com.yaozou.algorithm.leetcode.tree;
 
+import java.util.Stack;
+
 /**
  * created on 2020/9/22 18:27
  *
@@ -22,8 +24,44 @@ public class MinCameraCover {
      * @return
      */
     public int minCameraCover(TreeNode root) {
+        if (root == null){
+            return 0;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
 
-        return 0;
+        int num = 0;
+        while (!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            if (node.left != null){
+                if (node.left.left != null || node.left.right != null){
+                    if (node.left.left != null){
+                        stack.push(node.left.left);
+                    }
+                    if (node.left.right != null){
+                        stack.push(node.left.right);
+                    }
+                }
+                num++;
+            }
+            if (node.right != null){
+                if (node.right.left != null || node.right.right != null){
+                    if (node.right.left != null){
+                        stack.push(node.right.left);
+                    }
+                    if (node.right.right != null){
+                        stack.push(node.right.right);
+                    }
+                }
+                num++;
+            }
+        }
+
+        if (num == 0){
+            return 1;
+        }
+
+        return num;
     }
 
     class TreeNode{
