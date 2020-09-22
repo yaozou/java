@@ -42,29 +42,29 @@ public class DigraphSolution {
         // [[1,2], [2,3], [3,1]]            {{1,2}, {2,3}, {3,1}} 3->1
 
 
-       /* System.out.println("-----------------(1)即是子节点也是两个节点的父结点----------------");
+        /*System.out.println("-----------------(1)即是子节点也是两个节点的父结点----------------");
         execute(new int[][]{{1,2}, {2,3},{3,4},{4,1},{1,5}},"4->1","{{1,2}, {2,3},{3,4},{4,1},{1,5}}");
 
         System.out.println("-----------------（2） 即是父结点也是两个节点的子节点----------------");
         execute(new int[][]{{1,2}, {1,3}, {2,3}},"2->3","{{1,2}, {1,3}, {2,3}}");
-        execute(new int[][]{{4,2},{1,5},{5,2},{5,3},{1,4}},"5->2","{{4,2},{1,5},{5,2},{5,3},{1,4}}");*/
+        execute(new int[][]{{4,2},{1,5},{5,2},{5,3},{1,4}},"5->2","{{4,2},{1,5},{5,2},{5,3},{1,4}}");
         execute(new int[][]{{2,1},{3,1},{4,2},{1,4}},"2->1","{{2,1},{3,1},{4,2},{1,4}}");
-        execute(new int[][]{{1,5},{3,2},{2,4},{4,5},{5,3}},"4->5","{{1,5},{3,2},{2,4},{4,5},{5,3}}");
+        execute(new int[][]{{1,5},{3,2},{2,4},{4,5},{5,3}},"4->5","{{1,5},{3,2},{2,4},{4,5},{5,3}}");*/
 
-       /* System.out.println("-----------------（3）有两个节点异常，既有(1)也有(2)，并且（1）情况的节点是三个节点的父结点----------------");
-        execute(new int[][]{{1,4},{5,2},{1,3},{4,5},{1,5}},"1->5");
-        execute(new int[][]{{4,2},{1,5},{5,2},{4,3},{4,1}},"5->2");
-        execute(new int[][]{{5,2},{1,5},{4,2},{4,3},{4,1}},"4->2");
+        /*System.out.println("-----------------（3）有两个节点异常，既有(1)也有(2)，并且（1）情况的节点是三个节点的父结点----------------");
+        execute(new int[][]{{1,4},{5,2},{1,3},{4,5},{1,5}},"1->5","{{1,4},{5,2},{1,3},{4,5},{1,5}}");*/
+        execute(new int[][]{{4,2},{1,5},{5,2},{4,3},{4,1}},"5->2","{{4,2},{1,5},{5,2},{4,3},{4,1}}");
+        /*execute(new int[][]{{5,2},{1,5},{4,2},{4,3},{4,1}},"4->2","{{5,2},{1,5},{4,2},{4,3},{4,1}}");*/
 
-        System.out.println("-----------------（4）有两个节点异常，既有(1)也有(2), 为（2）情况的节点它的一个子节点也是它的父结点----------------");
-        execute(new int[][]{{4,2},{1,5},{5,2},{5,3},{2,4}},"4->2");
-        execute(new int[][]{{3,5},{1,3},{2,1},{5,4},{2,3}},"2->3");
+       /* System.out.println("-----------------（4）有两个节点异常，既有(1)也有(2), 为（2）情况的节点它的一个子节点也是它的父结点----------------");
+        execute(new int[][]{{4,2},{1,5},{5,2},{5,3},{2,4}},"4->2","{{4,2},{1,5},{5,2},{5,3},{2,4}}");
+        execute(new int[][]{{3,5},{1,3},{2,1},{5,4},{2,3}},"2->3","{{3,5},{1,3},{2,1},{5,4},{2,3}}");
 
         System.out.println("-----------------(5) (4)和(3)----------------");
-        execute(new int[][]{{4,1},{1,5},{4,2},{5,1},{4,3}},"5->1");
+        execute(new int[][]{{4,1},{1,5},{4,2},{5,1},{4,3}},"5->1","{{4,1},{1,5},{4,2},{5,1},{4,3}}");
 
         System.out.println("-----------------other----------------");
-       execute(new int[][]{{1,2}, {2,3}, {3,1}},"3->1");*/
+       execute(new int[][]{{1,2}, {2,3}, {3,1}},"3->1","{{1,2}, {2,3}, {3,1}}");*/
     }
 
     private static void execute(int[][] edges,String str,String array){
@@ -138,7 +138,8 @@ public class DigraphSolution {
             Map<Integer,Boolean> circle = new HashMap<>(16);
             Map<Integer,Boolean> notCircle = new HashMap<>(16);
             for (Integer root:list) {
-                if (circle(new int[]{root,son},m1,m3)){
+                // 4->2 start=4 end=2
+                if (circle(root,son,m1,m3)){
                     circle.put(root,true);
                 }else{
                     notCircle.put(root,true);
@@ -189,7 +190,8 @@ public class DigraphSolution {
             Map<Integer,Boolean> circle = new HashMap<>(16);
             Map<Integer,Boolean> notCircle = new HashMap<>(16);
             for (Integer node:nodes) {
-                if (circle(new int[]{root,node},m1,m3)){
+                // 4->2 start = 2 end=4
+                if (circle(node,root,m1,m3)){
                     circle.put(node,true);
                 }else {
                     notCircle.put(node,true);
@@ -224,8 +226,8 @@ public class DigraphSolution {
     }
 
     // 4->2 start = 2 end=4
-    private boolean circle(int[] node,Map<Integer,List<Integer>> m1,Map<Integer,List<Integer>> m3){
-        boolean flag = startJudge(node[1],node[0],node[0],m1,m3);
+    private boolean circle(int start,int end,Map<Integer,List<Integer>> m1,Map<Integer,List<Integer>> m3){
+        boolean flag = startJudge(start,end,end,m1,m3);
         return flag;
     }
 
