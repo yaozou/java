@@ -1,5 +1,9 @@
 package com.yaozou.algorithm.leetcode.tree;
 
+import com.yaozou.algorithm.leetcode.BinaryTreeCode;
+
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -9,6 +13,22 @@ import java.util.Stack;
  * @since v1.0.0
  */
 public class MinCameraCover {
+
+    public static void main(String[] args) {
+        print("[0,0,0]");
+        print("[0,0,0,null,null,null,0]");
+        print("[0,null,0,null,0,null,0]");
+        print("[0]");
+        print("[0,null,0,null,0,0,0]");
+
+    }
+
+    public static void print(String val){
+        MinCameraCover cameraCover = new MinCameraCover();
+        TreeNode root1  = cameraCover.deserialize(val);
+        cameraCover.minCameraCover(root1);
+        System.out.println(cameraCover.serialize(root1));
+    }
 
     /**
      * 给定一个二叉树，我们在树的节点上安装摄像头。
@@ -47,6 +67,7 @@ public class MinCameraCover {
                 }
             }
 
+            node.val = 1;
             // 预判下一个监控节点
             TreeNode nextLeft = node.left;
             next(nextLeft,stack);
@@ -97,5 +118,72 @@ public class MinCameraCover {
         TreeNode left;
         TreeNode right;
         TreeNode(int x) { val = x; }
+    }
+
+
+    public TreeNode deserialize(String data) {
+        if ((data == null || "".equals(data)) || (data.length() <=2)){return null;}
+        data = data.substring(1,data.length()-1);
+        String[] nodes = data.split(",");
+        Queue<TreeNode> queue = new LinkedList<>();
+        TreeNode root = createTreeNode(nodes[0]);
+        queue.add(root);
+
+        int i = 1;
+        while (!queue.isEmpty() && i < nodes.length){
+            TreeNode node = queue.poll();
+            if (node == null){continue;}
+            node.left = createTreeNode(nodes[i]);
+            node.right = createTreeNode(nodes[i+1]);
+
+            i += 2;
+            queue.add(node.left);
+            queue.add(node.right);
+        }
+        return root;
+    }
+
+    private TreeNode createTreeNode(String nodeStr){
+        if ("null".equals(nodeStr)){return null;}
+        return new TreeNode(Integer.valueOf(nodeStr));
+    }
+
+    public String serialize(TreeNode root) {
+        if (root == null){return "[]";}
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(root.val);
+        while (!queue.isEmpty()){
+            int level = queue.size();
+            boolean leaveNode = true;
+            for (int i = 0;i<level;i++){
+                TreeNode node = queue.poll();
+                boolean isNull = true;
+                String lVal = "null";
+                if (node.left!=null){
+                    lVal = node.left.val+"";
+                    isNull = false;
+                    queue.add(node.left);
+                    if (node.left.left != null || node.left.right != null){leaveNode = false;}
+                }
+
+                String rVal = "null";
+                if (node.right!=null){
+                    rVal = node.right.val+"";
+                    isNull = false;
+                    queue.add(node.right);
+                    if (node.right.left != null || node.right.right != null){leaveNode = false;}
+                }
+                if (!(isNull && queue.isEmpty())){
+                    sb.append(",").append(lVal).append(",").append(rVal);
+                }
+            }
+            if (leaveNode){
+                break;
+            }
+        }
+        return "["+sb.toString()+"]";
     }
 }
