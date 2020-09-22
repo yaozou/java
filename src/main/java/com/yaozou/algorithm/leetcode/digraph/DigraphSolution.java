@@ -46,8 +46,8 @@ public class DigraphSolution {
         execute(new int[][]{{1,2}, {2,3},{3,4},{4,1},{1,5}},"4->1","{{1,2}, {2,3},{3,4},{4,1},{1,5}}");
 
         System.out.println("-----------------（2） 即是父结点也是两个节点的子节点----------------");
-        execute(new int[][]{{1,2}, {1,3}, {2,3}},"2->3","{{1,2}, {1,3}, {2,3}}");
-        execute(new int[][]{{4,2},{1,5},{5,2},{5,3},{1,4}},"5->2","{{4,2},{1,5},{5,2},{5,3},{1,4}}");
+        /*execute(new int[][]{{1,2}, {1,3}, {2,3}},"2->3","{{1,2}, {1,3}, {2,3}}");
+        execute(new int[][]{{4,2},{1,5},{5,2},{5,3},{1,4}},"5->2","{{4,2},{1,5},{5,2},{5,3},{1,4}}");*/
         /*execute(new int[][]{{2,1},{3,1},{4,2},{1,4}},"2->1","{{2,1},{3,1},{4,2},{1,4}}");
         execute(new int[][]{{1,5},{3,2},{2,4},{4,5},{5,3}},"4->5","{{1,5},{3,2},{2,4},{4,5},{5,3}}");*/
 
@@ -182,46 +182,45 @@ public class DigraphSolution {
                           Map<Integer,List<Integer>> m1,Map<Integer,Boolean> m2,
                           Map<Integer,List<Integer>> m3,Map<Integer,Boolean> m4){
         int[] result = new int[2];
-        int root = 0;
-        List<Integer> nodes = new ArrayList<>();
         for (Map.Entry<Integer, Boolean> entry :m2.entrySet()) {
-            root = entry.getKey();
-            nodes = m1.get(root);
-            break;
-        }
+            int root = entry.getKey();
+            List<Integer> nodes = m1.get(root);
 
-        Map<Integer,Boolean> circle = new HashMap<>(16);
-        Map<Integer,Boolean> notCircle = new HashMap<>(16);
-        for (Integer node:nodes) {
-            if (circle(new int[]{root,node},m1,m3)){
-                circle.put(node,true);
-            }else {
-                notCircle.put(node,true);
-            }
-        }
-
-        if (circle.size() == 1){
-            for (int i=0;i<edges.length;i++) {
-                // key1->key2
-                int key1 = edges[i][0];
-                int key2 = edges[i][1];
-                if (!(key1 == root && notCircle.containsKey(key2))){
-                    result[0] = key1;
-                    result[1] = key2;
+            Map<Integer,Boolean> circle = new HashMap<>(16);
+            Map<Integer,Boolean> notCircle = new HashMap<>(16);
+            for (Integer node:nodes) {
+                if (circle(new int[]{root,node},m1,m3)){
+                    circle.put(node,true);
+                }else {
+                    notCircle.put(node,true);
                 }
             }
-            return result;
-        }else{
-            for (int i=0;i<edges.length;i++) {
-                // key1->key2
-                int key1 = edges[i][0];
-                int key2 = edges[i][1];
-                if (key1 == root && circle.containsKey(key2)){
-                    result[1] = key2;
+
+            if (circle.size() == 1){
+                for (int i=0;i<edges.length;i++) {
+                    // key1->key2
+                    int key1 = edges[i][0];
+                    int key2 = edges[i][1];
+                    if (!(key1 == root && notCircle.containsKey(key2))){
+                        result[0] = key1;
+                        result[1] = key2;
+                    }
                 }
+                return result;
+            }else{
+                for (int i=0;i<edges.length;i++) {
+                    // key1->key2
+                    int key1 = edges[i][0];
+                    int key2 = edges[i][1];
+                    if (key1 == root && circle.containsKey(key2)){
+                        result[1] = key2;
+                    }
+                }
+                result[0] = root;
+                return result;
             }
-            return result;
         }
+        return edges[edges.length-1];
     }
 
     // 4->2 start = 2 end=4
@@ -255,6 +254,7 @@ public class DigraphSolution {
                 if (i==end){
                     return true;
                 }
+                flag = startJudge(i,end,start,m1,m3);
             }
         }
 
