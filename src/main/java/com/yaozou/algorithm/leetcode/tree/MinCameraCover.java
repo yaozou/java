@@ -23,6 +23,7 @@ public class MinCameraCover {
      * @param root
      * @return
      */
+    //[0,0,0]
     public int minCameraCover(TreeNode root) {
         if (root == null){
             return 0;
@@ -41,8 +42,8 @@ public class MinCameraCover {
                     if (node.left.right != null){
                         stack.push(node.left.right);
                     }
+                    num++;
                 }
-                num++;
             }
             if (node.right != null){
                 if (node.right.left != null || node.right.right != null){
@@ -52,8 +53,8 @@ public class MinCameraCover {
                     if (node.right.right != null){
                         stack.push(node.right.right);
                     }
+                    num++;
                 }
-                num++;
             }
         }
 
