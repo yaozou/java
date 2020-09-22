@@ -42,14 +42,14 @@ public class DigraphSolution {
         // [[1,2], [2,3], [3,1]]            {{1,2}, {2,3}, {3,1}} 3->1
 
 
-       /* System.out.println("-----------------(1)即是子节点也是两个节点的父结点----------------");
-        execute(new int[][]{{1,2}, {2,3},{3,4},{4,1},{1,5}},"4->1");*/
+        System.out.println("-----------------(1)即是子节点也是两个节点的父结点----------------");
+        execute(new int[][]{{1,2}, {2,3},{3,4},{4,1},{1,5}},"4->1","{{1,2}, {2,3},{3,4},{4,1},{1,5}}");
 
         System.out.println("-----------------（2） 即是父结点也是两个节点的子节点----------------");
-        execute(new int[][]{{2,1},{3,1},{4,2},{1,4}},"2->1","{{2,1},{3,1},{4,2},{1,4}}");
-        /*execute(new int[][]{{1,2}, {1,3}, {2,3}},"2->3");
-        execute(new int[][]{{4,2},{1,5},{5,2},{5,3},{1,4}},"5->2");
-        execute(new int[][]{{1,5},{3,2},{2,4},{4,5},{5,3}},"4->5");*/
+        execute(new int[][]{{1,2}, {1,3}, {2,3}},"2->3","{{1,2}, {1,3}, {2,3}}");
+        execute(new int[][]{{4,2},{1,5},{5,2},{5,3},{1,4}},"5->2","{{4,2},{1,5},{5,2},{5,3},{1,4}}");
+        /*execute(new int[][]{{2,1},{3,1},{4,2},{1,4}},"2->1","{{2,1},{3,1},{4,2},{1,4}}");
+        execute(new int[][]{{1,5},{3,2},{2,4},{4,5},{5,3}},"4->5","{{1,5},{3,2},{2,4},{4,5},{5,3}}");*/
 
        /* System.out.println("-----------------（3）有两个节点异常，既有(1)也有(2)，并且（1）情况的节点是三个节点的父结点----------------");
         execute(new int[][]{{1,4},{5,2},{1,3},{4,5},{1,5}},"1->5");
@@ -76,35 +76,35 @@ public class DigraphSolution {
 
     public int[] findRedundantDirectedConnection(int[][] edges) {
        // 仅存在一个子节点 父结点，子节点
-       Map<Integer,Integer> m1 = new HashMap<>(edges.length);
+       Map<Integer,List<Integer>> m1 = new HashMap<>(edges.length);
        // 两个子节点       父结点，子节点
-       Map<Integer,List<Integer>> m2 = new HashMap<>(16);
+       Map<Integer,Boolean> m2 = new HashMap<>(16);
 
        // 为一个父结点，一个子结点 子结点，父结点
-        Map<Integer,Integer> m3 = new HashMap<>(edges.length);
+        Map<Integer,List<Integer>> m3 = new HashMap<>(edges.length);
        // 为一个父结点，两个子结点  子结点，父结点
-        Map<Integer,List<Integer>> m4 = new HashMap<>(16);
+        Map<Integer,Boolean> m4 = new HashMap<>(16);
 
        for (int i=0;i<edges.length;i++){
            // key1->key2
            int key1 = edges[i][0];
            int key2 = edges[i][1];
 
-           if (!m1.containsKey(key1)){
-                m1.put(key1,key2);
-            }else{
-               List<Integer> list = m2.getOrDefault(key1,new ArrayList<>());
-               list.add(key2);
-                m2.put(key1,list);
+           if (m1.containsKey(key1)){
+               m2.put(key1,true);
             }
 
-            if (!m3.containsKey(key2)){
-                m3.put(key2,key1);
-            }else{
-                List<Integer> list = m4.getOrDefault(key1,new ArrayList<>());
-                list.add(key1);
-                m4.put(key2,list);
+            if (m3.containsKey(key2)){
+                m4.put(key2,true);
             }
+
+           List<Integer> list = m1.getOrDefault(key1,new ArrayList<>());
+           list.add(key2);
+           m1.put(key1,list);
+
+           List<Integer> list1 = m3.getOrDefault(key2,new ArrayList<>());
+           list1.add(key1);
+           m3.put(key2,list1);
        }
 
         if (!m4.isEmpty()){
@@ -119,17 +119,26 @@ public class DigraphSolution {
        return  edges[edges.length-1];
     }
 
-    private int[] result1(int[][] edges,Map<Integer,Integer> m1,Map<Integer,List<Integer>> m2,Map<Integer,Integer> m3,Map<Integer,List<Integer>> m4){
+    private int[] result1(int[][] edges,
+                          Map<Integer,List<Integer>> m1,Map<Integer,Boolean> m2,
+                          Map<Integer,List<Integer>> m3,Map<Integer,Boolean> m4){
         int[] result = new int[2];
-        for (Map.Entry<Integer, List<Integer>> entry :m4.entrySet()) {
+        for (Map.Entry<Integer, Boolean> entry :m4.entrySet()) {
+
             int son = entry.getKey();
-            List<Integer> list = entry.getValue();
-            list.add(m3.get(son));
+            List<Integer> list = m3.get(son);
+
+            // 3->4 2->4 4->2
+            if (m1.containsKey(son)){
+                result[1] = son;
+                result[0] = m1.get(son).get(0);
+                return result;
+            }
 
             Map<Integer,Boolean> circle = new HashMap<>(16);
             Map<Integer,Boolean> notCircle = new HashMap<>(16);
             for (Integer root:list) {
-                if (cricle1(new int[]{root,son},root,m1)){
+                if (circle(new int[]{root,son},m1,m3)){
                     circle.put(root,true);
                 }else{
                     notCircle.put(root,true);
@@ -152,7 +161,7 @@ public class DigraphSolution {
                     int key2 = edges[i][1];
 
                     if (isEmpty){
-                        if (!notCircle.containsKey(key1)){
+                        if (notCircle.containsKey(key1)){
                             result[0] = key1;
                             result[1] = key2;
                         }
@@ -169,21 +178,22 @@ public class DigraphSolution {
         return result;
     }
 
-    private int[] result2(int[][] edges,Map<Integer,Integer> m1,Map<Integer,List<Integer>> m2,Map<Integer,Integer> m3,Map<Integer,List<Integer>> m4){
+    private int[] result2(int[][] edges,
+                          Map<Integer,List<Integer>> m1,Map<Integer,Boolean> m2,
+                          Map<Integer,List<Integer>> m3,Map<Integer,Boolean> m4){
         int[] result = new int[2];
         int root = 0;
         List<Integer> nodes = new ArrayList<>();
-        for (Map.Entry<Integer, List<Integer>> entry :m2.entrySet()) {
+        for (Map.Entry<Integer, Boolean> entry :m2.entrySet()) {
             root = entry.getKey();
-            nodes = entry.getValue();
-            nodes.add(m1.get(root));
+            nodes = m1.get(root);
             break;
         }
 
         Map<Integer,Boolean> circle = new HashMap<>(16);
         Map<Integer,Boolean> notCircle = new HashMap<>(16);
         for (Integer node:nodes) {
-            if (cricle1(new int[]{root,node},root,m1)){
+            if (circle(new int[]{root,node},m1,m3)){
                 circle.put(node,true);
             }else {
                 notCircle.put(node,true);
@@ -214,26 +224,38 @@ public class DigraphSolution {
         }
     }
 
-    private boolean cricle1(int[] dif,int end,Map<Integer,Integer> m){
-        //2<-1->3
-        //2->1<-3
-        boolean flag = true;
+    // 4->2 start = 2 end=4
+    private boolean circle(int[] node,Map<Integer,List<Integer>> m1,Map<Integer,List<Integer>> m3){
+        boolean flag = startJudge(node[1],node[0],node[0],m1,m3);
+        return flag;
+    }
 
-        int son = dif[1];
-        Integer next = son;
-        int i = m.size();
-        int hit = 0;
-        while (i>=0){
-            next = m.get(next);
-            if ((next!=null && next.intValue() == end)){
-                hit++;
-                break;
+    private boolean startJudge(int start,int end,int last,Map<Integer,List<Integer>> m1,Map<Integer,List<Integer>> m3){
+        boolean flag = false;
+        //
+        if (m3.containsKey(start)){
+            List<Integer> list = m3.get(start);
+            for (Integer i : list) {
+                if (i == last){
+                    continue;
+                }
+                if (i == end){
+                    return true;
+                }
+                flag = startJudge(i,end,start,m1,m3);
             }
-            i--;
         }
 
-        if (hit == 0){
-            flag = false;
+        if (!flag && m1.containsKey(start)){
+            List<Integer> list = m1.get(start);
+            for (Integer i : list) {
+                if (i == last){
+                    continue;
+                }
+                if (i==end){
+                    return true;
+                }
+            }
         }
 
         return flag;
