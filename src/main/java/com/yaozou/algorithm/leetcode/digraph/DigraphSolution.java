@@ -129,10 +129,16 @@ public class DigraphSolution {
             List<Integer> list = m3.get(son);
 
             // 3->4 2->4 4->2
-            if (m1.containsKey(son) && m1.get(son).get(0) == son){
-                result[1] = son;
-                result[0] = m1.get(son).get(0);
-                return result;
+            if (m1.containsKey(son)){
+                int v = m1.get(son).get(0);
+                for (Integer node:list){
+                    if (node == v){
+                        result[1] = son;
+                        result[0] = m1.get(son).get(0);
+                        return result;
+                    }
+                }
+
             }
 
             Map<Integer,Boolean> circle = new HashMap<>(16);
