@@ -34,34 +34,15 @@ public class MinCameraCover {
         int num = 0;
         while (!stack.isEmpty()){
             TreeNode node = stack.pop();
-            boolean flag = true;
+            boolean flag = install(node);
 
-            // 判断此节点是否需要安装监控
-            boolean left = node.left != null && (node.left.left != null || node.left.right != null);
-            boolean right = node.right != null && (node.right.left != null || node.right.right != null);
-
-            if (node.left == null && node.right == null){
-                flag = false;
-                num ++;
-            } else if (node.left != null && node.left.left == null && node.left.right == null){
-                flag = false;
-                num ++;
-            }else if (node.right != null && node.right.left == null && node.right.right == null){
-                flag = false;
-                num ++;
-            }else if (left && right){
-                flag = false;
-                num ++;
-            }
-
-            if (flag){
+            num ++;
+            if (!flag){
                 // 不适合安装监控时,将监控安装在下一个节点，由此从一个节点安装
-                if (left){
-                    num ++;
+                if (node.left != null && (node.left.left != null || node.left.right != null)){
                     node = node.left;
                 }
-                if (right){
-                    num ++;
+                if (node.right != null && (node.right.left != null || node.right.right != null)){
                     node = node.right;
                 }
             }
@@ -78,21 +59,37 @@ public class MinCameraCover {
     }
 
     private void next(TreeNode nextNode,Stack<TreeNode> stack){
-        if (nextNode != null ){
-            boolean leftFlag =  nextNode.left != null && (nextNode.left.left != null || nextNode.left.right != null);
-            boolean rightFlag = nextNode.right != null && (nextNode.right.left != null || nextNode.right.right != null);
-            if (leftFlag){
-                stack.push(nextNode.left);
-            }
-            if (rightFlag){
-                stack.push(nextNode.right);
-            }
-
-            if (!leftFlag && !rightFlag){
+        if (nextNode != null){
+            // 预测下一个节点为监控
+            if (install(nextNode)){
                 stack.push(nextNode);
+            }else{
+                if (nextNode.left != null ){
+                    stack.push(nextNode.left);
+                }
+                if (nextNode.right != null){
+                    stack.push(nextNode.right);
+                }
             }
-
         }
+
+    }
+
+    private boolean install(TreeNode node){
+        boolean flag = false;
+        boolean left = node.left != null && (node.left.left != null || node.left.right != null);
+        boolean right = node.right != null && (node.right.left != null || node.right.right != null);
+
+        if (node.left == null && node.right == null){
+            flag = true;
+        } else if (node.left != null && node.left.left == null && node.left.right == null){
+            flag = true;
+        }else if (node.right != null && node.right.left == null && node.right.right == null){
+            flag = true;
+        }else if (left && right){
+            flag = true;
+        }
+        return flag;
     }
 
     class TreeNode{
