@@ -1,7 +1,5 @@
 package com.yaozou.algorithm.leetcode.tree;
 
-import com.yaozou.algorithm.leetcode.BinaryTreeCode;
-
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -15,19 +13,22 @@ import java.util.Stack;
 public class MinCameraCover {
 
     public static void main(String[] args) {
-        print("[0,0,0]");
-        print("[0,0,0,null,null,null,0]");
-        print("[0,null,0,null,0,null,0]");
-        print("[0]");
-        print("[0,null,0,null,0,0,0]");
+        /*print("[0,0,0]","[1,0,0]");
+        print("[0,0,0,null,null,null,0]","[1,0,1,null,null,null,0]");
+        print("[0,null,0,null,0,null,0]","[0,null,1,null,1,null,0]");
+        print("[0]","[1]");
+        print("[0,null,0,null,0,0,0]","[0,null,1,null,1,0,0]");
 
+        print("[0,0,null,null,0,null,0]","[0,1,null,null,1,null,0]");*/
+        print("[0,0,0,null,0,null,0]","[0,1,1,null,0,null,0]");
     }
 
-    public static void print(String val){
+    public static void print(String val,String result){
         MinCameraCover cameraCover = new MinCameraCover();
         TreeNode root1  = cameraCover.deserialize(val);
         cameraCover.minCameraCover(root1);
-        System.out.println(cameraCover.serialize(root1));
+        String end = cameraCover.serialize(root1);
+        System.out.println(result + "  " + end+ "  "+result.equals(end));
     }
 
     /**
@@ -43,7 +44,6 @@ public class MinCameraCover {
      * @param root
      * @return
      */
-    //[0,0,0]  [0,0,0,null,null,null,0] [0,null,0,null,0,null,0] [0] [0,null,0,null,0,0,0]
     public int minCameraCover(TreeNode root) {
         if (root == null){
             return 0;
@@ -61,8 +61,7 @@ public class MinCameraCover {
                 // 不适合安装监控时,将监控安装在下一个节点，由此从一个节点安装
                 if (node.left != null && (node.left.left != null || node.left.right != null)){
                     node = node.left;
-                }
-                if (node.right != null && (node.right.left != null || node.right.right != null)){
+                }else if (node.right != null && (node.right.left != null || node.right.right != null)){
                     node = node.right;
                 }
             }
@@ -82,7 +81,7 @@ public class MinCameraCover {
     private void next(TreeNode nextNode,Stack<TreeNode> stack){
         if (nextNode != null){
             // 预测下一个节点为监控
-            if (install(nextNode)){
+            if (nextNodeInstall(nextNode)){
                 stack.push(nextNode);
             }else{
                 if (nextNode.left != null ){
@@ -94,6 +93,18 @@ public class MinCameraCover {
             }
         }
 
+    }
+
+    private boolean nextNodeInstall(TreeNode nextNode){
+        boolean flag = false;
+
+        if (nextNode.left != null && nextNode.left.left == null && nextNode.left.right == null){
+            flag = true;
+        }else if (nextNode.right != null && nextNode.right.left == null && nextNode.right.right == null){
+            flag = true;
+        }
+
+        return flag;
     }
 
     private boolean install(TreeNode node){
