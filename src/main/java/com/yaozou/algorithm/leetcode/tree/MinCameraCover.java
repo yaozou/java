@@ -54,28 +54,47 @@ public class MinCameraCover {
         int num = 0;
         while (!stack.isEmpty()){
             TreeNode node = stack.pop();
-            boolean flag = install(node);
+            boolean flag = false;
+            boolean left = node.left != null && (node.left.left != null || node.left.right != null);
+            boolean right = node.right != null && (node.right.left != null || node.right.right != null);
 
-            num ++;
-            if (!flag){
-                // 不适合安装监控时,将监控安装在下一个节点，由此从一个节点安装
-                if (node.left != null && (node.left.left != null || node.left.right != null)){
-                    node = node.left;
-                }else if (node.right != null && (node.right.left != null || node.right.right != null)){
-                    node = node.right;
-                }
+            if (node.left == null && node.right == null){
+                // 叶子节点
+                flag = true;
+            } else if (node.left != null && node.left.left == null && node.left.right == null){
+                // 左节点为叶子节点
+                flag = true;
+            }else if (node.right != null && node.right.left == null && node.right.right == null){
+                // 右节点为叶子节点
+                flag = true;
+            }else if (left && right && (deep(node.left) || deep(node.right))){
+                // 左边/右边子树深度至少3层
+                flag = true;
             }
+            if (flag){
+                node.val = 1;
+                num ++;
+                next(node,stack);
+            }else{
+                // 当前节点不适合安装监控，预测下级所有子节点是否合适并安装
+                // 左边子树
+                num ++;
+                next(node.left,stack);
 
-            node.val = 1;
-            // 预判下一个监控节点
-            TreeNode nextLeft = node.left;
-            next(nextLeft,stack);
-
-            TreeNode nextRight = node.right;
-            next(nextRight,stack);
+                // 右子树
+                num ++;
+                next(node.right,stack);
+            }
         }
 
         return num;
+    }
+
+    private boolean deep(TreeNode node){
+        boolean left = node.left != null && (node.left.left != null || node.left.right != null);
+        boolean right = node.right != null && (node.right.left != null || node.right.right != null);
+
+        return left || right;
     }
 
     private void next(TreeNode nextNode,Stack<TreeNode> stack){
@@ -104,23 +123,6 @@ public class MinCameraCover {
             flag = true;
         }
 
-        return flag;
-    }
-
-    private boolean install(TreeNode node){
-        boolean flag = false;
-        boolean left = node.left != null && (node.left.left != null || node.left.right != null);
-        boolean right = node.right != null && (node.right.left != null || node.right.right != null);
-
-        if (node.left == null && node.right == null){
-            flag = true;
-        } else if (node.left != null && node.left.left == null && node.left.right == null){
-            flag = true;
-        }else if (node.right != null && node.right.left == null && node.right.right == null){
-            flag = true;
-        }else if (left && right){
-            flag = true;
-        }
         return flag;
     }
 
