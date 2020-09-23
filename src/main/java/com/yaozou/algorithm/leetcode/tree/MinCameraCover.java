@@ -13,7 +13,7 @@ import java.util.Stack;
 public class MinCameraCover {
 
     public static void main(String[] args) {
-       /* print("[0,0,0]","[1,0,0]");
+        print("[0,0,0]","[1,0,0]");
         print("[0,0,0,null,null,null,0]","[1,0,1,null,null,null,0]");
         print("[0,null,0,null,0,null,0]","[0,null,1,null,1,null,0]");
         print("[0]","[1]");
@@ -22,7 +22,7 @@ public class MinCameraCover {
         print("[0,0,null,null,0,null,0]","[0,1,null,null,1,null,0]");
         print("[0,0,0,null,0,null,0]","[0,1,1,null,0,null,0]");
 
-        print("[0,0,null,0,null,0,null,null,0]","[0,1,null,0,null,1,null,null,0]");*/
+        print("[0,0,null,0,null,0,null,null,0]","[0,1,null,0,null,1,null,null,0]");
        print("[0,0,0,null,0,0,null,null,0]","[0,0,0,null,0,0,null,null,0]");
     }
 
@@ -58,8 +58,6 @@ public class MinCameraCover {
         while (!stack.isEmpty()){
             TreeNode node = stack.pop();
             boolean flag = false;
-            boolean left = node.left != null && (node.left.left != null || node.left.right != null);
-            boolean right = node.right != null && (node.right.left != null || node.right.right != null);
 
             if (node.left == null && node.right == null){
                 // 叶子节点
@@ -70,33 +68,53 @@ public class MinCameraCover {
             }else if (node.right != null && node.right.left == null && node.right.right == null){
                 // 右节点为叶子节点
                 flag = true;
-            }else if (left && right && (deep(node.left) || deep(node.right))){
-                // 左边/右边子树深度至少3层
-                flag = true;
             }
+
             if (flag){
                 node.val = 1;
                 num ++;
                 next(node,stack);
             }else{
                 // 当前节点不适合安装监控，预测下级所有子节点是否合适并安装
+                boolean leftFlag =  node.left != null && (leaveNode(node.left.left) || leaveNode(node.left.right));
+                boolean rightFlag = node.right != null && (leaveNode(node.right.left) || leaveNode(node.right.right));
                 // 左边子树
-                if (node.left != null){
-                    num ++;
+                num ++;
+                if (leftFlag){
                     node.left.val = 1;
                     next(node.left,stack);
+                }else {
+                    if (node.left != null && node.left.left != null){
+                        node.left.left.val = 1;
+                        next(node.left.left,stack);
+                    }else if (node.left != null && node.left.right != null){
+                        node.left.right.val = 1;
+                        next(node.left.right,stack);
+                    }
                 }
 
                 // 右子树
-                if (node.right != null){
-                    num ++;
+                num ++;
+                if (rightFlag){
                     node.right.val = 1;
                     next(node.right,stack);
+                }else {
+                    if (node.right != null && node.right.left != null){
+                        node.right.left.val = 1;
+                        next(node.right.left,stack);
+                    }else if (node.right != null && node.right.right != null){
+                        node.right.right.val = 1;
+                        next(node.right.right,stack);
+                    }
                 }
             }
         }
 
         return num;
+    }
+
+    private boolean leaveNode(TreeNode node){
+        return node != null && (node.left == null && node.right == null);
     }
 
     private boolean deep(TreeNode node){
