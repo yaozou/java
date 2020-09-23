@@ -13,7 +13,7 @@ import java.util.Stack;
 public class MinCameraCover {
 
     public static void main(String[] args) {
-        print("[0,0,0]","[1,0,0]");
+       /* print("[0,0,0]","[1,0,0]");
         print("[0,0,0,null,null,null,0]","[1,0,1,null,null,null,0]");
         print("[0,null,0,null,0,null,0]","[0,null,1,null,1,null,0]");
         print("[0]","[1]");
@@ -22,7 +22,8 @@ public class MinCameraCover {
         print("[0,0,null,null,0,null,0]","[0,1,null,null,1,null,0]");
         print("[0,0,0,null,0,null,0]","[0,1,1,null,0,null,0]");
 
-        print("[0,0,null,0,null,0,null,null,0]","[0,1,null,0,null,1,null,null,0]");
+        print("[0,0,null,0,null,0,null,null,0]","[0,1,null,0,null,1,null,null,0]");*/
+       print("[0,0,0,null,0,0,null,null,0]","[0,0,0,null,0,0,null,null,0]");
     }
 
     public static void print(String val,String result){
