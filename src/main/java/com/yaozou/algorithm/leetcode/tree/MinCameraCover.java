@@ -21,6 +21,8 @@ public class MinCameraCover {
 
         print("[0,0,null,null,0,null,0]","[0,1,null,null,1,null,0]");
         print("[0,0,0,null,0,null,0]","[0,1,1,null,0,null,0]");
+
+        print("[0,0,null,0,null,0,null,null,0]","[0,1,null,0,null,1,null,null,0]");
     }
 
     public static void print(String val,String result){
@@ -28,7 +30,7 @@ public class MinCameraCover {
         TreeNode root1  = cameraCover.deserialize(val);
         cameraCover.minCameraCover(root1);
         String end = cameraCover.serialize(root1);
-        System.out.println(result + "  " + end+ "  "+result.equals(end));
+        System.out.println(result.equals(end)+ "  " + result + "  " + end);
     }
 
     /**
@@ -105,11 +107,24 @@ public class MinCameraCover {
 
     private void next(TreeNode node,Stack<TreeNode> stack){
         // 预测下一个节点为监控
-        if (node.left != null && nextNodeInstall(node.left)){
-            stack.push(node.left);
+        if (node.left != null){
+            if (nextNodeInstall(node.left)){
+                stack.push(node.left);
+            }else if (node.left.left != null){
+                stack.push(node.left.left);
+            }else if (node.left.right != null){
+                stack.push(node.left.right);
+            }
         }
-        if (node.right != null&& nextNodeInstall(node.right)){
-            stack.push(node.right);
+        if (node.right != null){
+            if (nextNodeInstall(node.right)){
+                stack.push(node.right);
+            }else if (node.right.left != null){
+                stack.push(node.right.left);
+            }else if (node.right.right != null){
+                stack.push(node.right.right);
+            }
+
         }
 
     }
