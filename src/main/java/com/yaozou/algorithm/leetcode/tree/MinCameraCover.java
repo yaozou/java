@@ -13,13 +13,13 @@ import java.util.Stack;
 public class MinCameraCover {
 
     public static void main(String[] args) {
-        /*print("[0,0,0]","[1,0,0]");
+        print("[0,0,0]","[1,0,0]");
         print("[0,0,0,null,null,null,0]","[1,0,1,null,null,null,0]");
         print("[0,null,0,null,0,null,0]","[0,null,1,null,1,null,0]");
         print("[0]","[1]");
         print("[0,null,0,null,0,0,0]","[0,null,1,null,1,0,0]");
 
-        print("[0,0,null,null,0,null,0]","[0,1,null,null,1,null,0]");*/
+        print("[0,0,null,null,0,null,0]","[0,1,null,null,1,null,0]");
         print("[0,0,0,null,0,null,0]","[0,1,1,null,0,null,0]");
     }
 
@@ -78,12 +78,18 @@ public class MinCameraCover {
             }else{
                 // 当前节点不适合安装监控，预测下级所有子节点是否合适并安装
                 // 左边子树
-                num ++;
-                next(node.left,stack);
+                if (node.left != null){
+                    num ++;
+                    node.left.val = 1;
+                    next(node.left,stack);
+                }
 
                 // 右子树
-                num ++;
-                next(node.right,stack);
+                if (node.right != null){
+                    num ++;
+                    node.right.val = 1;
+                    next(node.right,stack);
+                }
             }
         }
 
@@ -97,19 +103,13 @@ public class MinCameraCover {
         return left || right;
     }
 
-    private void next(TreeNode nextNode,Stack<TreeNode> stack){
-        if (nextNode != null){
-            // 预测下一个节点为监控
-            if (nextNodeInstall(nextNode)){
-                stack.push(nextNode);
-            }else{
-                if (nextNode.left != null ){
-                    stack.push(nextNode.left);
-                }
-                if (nextNode.right != null){
-                    stack.push(nextNode.right);
-                }
-            }
+    private void next(TreeNode node,Stack<TreeNode> stack){
+        // 预测下一个节点为监控
+        if (node.left != null && nextNodeInstall(node.left)){
+            stack.push(node.left);
+        }
+        if (node.right != null&& nextNodeInstall(node.right)){
+            stack.push(node.right);
         }
 
     }
