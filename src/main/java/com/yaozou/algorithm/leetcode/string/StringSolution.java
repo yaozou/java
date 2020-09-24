@@ -1,10 +1,5 @@
 package com.yaozou.algorithm.leetcode.string;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * created on 2020/9/24 15:51
  *
@@ -12,10 +7,10 @@ import java.util.Map;
  * @since v1.0.0
  */
 public class StringSolution {
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         StringSolution solution = new StringSolution();
         System.out.println(solution.lengthOfLongestSubstring("abcabcbb"));
-    }
+    }*/
 
     /**
      * 3. 无重复字符的最长子串
@@ -76,7 +71,12 @@ public class StringSolution {
         return length;
     }
 
-    private int center(int start, int end, char[] chars) {
+    public static void main(String[] args) {
+        char[] chars = "abcabcbb".toCharArray();
+        System.out.println(center(0,1,chars));
+    }
+
+    private static int center(int start, int end, char[] chars) {
         for (; start < end-1; start++) {
             for (int j = start+1; j < end; j++) {
                 if (chars[start] == chars[j]) {
