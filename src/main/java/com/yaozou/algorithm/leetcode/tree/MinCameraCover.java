@@ -1,8 +1,6 @@
 package com.yaozou.algorithm.leetcode.tree;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * created on 2020/9/22 18:27
@@ -13,25 +11,26 @@ import java.util.Stack;
 public class MinCameraCover {
 
     public static void main(String[] args) {
-        print("[0,0,0]","[1,0,0]");
-        print("[0,0,0,null,null,null,0]","[1,0,1,null,null,null,0]");
-        print("[0,null,0,null,0,null,0]","[0,null,1,null,1,null,0]");
-        print("[0]","[1]");
-        print("[0,null,0,null,0,0,0]","[0,null,1,null,1,0,0]");
+        print("[0,0,0]","1");
+        print("[0,0,0,null,null,null,0]","2");
+        print("[0,null,0,null,0,null,0]","2");
+        print("[0]","1");
+        print("[0,null,0,null,0,0,0]","2");
 
-        print("[0,0,null,null,0,null,0]","[0,1,null,null,1,null,0]");
-        print("[0,0,0,null,0,null,0]","[0,1,1,null,0,null,0]");
+        print("[0,0,null,null,0,null,0]","2");
+        print("[0,0,0,null,0,null,0]","2");
 
-        print("[0,0,null,0,null,0,null,null,0]","[0,1,null,0,null,1,null,null,0]");
-       print("[0,0,0,null,0,0,null,null,0]","[0,0,0,null,0,0,null,null,0]");
+        print("[0,0,null,0,null,0,null,null,0]","2");
+        print("[0,0,0,null,0,0,null,null,0]","2");
+
+        print("[0,0,0,0,0,null,null,0,null,null,0,null,0,null,null,null,0]","4");
     }
 
     public static void print(String val,String result){
         MinCameraCover cameraCover = new MinCameraCover();
         TreeNode root1  = cameraCover.deserialize(val);
-        cameraCover.minCameraCover(root1);
-        String end = cameraCover.serialize(root1);
-        System.out.println(result.equals(end)+ "  " + result + "  " + end);
+        int num = cameraCover.minCameraCover(root1);
+        System.out.println(result.equals(num+"")+ " "+num+":" + result + " "+val);
     }
 
     /**
@@ -48,116 +47,106 @@ public class MinCameraCover {
      * @return
      */
     public int minCameraCover(TreeNode root) {
-        if (root == null){
-            return 0;
-        }
-        Stack<TreeNode> stack = new Stack<>();
-        stack.push(root);
+        if (root == null){return 0;}
 
-        int num = 0;
-        while (!stack.isEmpty()){
-            TreeNode node = stack.pop();
-            boolean flag = false;
+        // 被监控的节点 key->节点 value->是否为摄像头
+        Map<Integer,Boolean>  monitored = new HashMap<>(16);
+        // 摄像头 key->节点 value->是否为一级节点
+        Map<Integer,Boolean>  camera = new HashMap<>(16);
 
-            if (node.left == null && node.right == null){
-                // 叶子节点
-                flag = true;
-            } else if (node.left != null && node.left.left == null && node.left.right == null){
-                // 左节点为叶子节点
-                flag = true;
-            }else if (node.right != null && node.right.left == null && node.right.right == null){
-                // 右节点为叶子节点
-                flag = true;
-            }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
 
-            if (flag){
-                node.val = 1;
-                num ++;
-                next(node,stack);
-            }else{
-                // 当前节点不适合安装监控，预测下级所有子节点是否合适并安装
-                boolean leftFlag =  node.left != null && (leaveNode(node.left.left) || leaveNode(node.left.right));
-                boolean rightFlag = node.right != null && (leaveNode(node.right.left) || leaveNode(node.right.right));
-                // 左边子树
-                num ++;
-                if (leftFlag){
-                    node.left.val = 1;
-                    next(node.left,stack);
-                }else {
-                    if (node.left != null && node.left.left != null){
-                        node.left.left.val = 1;
-                        next(node.left.left,stack);
-                    }else if (node.left != null && node.left.right != null){
-                        node.left.right.val = 1;
-                        next(node.left.right,stack);
+        int level = 1;
+        while (!queue.isEmpty()){
+           int size = queue.size();
+           boolean leaveNode = true;
+           for (int i = 0;i<size;i++){
+               TreeNode node = queue.poll();
+               if (node == null){
+                   queue.add(null);
+                   queue.add(null);
+                   continue;
+               }
+               if (node.left!=null && (node.left.left != null || node.left.right != null)){
+                   leaveNode = false;
+               }
+               if (node.right!=null && (node.right.left != null || node.right.right != null)){
+                   leaveNode = false;
+               }
+               queue.add(node.left);
+               queue.add(node.right);
+               int position = point(level,i);
+               int parent = position/2;
+              // 判断当前节点是否可安装监控
+               boolean isMonitored = monitored.containsKey(position);
+               if (!isMonitored || (isMonitored && levelEqOne(node))){
+                    if (install(node) || (parent > 0 && !camera.containsKey(parent))){
+                        camera.put(position,levelEqOne(node));
+                        monitored.put(position,true);
+                        if (node.left != null){
+                            monitored.put(position<<1,false);
+                        }
+                        if (node.right != null){
+                            monitored.put((position<<1)+1,false);
+                        }
+                        if (parent > 1 && !monitored.containsKey(parent)){
+                            monitored.put(parent,false);
+                        }
+                        int mod = position % 2;
+                        // 为右节点
+                        if (mod > 0 && camera.containsKey(position-1) && !camera.get(position-1)){
+                            int leftPosition = position-1;
+                            camera.remove(leftPosition);
+                            monitored.remove(leftPosition);
+                            monitored.remove(leftPosition<<1);
+                            monitored.remove((leftPosition<<1)+1);
+                        }
                     }
-                }
-
-                // 右子树
-                num ++;
-                if (rightFlag){
-                    node.right.val = 1;
-                    next(node.right,stack);
-                }else {
-                    if (node.right != null && node.right.left != null){
-                        node.right.left.val = 1;
-                        next(node.right.left,stack);
-                    }else if (node.right != null && node.right.right != null){
-                        node.right.right.val = 1;
-                        next(node.right.right,stack);
-                    }
-                }
+               }
+           }
+            if (leaveNode){
+                break;
             }
+            level ++;
+
         }
 
-        return num;
+        System.out.println(level +" "+camera.toString());
+        return camera.size();
     }
 
-    private boolean leaveNode(TreeNode node){
-        return node != null && (node.left == null && node.right == null);
-    }
-
-    private boolean deep(TreeNode node){
-        boolean left = node.left != null && (node.left.left != null || node.left.right != null);
-        boolean right = node.right != null && (node.right.left != null || node.right.right != null);
+    private boolean levelEqOne(TreeNode node){
+        boolean left = false;
+        boolean right = false;
+        if (node.left != null && node.left.left == null && node.left.right == null){
+            left = true;
+        }
+        if (node.right != null && node.right.left == null && node.right.right == null){
+            right = true;
+        }
 
         return left || right;
     }
 
-    private void next(TreeNode node,Stack<TreeNode> stack){
-        // 预测下一个节点为监控
-        if (node.left != null){
-            if (nextNodeInstall(node.left)){
-                stack.push(node.left);
-            }else if (node.left.left != null){
-                stack.push(node.left.left);
-            }else if (node.left.right != null){
-                stack.push(node.left.right);
-            }
-        }
-        if (node.right != null){
-            if (nextNodeInstall(node.right)){
-                stack.push(node.right);
-            }else if (node.right.left != null){
-                stack.push(node.right.left);
-            }else if (node.right.right != null){
-                stack.push(node.right.right);
-            }
-
-        }
-
-    }
-
-    private boolean nextNodeInstall(TreeNode nextNode){
+    private boolean install(TreeNode node){
         boolean flag = false;
 
-        if (nextNode.left != null && nextNode.left.left == null && nextNode.left.right == null){
+        if (node.left == null && node.right == null){
+            // 叶子节点
             flag = true;
-        }else if (nextNode.right != null && nextNode.right.left == null && nextNode.right.right == null){
+        } else if (node.left != null && node.left.left == null && node.left.right == null){
+            // 左节点为叶子节点
+            flag = true;
+        }else if (node.right != null && node.right.left == null && node.right.right == null){
+            // 右节点为叶子节点
             flag = true;
         }
-
         return flag;
+    }
+
+    private int point(int level,int num){
+        return (int) (Math.pow(2,level-1)+num);
     }
 
     class TreeNode{
