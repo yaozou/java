@@ -14,7 +14,7 @@ import java.util.Map;
 public class StringSolution {
     public static void main(String[] args) {
         StringSolution solution = new StringSolution();
-        System.out.println(solution.lengthOfLongestSubstring("abcednba"));
+        System.out.println(solution.lengthOfLongestSubstring("abcabcbb"));
     }
 
     /**
