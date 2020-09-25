@@ -98,6 +98,6 @@ public class StringSolution {
         System.out.println(center(1,3,chars));*/
 
         StringSolution solution = new StringSolution();
-        System.out.println(solution.lengthOfLongestSubstring("wkew"));
+        System.out.println(solution.lengthOfLongestSubstring("pwwkew"));
     }
 }
