@@ -7,11 +7,6 @@ package com.yaozou.algorithm.leetcode.string;
  * @since v1.0.0
  */
 public class StringSolution {
-    /*public static void main(String[] args) {
-        StringSolution solution = new StringSolution();
-        System.out.println(solution.lengthOfLongestSubstring("abcabcbb"));
-    }*/
-
     /**
      * 3. 无重复字符的最长子串
      * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
@@ -43,47 +38,49 @@ public class StringSolution {
 
         int length = 0;
         char[] chars = s.toCharArray();
-        for (int i = 0; i < chars.length - 1; i++) {
+        int size = chars.length;
+        for (int i = 0; i <  size- 1; i++) {
             char c = chars[i];
             boolean flag = false;
-            for (int j = i+1; j < chars.length; j++) {
+            for (int j = i+1; j < size; j++) {
                 if (c == chars[j]) {
                     flag = true;
-                    int v = (center(i+1,j-1,chars) - i);
+                    int v = (center(i+1,j-1,chars) - i)+1;
                     System.out.println(c+"->"+v);
                     if (length < v) {
                         length = v;
                     }
                     break;
                 }
-            }
+            } // end of for
             if (!flag) {
                 int f = center(i+1,s.length()-1,chars);
-                if (f != chars.length - 1){
-                    int v = s.length() - i;
-                    System.out.println(c+"->"+v);
-                    if (length < v) {
-                        length = v;
-                    }
+                int v = f - i+1;
+                System.out.println(c+"->"+v);
+                if (length < v) {
+                    length = v;
                 }
             }
-        }
+        } // end of for
         return length;
     }
 
-    public static void main(String[] args) {
-        char[] chars = "abcabcbb".toCharArray();
-        System.out.println(center(0,1,chars));
-    }
-
     private static int center(int start, int end, char[] chars) {
-        for (; start < end-1; start++) {
-            for (int j = start+1; j < end; j++) {
+        for (; start <= end-1; start++) {
+            for (int j = start+1; j <= end; j++) {
                 if (chars[start] == chars[j]) {
                     return start;
                 }
             }
         }
         return end;
+    }
+
+    public static void main(String[] args) {
+        /*char[] chars = "abcabcbb".toCharArray();
+        System.out.println(center(1,3,chars));*/
+
+        StringSolution solution = new StringSolution();
+        System.out.println(solution.lengthOfLongestSubstring("pwwkew"));
     }
 }
