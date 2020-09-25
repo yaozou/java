@@ -1,5 +1,8 @@
 package com.yaozou.algorithm.leetcode.string;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * created on 2020/9/24 15:51
  *
@@ -32,7 +35,7 @@ public class StringSolution {
         if (s == null || "".equals(s)) {
             return 0;
         }
-        if ("".equals(s.trim())) {
+        if ("".equals(s.trim()) || s.length() == 1) {
             return 1;
         }
 
@@ -66,14 +69,22 @@ public class StringSolution {
     }
 
     private static int center(int start, int end, char[] chars) {
+        //1 紧挨两个字符串重复
+       // 2 两重复字符串之间，有多个重复字符且重复多次，计算最后一个重复得
+        Map<Character,Boolean> map = new HashMap<>();
+        int val = end;
         for (; start <= end-1; start++) {
+            if (map.containsKey(chars[start])){
+                break;
+            }
             for (int j = start+1; j <= end; j++) {
                 if (chars[start] == chars[j]) {
-                    return start;
+                    val = start;
+                    map.put(chars[start],true);
                 }
             }
         }
-        return end;
+        return val;
     }
 
     public static void main(String[] args) {
