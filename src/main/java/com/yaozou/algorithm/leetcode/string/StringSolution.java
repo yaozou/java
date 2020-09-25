@@ -77,11 +77,17 @@ public class StringSolution {
             if (map.containsKey(chars[start])){
                 break;
             }
+            boolean flag = false;
             for (int j = start+1; j <= end; j++) {
                 if (chars[start] == chars[j]) {
                     val = start;
+                    flag = true;
                     map.put(chars[start],true);
+                    break;
                 }
+            }
+            if (!flag){
+                val = start;
             }
         }
         return val;
