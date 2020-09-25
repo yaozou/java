@@ -71,14 +71,14 @@ public class StringSolution {
     private static int center(int start, int end, char[] chars) {
         //1 紧挨两个字符串重复
        // 2 两重复字符串之间，有多个重复字符且重复多次，计算最后一个重复得
-        Map<Character,Boolean> map = new HashMap<>();
+        Map<Character,Boolean> map = new HashMap<>(16);
         int val = end;
-        for (; start <= end-1; start++) {
+        for (; start <= end; start++) {
             if (map.containsKey(chars[start])){
                 break;
             }
             boolean flag = false;
-            for (int j = start+1; j <= end; j++) {
+            for (int j = start+1; j < end; j++) {
                 if (chars[start] == chars[j]) {
                     val = start;
                     flag = true;
@@ -98,6 +98,6 @@ public class StringSolution {
         System.out.println(center(1,3,chars));*/
 
         StringSolution solution = new StringSolution();
-        System.out.println(solution.lengthOfLongestSubstring("pwwkew"));
+        System.out.println(solution.lengthOfLongestSubstring("wkew"));
     }
 }
