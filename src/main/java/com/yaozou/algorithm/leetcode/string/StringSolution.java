@@ -73,12 +73,12 @@ public class StringSolution {
        // 2 两重复字符串之间，有多个重复字符且重复多次，计算最后一个重复得
         Map<Character,Boolean> map = new HashMap<>(16);
         int val = end;
-        for (; start <= end; start++) {
+        for (; start < end; start++) {
             if (map.containsKey(chars[start])){
                 break;
             }
             boolean flag = false;
-            for (int j = start+1; j < end; j++) {
+            for (int j = start+1; j <= end; j++) {
                 if (chars[start] == chars[j]) {
                     val = start;
                     flag = true;
@@ -89,6 +89,9 @@ public class StringSolution {
             if (!flag){
                 val = start;
             }
+        }
+        if (map.isEmpty()){
+            return end;
         }
         return val;
     }
