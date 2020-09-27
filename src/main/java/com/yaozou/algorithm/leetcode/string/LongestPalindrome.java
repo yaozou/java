@@ -27,27 +27,21 @@ public class LongestPalindrome {
         char[] chars = s.toCharArray();
         String value = new String(new char[]{chars[0]});
         for (int i = 0;i<chars.length-1;i++){
-            int last = i;
-            boolean flag = false;
+
             StringBuilder sb = new StringBuilder();
             sb.append(chars[i]);
+
             for (int j = i+1;j<chars.length;j++){
+                sb.append(chars[j]);
                 if (chars[j] == chars[i]){
-                    flag = true;
-                    sb.append(chars[j]);
-                    if (last != j-1){
-                        break;
+                    if (isPalindrome(sb.toString())){
+                        if (sb.length() > value.length()){
+                            value = sb.toString();
+                        }
                     }
-                    last = j;
-                }else if (flag){
-                    break;
-                }else{
-                    sb.append(chars[j]);
                 }
             }
-            if (flag && sb.length() > value.length() && isPalindrome(sb.toString())){
-                value = sb.toString();
-            }
+
             if (chars.length-i<=value.length()){
                 break;
             }
