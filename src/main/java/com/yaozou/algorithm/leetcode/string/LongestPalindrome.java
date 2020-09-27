@@ -1,7 +1,5 @@
 package com.yaozou.algorithm.leetcode.string;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * created on 2020/9/27 15:27
@@ -16,6 +14,38 @@ public class LongestPalindrome {
      * 给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。
      */
     public String longestPalindrome(String s) {
+        // 动态规划
+        int n = s.length();
+        boolean[][] dp = new boolean[n][n];
+        String ans = "";
+
+        /**
+         * 动态规划的状态转移方程：
+         * P(i,j)=P(i+1,j−1)∧(Si==Sj)
+         * 也就是说，只有 s[i+1:j−1]是回文串，并且s的第 i和 j个字母相同时，s[i:j]才会是回文串。
+         */
+
+        for (int l = 0; l < n; ++l) {
+            for (int i = 0; i + l < n; ++i) {
+                int j = i + l;
+                if (l == 0) {
+                    dp[i][j] = true;
+                } else if (l == 1) {
+                    dp[i][j] = (s.charAt(i) == s.charAt(j));
+                } else {
+                    dp[i][j] = (s.charAt(i) == s.charAt(j) && dp[i + 1][j - 1]);
+                }
+                if (dp[i][j] && l + 1 > ans.length()) {
+                    ans = s.substring(i, i + l + 1);
+                }
+            }
+        }
+
+        return ans;
+    }
+
+
+    public String longestPalindrome1(String s) {
         //把相同的词汇或句子,在下文中调换位置或颠倒过来,产生首尾回环的情趣,叫做回文,也叫回环
         // abbba  abbba
         // abccba
@@ -31,10 +61,16 @@ public class LongestPalindrome {
             StringBuilder sb = new StringBuilder();
             sb.append(chars[i]);
 
+            boolean flag = true;
+            int last = i;
             for (int j = i+1;j<chars.length;j++){
                 sb.append(chars[j]);
                 if (chars[j] == chars[i]){
-                    if (isPalindrome(sb.toString())){
+                    if (flag && last+1 != j){
+                        flag = false;
+                    }
+                    last = j;
+                    if (flag || isPalindrome(sb.toString())){
                         if (sb.length() > value.length()){
                             value = sb.toString();
                         }
