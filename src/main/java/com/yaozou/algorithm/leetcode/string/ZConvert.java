@@ -14,7 +14,7 @@ public class ZConvert {
     /**
      * 6. Z 字形变换
      */
-    public String convert(String s, int numRows) {
+    public String convert1(String s, int numRows) {
         if (numRows == 1){ return s;}
 
         List<StringBuilder> list = new ArrayList<>();
@@ -42,8 +42,29 @@ public class ZConvert {
         return val.toString();
     }
 
+    public String convert(String s, int numRows) {
+        if (numRows == 1){ return s;}
+        StringBuilder sb = new StringBuilder();
+        // 先一行一行读完
+        // 行0，字符位于索引k(2.numRows-2)处;
+        // 行numRows-1中的字符位于索引k(2.numRows-2)+numRows-1处;
+        // 内部的行i中的字符位于索引k(2.numRows-2)+i以及(k+1)(2.numRows-2)-i处;
+        int cyclelen = 2*numRows-2;
+        for (int i = 0;i<numRows;i++){
+            for (int j = 0;j+i<s.length();j+=cyclelen){
+                sb.append(s.charAt(j+i));
+                if (i!=0&&i!=numRows-1&&j+cyclelen-i<s.length()){
+                    sb.append(s.charAt(j+cyclelen-i));
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+
     public static void main(String[] args) {
         ZConvert convert = new ZConvert();
+        System.out.println(convert.convert1("ABCDEFGHIJKLMN",3));
         System.out.println(convert.convert("ABCDEFGHIJKLMN",3));
     }
 }
