@@ -64,7 +64,7 @@ public class ZConvert {
 
     public static void main(String[] args) {
         ZConvert convert = new ZConvert();
-        System.out.println(convert.convert1("ABCDEFGHIJKLMN",3));
-        System.out.println(convert.convert("ABCDEFGHIJKLMN",3));
+        System.out.println(convert.convert1("ABCDEF",2));
+        System.out.println(convert.convert("ABCDEF",2));
     }
 }
