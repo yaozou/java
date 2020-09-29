@@ -43,7 +43,9 @@ public class Atoi {
         }
 
         int radix = 10;
-       char[] chars = new char[radix];
+        int digit;
+        int multmin = limit / radix;
+        int result = 0;
         for(;j< str.length();j++){
             if (!isNum(str.charAt(j))){
                 break;
@@ -55,15 +57,8 @@ public class Atoi {
             if (i>=radix){
                 return defaultVal;
             }
-            chars[i++] = str.charAt(j);
-        }
 
-
-        int digit;
-        int multmin = limit / radix;
-        int result = 0;
-        for (int n = 0;n<chars.length;n++){
-            digit = Character.digit(chars[n],radix);
+            digit = Character.digit(str.charAt(j),radix);
             if (digit < 0){
                 break;
             }
@@ -76,7 +71,6 @@ public class Atoi {
             }
             result -= digit;
         }
-
         return negative?result:-result;
     }
 
@@ -87,6 +81,6 @@ public class Atoi {
     public static void main(String[] args) {
         Atoi atoi = new Atoi();
         //2147483647
-        System.out.println(atoi.myAtoi("  +0000000000012345678"));
+        System.out.println(atoi.myAtoi("  -000000000002147483649"));
     }
 }
