@@ -27,7 +27,7 @@ public class Atoi {
         str = str.trim();
         int     limit = -0x7fffffff;
         int     defaultVal = 0x7fffffff;
-        boolean negative = false;
+        boolean negative = false,start=false;
         int i = 0, j = 0;
 
         char first = str.charAt(0);
@@ -48,6 +48,10 @@ public class Atoi {
             if (!isNum(str.charAt(j))){
                 break;
             }
+            if (!start && str.charAt(j) == '0'){
+                continue;
+            }
+            start = true;
             if (i>=radix){
                 return defaultVal;
             }
