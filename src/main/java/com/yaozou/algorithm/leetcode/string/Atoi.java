@@ -44,7 +44,7 @@ public class Atoi {
 
         int radix = 10;
        char[] chars = new char[radix];
-        for(;j< str.length();j++,i++){
+        for(;j< str.length();j++){
             if (!isNum(str.charAt(j))){
                 break;
             }
@@ -55,7 +55,7 @@ public class Atoi {
             if (i>=radix){
                 return defaultVal;
             }
-            chars[i] = str.charAt(j);
+            chars[i++] = str.charAt(j);
         }
 
 
@@ -87,6 +87,6 @@ public class Atoi {
     public static void main(String[] args) {
         Atoi atoi = new Atoi();
         //2147483647
-        System.out.println(atoi.myAtoi("  -42"));
+        System.out.println(atoi.myAtoi("  +0000000000012345678"));
     }
 }
