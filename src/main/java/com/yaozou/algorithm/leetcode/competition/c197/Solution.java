@@ -1,5 +1,6 @@
 package com.yaozou.algorithm.leetcode.competition.c197;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -96,35 +97,18 @@ public class Solution {
     }
 
     public double getMinDistSum(int[][] positions) {
+        // 题解析
+        // 文档：2-梯度下降.note
+        // 链接：http://note.youdao.com/noteshare?id=6ba5d61ac852dc10c3a79ea000e9e9cb&sub=B8B4429B054C404F8807E752F37BF706
         if (positions.length <= 1){
             return 0D;
         }
-        // 计算一个中心点到各个点的距离最短
-        // 给定的函数是一个凸函数
-        // 凸优化问题
-        // 局部最小值就等于全部最小值
-        // 先求解局部最小值
-        // 1、使用梯度下降法，求解局部最小值：对于给定的(x,y),它的梯度方向是函数值上升最快的方向，因此梯度反向就是函数值下降最快的方向，函数为：
-        //      f(xc​,yc​)=i=0∑n−1​(xc​−xi​)2+(yc​−yi​)2
-        //​ 求得它的导数为：
-        //      f`(x)​
-        //      f`(y)
-        // 那么梯度反向=(-f`(x),f`(y))。从一个初始点(xs,ys)开始进行迭代 ，每次令
-        //      xs`=xs-alpha*f`(x)
-        //      ys`=ys-alpha*f`(y)
-        // 得到新的点(xs`,ys`),alpha为学习率。
-        // 当迭代了一定次数之后，当前的点会非常接近真正的最小值点，如果我们的学习速率不变，迭代的结果将会在最小值点的周围来回震荡，无法继续接近最小值点。因此，需要设置学习率衰减，在迭代的过程中逐渐减小学习率，向最小值点逼近。
-        // 在代码中：
-        //   初始点(xs,ys)=(x1+x2+....+xn)/n,(y1+y2+....+yn)/n
-        //   学习率alpha=1
-        //   学习率衰减n=10的-3次方
-        //   当(xs,ys)与(xs`,ys`)的距离小于10的-7次方时结束迭代。
 
         double alpha = 1,eps=1e-7,decay=1e-3;
         int n = positions.length,batchSize=n;
 
         // 1、获得初始点
-        double x = 0D,y = 0D;
+        double x = 0.0,y = 0.0;
         for (int[] pos:positions){
             x += pos[0];y += pos[1];
         }
@@ -139,9 +123,9 @@ public class Solution {
             shuffle(positions);
 
             // 得到新的点(dx,dy)，alpha并衰减
-            for (int i = 0;i<n;i++){
+            for (int i = 0;i<n;i += batchSize){
                 int j = Math.min(i+batchSize,n);
-                double dx=0D,dy=0D;
+                double dx=0.0,dy=0.0;
                 // 根据函数的导数计算新的点
                 for (int k = i;k<j;k++){
                     int[] pos = positions[k];
@@ -181,12 +165,11 @@ public class Solution {
     }
 
     private double distance(double x , double y,int[][] positions){
-        double distance = 0D;
+        double distance = 0;
         for (int[] pos:positions) {
-            double x2 = (pos[0]-x)*(pos[0]-x);
-            double y2 = (pos[1]-y)*(pos[1]-y);
-            distance += Math.sqrt(x2+y2);
+            distance += Math.sqrt((pos[0]-x)*(pos[0]-x)+(pos[1]-y)*(pos[1]-y));
         }
+        System.out.println(x+","+y);
         return distance;
     }
 }
