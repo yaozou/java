@@ -16,6 +16,35 @@ public class Simple {
      */
     public int romanToInt(String s) {
         if (s == null || "".equals(s.trim())){return 0;}
+        int num = 0;
+        char[] chars = s.toCharArray();
+        int preNum = getValue(chars[0]);
+        for (int i = 1;i<chars.length;i++){
+            int val = getValue(chars[i]);
+            if (val > preNum){
+                num -= preNum;
+            }else {
+                num += preNum;
+            }
+            preNum = val;
+        }
+        num += preNum;
+        return num;
+    }
+    private int getValue(char c){
+        switch (c){
+            case 'I': return 1;
+            case 'V': return 5;
+            case 'X': return 10;
+            case 'L': return 50;
+            case 'C': return 100;
+            case 'D': return 500;
+            case 'M': return 1000;
+            default: return 0;
+        }
+    }
+    public int romanToInt1(String s) {
+        if (s == null || "".equals(s.trim())){return 0;}
         Map<Character,Integer> map = new HashMap<>(8);
         map.put('I',1);map.put('V',5);map.put('X',10);
         map.put('L',50);map.put('C',100);map.put('D',500);map.put('M',1000);
@@ -62,7 +91,7 @@ public class Simple {
 
     public static void main(String[] args) {
         Simple s = new Simple();
-        System.out.println(s.romanToInt("XLIX"));
+        System.out.println(s.romanToInt("MCMXCIV"));
     }
 
 }
