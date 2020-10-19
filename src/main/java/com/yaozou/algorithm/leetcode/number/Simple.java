@@ -88,10 +88,26 @@ public class Simple {
         return sb.toString();
     }
 
+    /**
+     * 27. 移除元素
+     */
+    public int removeElement(int[] nums, int val) {
+        int pos       = 0;
+        for (int i=0;i<nums.length;i++){
+            if (val != nums[i]){
+                nums[pos] = nums[i];
+                pos++;
+            }
+        }
+        return pos;
+    }
+
 
     public static void main(String[] args) {
         Simple s = new Simple();
-        System.out.println(s.romanToInt("MCMXCIV"));
+        /*System.out.println(s.romanToInt("MCMXCIV"));*/
+
+        s.removeElement(new int[]{0,1,2,2,3,0,4,2},2);
     }
 
 }
