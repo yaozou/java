@@ -165,10 +165,57 @@ public class Solution {
         return maxArea;
     }
 
+    /** 下一个更大元素 I */
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        Map<Integer,Integer> nums = new HashMap<>(nums2.length);
+        Stack<Integer>       stack = new Stack<>();
+        for (int i = 0;i<nums2.length;i++){
+            while (!stack.isEmpty() && nums2[i] > stack.peek()){
+                nums.put(stack.pop(),nums2[i]);
+            }
+            stack.add(nums2[i]);
+        }
 
+        int[] nums3 = new int[nums1.length];
+        for (int i = 0;i<nums1.length;i++ ){
+            nums3[i] = nums.getOrDefault(nums1[i],-1);
+        }
+        return nums3;
+    }
+
+    /** 棒球比赛 */
+    public int calPoints(String[] ops) {
+        Stack<Integer> stack = new Stack<>();
+        for (String op:ops){
+            if ("C".equals(op)){
+                stack.pop();//表示前一次得分无效，将其从记录中移除
+            }else if ("D".equals(op)){
+                stack.add(stack.peek()*2);
+            }else if ("+".equals(op)){
+                int[] grades = new int[2];
+                int i  = 0;
+                while (!stack.isEmpty()){
+                    grades[i] = stack.pop();
+                    i++;
+                    if (i == 2){break;}
+                }
+                stack.add(grades[1]);
+                stack.add(grades[0]);
+                stack.add(grades[0]+grades[1]);
+            }else{
+                stack.add(new Integer(op));
+            }
+        }
+
+        int sum = 0;
+        while (!stack.isEmpty()){
+            sum += stack.pop();
+        }
+        return sum;
+    }
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        System.out.println(solution.largestRectangleArea(new int[]{0,9}));
+        System.out.println(solution.calPoints(new String[]{"5","-2","4","C","D","9","+","+"}));
     }
 }
