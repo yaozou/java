@@ -165,6 +165,8 @@ public class Solution {
         return maxArea;
     }
 
+
+
     public static void main(String[] args) {
         Solution solution = new Solution();
         System.out.println(solution.largestRectangleArea(new int[]{0,9}));
