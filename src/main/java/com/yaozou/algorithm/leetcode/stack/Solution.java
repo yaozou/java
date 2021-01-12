@@ -294,6 +294,16 @@ public class Solution {
         return sb.toString();
     }
 
+    /** 用栈操作构建数组 */
+    public List<String> buildArray(int[] target, int n) {
+        int size = target.length,count = 0;
+        List<String> list = new ArrayList<>();
+        for (int i = 1;i<=n && count < size;i++){
+            if (i == target[count]){list.add("Push");count++;}else{list.add("Push");list.add("Pop");}
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         Solution solution = new Solution();
         System.out.println(solution.removeOuterParentheses("(()())(())(()(()))"));
