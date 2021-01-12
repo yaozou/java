@@ -304,8 +304,26 @@ public class Solution {
         return list;
     }
 
+    /** 整理字符串 */
+    public String makeGood(String s) {
+        if (s == null || "".equals(s)){return "";}
+        Stack<Character> stack = new Stack<>();
+        for (char c:s.toCharArray()) {
+            if (!stack.isEmpty() && Math.abs(c-stack.peek()) == 32 ){
+                stack.pop();continue;
+            }
+           stack.add(c);
+        }
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()){
+            sb.insert(0,stack.pop());
+        }
+        return sb.toString();
+    }
+
     public static void main(String[] args) {
         Solution solution = new Solution();
         System.out.println(solution.removeOuterParentheses("(()())(())(()(()))"));
+        System.out.println('a'-'A');
     }
 }
