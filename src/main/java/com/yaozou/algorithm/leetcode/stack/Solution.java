@@ -214,6 +214,37 @@ public class Solution {
         return sum;
     }
 
+    /**  比较含退格的字符串 */
+    public boolean backspaceCompare(String S, String T) {
+        Stack<Character> stack1 = new Stack<>();
+        Stack<Character> stack2 = new Stack<>();
+        char back = '#';
+        for (char c:S.toCharArray()) {
+            if (c == back){
+                if (!stack1.isEmpty()){
+                    stack1.pop();
+                }
+                continue;
+            }
+            stack1.add(c);
+        }
+        for (char c:T.toCharArray()) {
+            if (c == back){
+                if (!stack2.isEmpty()){
+                    stack2.pop();
+                }
+                continue;
+            }
+            stack2.add(c);
+        }
+
+        if (stack1.size() != stack2.size()){return false;}
+        while (!stack1.isEmpty() && !stack2.isEmpty()){
+            if (!stack1.pop().equals(stack2.pop())){return false;}
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         Solution solution = new Solution();
         System.out.println(solution.calPoints(new String[]{"5","-2","4","C","D","9","+","+"}));
