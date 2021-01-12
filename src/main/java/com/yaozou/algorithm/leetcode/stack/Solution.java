@@ -278,6 +278,22 @@ public class Solution {
         return result.toString();
     }
 
+    /** 删除字符串中的所有相邻重复项 */
+    public String removeDuplicates(String S) {
+        Stack<Character> stack = new Stack<>();
+        for (char c:S.toCharArray()) {
+            if (!stack.isEmpty() && stack.peek().equals(c)){
+                stack.pop();continue;
+            }
+            stack.add(c);
+        }
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()){
+            sb.insert(0,stack.pop());
+        }
+        return sb.toString();
+    }
+
     public static void main(String[] args) {
         Solution solution = new Solution();
         System.out.println(solution.removeOuterParentheses("(()())(())(()(()))"));
