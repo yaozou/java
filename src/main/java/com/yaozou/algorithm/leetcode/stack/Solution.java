@@ -245,8 +245,41 @@ public class Solution {
         return true;
     }
 
+    /** 删除最外层的括号 */
+    public java.lang.String removeOuterParentheses(String S) {
+        Stack<String> values = new Stack<>();
+        // 原语分解
+        char[] chars = S.toCharArray();
+        char left = '(',right = ')';
+        StringBuilder sb = new StringBuilder();
+        int leftNum = 0;
+
+        for (char c:chars){
+            sb.append(c);
+            if (c == left){
+                leftNum ++;
+            }else if (c == right){
+                leftNum --;
+                if (leftNum == 0){
+                    String value = sb.toString();
+                    // 删除左右两边
+                    values.add(value.substring(1,value.length()-1));
+                    sb = new StringBuilder();
+                    leftNum = 0;
+                }
+            }
+        }
+
+
+        StringBuilder result = new StringBuilder();
+        while (!values.isEmpty()){
+            result.insert(0,values.pop());
+        }
+        return result.toString();
+    }
+
     public static void main(String[] args) {
         Solution solution = new Solution();
-        System.out.println(solution.calPoints(new String[]{"5","-2","4","C","D","9","+","+"}));
+        System.out.println(solution.removeOuterParentheses("(()())(())(()(()))"));
     }
 }
