@@ -93,6 +93,27 @@ public class MyQueue {
         }
     }
 }
+class CQueue {
+    private Stack<Integer> head;
+    private Stack<Integer> tail;
+    public CQueue() {
+        head = new Stack<>();
+        tail = new Stack<>();
+    }
+
+    public void appendTail(int value) {
+        tail.add(value);
+    }
+
+    public int deleteHead() {
+        if (head.isEmpty()){
+            while (!tail.isEmpty()){
+                head.add(tail.pop());
+            }
+        }
+        return head.isEmpty()?-1:head.pop();
+    }
+}
 
 
 
