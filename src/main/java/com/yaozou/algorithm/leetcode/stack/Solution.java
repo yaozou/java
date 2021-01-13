@@ -321,6 +321,21 @@ public class Solution {
         return sb.toString();
     }
 
+    /** 文件夹操作日志搜集器 */
+    public int minOperations(String[] logs) {
+        String last = "../",current = "./";
+        Stack<String> stack = new Stack<>();
+        for (String log:logs) {
+            if (last.equals(log)){
+                if (!stack.isEmpty()){stack.pop();}
+            }else if (current.equals(log)){continue;}
+            else {
+                stack.add(log);
+            }
+        }
+        return stack.size();
+    }
+
     public static void main(String[] args) {
         Solution solution = new Solution();
         System.out.println(solution.removeOuterParentheses("(()())(())(()(()))"));
