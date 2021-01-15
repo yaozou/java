@@ -1,7 +1,6 @@
 package com.yaozou.algorithm.leetcode.stack;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * created on 2020/7/30 11:47
@@ -10,39 +9,30 @@ import java.util.List;
  * @since v1.0.0
  */
 public class MinStack {
-    List<Integer> data;
-    int min;
+    Stack<Integer> data,minStack;
     /** initialize your data structure here. */
     public MinStack() {
-        data = new ArrayList<>();
+        data = new Stack<>();
+        minStack = new Stack<>();
+        minStack.add(Integer.MAX_VALUE);
     }
 
     public void push(int x) {
-        if (data.size() == 0 || min > x){min = x;}
         data.add(x);
+        minStack.add(Math.min(minStack.peek(),x));
     }
 
     public void pop() {
-        int val = data.remove(data.size() -1);
-        if (val == min){
-            if(data.size() > 0){
-                min = data.get(0);
-                for (int i = 1;i<data.size();i++){
-                    if (min > data.get(i)){
-                        min = data.get(i);
-                    }
-                }
-            }
-
-        }
+        data.pop();
+        minStack.pop();
     }
 
     public int top() {
-        return data.get(data.size() -1);
+        return data.peek();
     }
 
     public int getMin() {
-
-        return min;
+        return minStack.peek();
     }
+
 }
