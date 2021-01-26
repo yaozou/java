@@ -119,11 +119,45 @@ public class MediumSolution {
         return stack.peek();
     }
 
+    class BSTIterator {
+        Queue<Integer> queue = new LinkedList<>();
+        public BSTIterator(TreeNode root) {
+           // 中序遍历二叉树 左根右
+            Stack<TreeNode> stack = new Stack<>();
+            TreeNode curr = root;
+            while (curr != null || !stack.isEmpty()){
+                if (curr != null){
+                    stack.push(curr);
+                    curr = curr.left;
+                }else{
+                    curr = stack.pop();
+                    queue.add(curr.val);
+                    curr = curr.right;
+                }
+            }
+
+        }
+
+        public int next() {
+            return queue.poll();
+        }
+
+        public boolean hasNext() {
+            return !queue.isEmpty();
+        }
+    }
+
     private class TreeNode{
         int val;
         TreeNode left;
         TreeNode right;
+        TreeNode() {}
         TreeNode(int x){val = x;}
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
     }
 
     public static void main(String[] args) {

@@ -438,7 +438,7 @@ public class BinaryTreeCode {
 
         Stack<TreeNode> stack = new Stack<>();
         TreeNode curr = root;
-        while (curr != null && !stack.isEmpty()){
+        while (curr != null || !stack.isEmpty()){
             if (curr != null){
                 stack.push(curr);
                 curr = curr.left;
@@ -526,6 +526,7 @@ public class BinaryTreeCode {
 
         ArrayDeque<TreeNode> deque = new ArrayDeque<>();
         deque.add(root);
+        // 根左右
         while(!deque.isEmpty()){
             TreeNode node = deque.pollLast();
             list.add(node.val);
