@@ -270,21 +270,37 @@ public class MediumSolution {
         }
     }
 
-      // This is the interface that allows for creating nested lists.
-      // You should not implement it, or speculate about its implementation
-      public interface NestedInteger {
-
-          // @return true if this NestedInteger holds a single integer, rather than a nested list.
-         public boolean isInteger();
-
-          // @return the single integer that this NestedInteger holds, if it holds a single integer
-          // Return null if this NestedInteger holds a nested list
-          public Integer getInteger();
-
-          // @return the nested list that this NestedInteger holds, if it holds a nested list
-          // Return null if this NestedInteger holds a single integer
-          public List<NestedInteger> getList();
-      }
+    /*char[] chars;
+    int curr = 0;
+    public NestedInteger deserialize(String s) {
+        chars = s.toCharArray();
+        if (chars[0] != '['){return new NestedInteger(Integer.valueOf(s));}
+        return getNested();
+    }
+    private NestedInteger getNested(){
+        NestedInteger nest = new NestedInteger();
+        //当前记录的整数是不是负数
+        boolean negative = false;
+        int num = 0;
+        while (curr < chars.length){
+            curr++;
+            if (chars[curr] == ','){continue;}
+            else if (chars[curr] == '['){nest.add(getNested());}
+            else if (chars[curr] == ']'){return nest;}
+            else if (chars[curr] == '-'){negative = true;}
+            else{
+                if(negative){num = 10*num - (chars[curr]-'0');}
+                else{num = 10*num + (chars[curr]-'0');}
+                //如果下一个字符是,或者]说明当前数字已经记录完了，需要加入集合中
+                if(chars[curr+1]==','||chars[curr+1]==']'){
+                    nest.add(new NestedInteger(num));
+                    num = 0;
+                    negative = false;
+                }
+            }
+        }
+        return null;
+    }*/
 
     public static void main(String[] args) {
         MediumSolution solution = new MediumSolution();
