@@ -216,6 +216,20 @@ public class MediumSolution {
         return sb.toString();
     }
 
+    public boolean isValidSerialization(String preorder) {
+        // 槽点占位
+       int salt = 1;
+       String[] strs = preorder.split(",");
+        for (String str:strs) {
+            salt--;
+            if (salt < 0){return false;}
+            if (!str.equals("#")){
+                salt += 2;
+            }
+        }
+        return salt == 0;
+    }
+
     private class TreeNode{
         int val;
         TreeNode left;
