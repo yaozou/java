@@ -1,6 +1,5 @@
 package com.yaozou.algorithm.leetcode.stack;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -147,6 +146,49 @@ public class MediumSolution {
         }
     }
 
+    public int calculate(String s) {
+        Deque<String> all = new ArrayDeque<>();
+        StringBuilder sb = new StringBuilder();
+        for (char c:s.toCharArray()) {
+            if (' ' == c){continue;}
+            else if (c >= '0' && c <= '9'){
+                sb.append(c);
+            }else{
+                all.add(sb.toString());
+                all.add(new String(new char[]{c}));
+                sb.delete(0,sb.length());
+            }
+        }
+        all.add(sb.toString());
+
+        String divide = "/",mul="*",sub = "-",add = "+";
+        Deque<Integer> nums = new ArrayDeque<>();
+        Deque<String> mathematicalOperator = new ArrayDeque<>();
+        while (!all.isEmpty()) {
+            String c = all.pop();
+            if (c .equals(divide) ){
+                nums.add(nums.pollLast()/ new Integer(all.pop()));
+            }else if (mul.equals(c)){
+                nums.add(nums.pollLast()* new Integer(all.pop()));
+            }else if (sub.equals(c) || add.equals(c)){
+                mathematicalOperator.add(c);
+            }else{
+                nums.add(new Integer(c));
+            }
+        }
+
+        int val = nums.pop();
+        while (!mathematicalOperator.isEmpty()){
+            String c = mathematicalOperator.pop();
+            if (add.equals(c)){
+                val = val + nums.pop();
+            }else {
+                val = val - nums.pop();
+            }
+        }
+        return val;
+    }
+
     private class TreeNode{
         int val;
         TreeNode left;
@@ -164,6 +206,7 @@ public class MediumSolution {
         MediumSolution solution = new MediumSolution();
         // {1,0},{0,1},{1,1}
         // {0,0},{0,1},{1,0},{1,2},{2,1},{2,2}
-        System.out.println(solution.removeStones(new int[][]{{0,0},{0,1},{1,0},{1,2},{2,1},{2,2}}));
+//        System.out.println(solution.removeStones(new int[][]{{0,0},{0,1},{1,0},{1,2},{2,1},{2,2}}));
+        solution.calculate(" 3+5 / 2 ");
     }
 }
