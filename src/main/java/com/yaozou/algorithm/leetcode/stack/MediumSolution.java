@@ -189,6 +189,33 @@ public class MediumSolution {
         return val;
     }
 
+    public String removeDuplicateLetters(String s) {
+        char[] chars = s.toCharArray();
+        boolean[] vis = new boolean[26];
+        int[] num = new int[26];
+        for (char c : chars){
+            num[c-'a']++;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (char c:chars) {
+            if (!vis[c-'a']){
+                while (sb.length() > 0 && sb.charAt(sb.length()-1)>c){
+                    if (num[sb.charAt(sb.length()-1)-'a']>0){
+                        vis[sb.charAt(sb.length()-1)-'a'] = false;
+                        sb.deleteCharAt(sb.length()-1);
+                    }else {
+                        break;
+                    }
+                }
+                vis[c-'a'] = true;
+                sb.append(c);
+            }
+            num[c - 'a'] -= 1;
+        }
+
+        return sb.toString();
+    }
+
     private class TreeNode{
         int val;
         TreeNode left;
