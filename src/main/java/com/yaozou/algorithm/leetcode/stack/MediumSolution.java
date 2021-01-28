@@ -328,6 +328,31 @@ public class MediumSolution {
         return result.toString();
     }
 
+    public String removeKdigits(String num, int k) {
+        if(num.length() == k){return "0";}
+        char[] chars = num.toCharArray();
+        Deque<Character> stack = new ArrayDeque<>();
+        for (char c:chars) {
+            while (!stack.isEmpty() && k >0&&c < stack.peekLast()){
+                stack.pollLast();k--;
+            }
+            stack.addLast(c);
+        }
+
+        for (int i = 0;i<k;i++){stack.pollLast();}
+
+        StringBuilder sb = new StringBuilder();
+        boolean flag = true;
+        while (!stack.isEmpty()){
+            char c = stack.pollFirst();
+            if (flag && c == '0'){continue;}
+            flag = false;
+            sb.append(c);
+        }
+
+        return sb.length() == 0?"0":sb.toString();
+    }
+
     public static void main(String[] args) {
         MediumSolution solution = new MediumSolution();
         // {1,0},{0,1},{1,1}
