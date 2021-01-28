@@ -302,11 +302,37 @@ public class MediumSolution {
         return null;
     }*/
 
+    public String decodeString(String s) {
+        char[] chars = s.toCharArray();
+        Stack<String> stringStack =  new Stack<>();
+        Stack<Integer> integerStack = new Stack<>();
+        int num = 0;
+        StringBuilder result = new StringBuilder(),cur = new StringBuilder();
+        for (char c:chars) {
+            if (c >= '0' && c <= '9'){
+                num = num*10 + c-'0';
+            }else if (c == '['){
+                integerStack.add(num);num = 0;
+                stringStack.add(cur.toString());cur.delete(0,cur.length());
+            }else if (c == ']'){
+                int k = integerStack.pop();
+                StringBuilder newCur = new StringBuilder(stringStack.pop());
+                String val = cur.toString();
+                for(int j=0; j<k; ++j){newCur.append(val);}
+                cur = newCur;
+            }else {
+                cur.append(c);
+            }
+        }
+        result.append(cur);
+        return result.toString();
+    }
+
     public static void main(String[] args) {
         MediumSolution solution = new MediumSolution();
         // {1,0},{0,1},{1,1}
         // {0,0},{0,1},{1,0},{1,2},{2,1},{2,2}
 //        System.out.println(solution.removeStones(new int[][]{{0,0},{0,1},{1,0},{1,2},{2,1},{2,2}}));
-        solution.calculate(" 3+5 / 2 ");
+        solution.decodeString("3[a]2[bc]");
     }
 }
