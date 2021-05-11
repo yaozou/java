@@ -10,7 +10,7 @@ public class TestSort {
 
     }
 
-    class InsertSirt{
+    class InsertSort{
         /**
          * 直接插入排序
          * 基本思想：将当前无序区的第1个记录R[i]插入到有序区R[0...i-1]中适当的位置上，
