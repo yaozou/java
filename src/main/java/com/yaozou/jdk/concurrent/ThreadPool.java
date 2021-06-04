@@ -110,5 +110,10 @@ class JdkThreadPool{
             e.printStackTrace();
             Thread.currentThread().interrupt();
         }*/
+        try {
+            fixedThreadPool.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
